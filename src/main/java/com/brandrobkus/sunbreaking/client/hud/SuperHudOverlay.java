@@ -64,12 +64,16 @@ public class SuperHudOverlay {
         int superY = client.getWindow().getScaledHeight() - 62;
 
         if (hasGearItem) {
+            //Empty Gear Meter
             context.drawTexture(TEXTURE, gearX, gearY, 101, 64, 81, 5);
+            //Gear meter that scales up dynamically
             if (gearWidth > 0) context.drawTexture(TEXTURE, gearX, gearY, 101, 69, gearWidth, 5);
         }
 
         if (hasSuperItem) {
+            //Empty Super Meter
             context.drawTexture(TEXTURE, superX, superY, 0, 64, 81, 5);
+            //Super meter that scales up dynamically
             if (superWidth > 0) context.drawTexture(TEXTURE, superX, superY, 0, 69, superWidth, 5);
         }
 
@@ -148,40 +152,42 @@ public class SuperHudOverlay {
             }
         }
 
-        int superCostWidth = (int)((superCost / 100f) * BAR_WIDTH);
-        int gearCostWidth = (int)((gearCost / 100f) * BAR_WIDTH);
+        int superCostWidth = Math.round((superCost / 100f) * BAR_WIDTH);
+        superCostWidth = Math.min(superCostWidth, BAR_WIDTH);
 
-        int visibleSuperWidth = Math.min(superCostWidth, superWidth);
-        int visibleGearWidth  = Math.min(gearCostWidth, gearWidth);
-
-        if (superCost > currentSuper) visibleSuperWidth = superCostWidth;
-        if (gearCost > currentGear) visibleGearWidth = gearCostWidth;
-
-        if (superCost < superWidth + 5) {
-            int costWidth = Math.round((superCost / 100f) * BAR_WIDTH);
-            int drawWidth = Math.min(costWidth, BAR_WIDTH);
-
-            int offset = Math.max(0, superWidth - drawWidth);
+        if (superCostWidth <= superWidth) {
+            int offset = superWidth - superCostWidth;
 
             context.drawTexture(TEXTURE, superX + offset, superY + 16,
-                    SUPER_COST_U + offset, costV, drawWidth, BAR_HEIGHT);
-        } else if (superCost >= superWidth + 5){
-            context.drawTexture(TEXTURE, superX, superY+16, 0, costV - 5, visibleSuperWidth, 5);
-            if (superWidth > 0) context.drawTexture(TEXTURE, superX, superY+16, 0, costV, superWidth, 5);
+                    SUPER_COST_U + offset, costV, superCostWidth, BAR_HEIGHT
+            );
+        } else {
+            context.drawTexture(TEXTURE, superX, superY + 16,
+                    SUPER_COST_U, costV - BAR_HEIGHT, superCostWidth, BAR_HEIGHT
+            );
+
+            if (superWidth > 0) {
+                context.drawTexture(TEXTURE, superX, superY + 16,
+                        SUPER_COST_U, costV, superWidth, BAR_HEIGHT);
+            }
         }
 
-        if (gearCost < gearWidth + 5) {
-            int costWidth = Math.round((gearCost / 100f) * BAR_WIDTH);
-            int drawWidth = Math.min(costWidth, BAR_WIDTH);
+        int gearCostWidth = Math.round((gearCost / 100f) * BAR_WIDTH);
+        gearCostWidth = Math.min(gearCostWidth, BAR_WIDTH);
 
-            int offset = Math.max(0, gearWidth - drawWidth);
+        if (gearCostWidth <= gearWidth) {
+            int offset = gearWidth - gearCostWidth;
 
             context.drawTexture(TEXTURE, gearX + offset, gearY + 16,
-                    GEAR_COST_U + offset, 53, drawWidth, BAR_HEIGHT
-            );
-        } else if (gearCost >= gearWidth + 5){
-            context.drawTexture(TEXTURE, gearX, gearY+16, 101, 48, visibleGearWidth, 5);
-            if (gearWidth > 0) context.drawTexture(TEXTURE, gearX, gearY+16, 101, 53, gearWidth, 5);
+                    GEAR_COST_U + offset, 53, gearCostWidth, BAR_HEIGHT);
+        } else {
+            context.drawTexture(TEXTURE, gearX, gearY + 16,
+                    GEAR_COST_U, 48, gearCostWidth, BAR_HEIGHT);
+
+            if (gearWidth > 0) {
+                context.drawTexture(TEXTURE, gearX, gearY + 16,
+                        GEAR_COST_U, 53, gearWidth, BAR_HEIGHT);
+            }
         }
     }
 }

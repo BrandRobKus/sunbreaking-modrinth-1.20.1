@@ -30,6 +30,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 public class SkyFirelessLightningEntity extends Entity {
@@ -39,9 +40,8 @@ public class SkyFirelessLightningEntity extends Entity {
     public long seed;
     private int remainingActions;
     private boolean cosmetic;
-    @Nullable
-    private ServerPlayerEntity channeler;
-    private final Set<Entity> struckEntities = Sets.<Entity>newHashSet();
+    private UUID ownerUUID;
+    private final Set<Entity> struckEntities = Sets.newHashSet();
 
     public SkyFirelessLightningEntity(EntityType<? extends SkyFirelessLightningEntity> entityType, World world) {
         super(entityType, world);
@@ -49,6 +49,17 @@ public class SkyFirelessLightningEntity extends Entity {
         this.ambientTick = 2;
         this.seed = this.random.nextLong();
         this.remainingActions = this.random.nextInt(3) + 1;
+    }
+
+    public void setOwner(PlayerEntity player) {
+        this.ownerUUID = player.getUuid();
+    }
+
+    @Nullable
+    public ServerPlayerEntity getOwnerPlayer() {
+        if (ownerUUID == null) return null;
+        if (!(getWorld() instanceof ServerWorld serverWorld)) return null;
+        return serverWorld.getServer().getPlayerManager().getPlayer(ownerUUID);
     }
 
     @Override
@@ -72,30 +83,29 @@ public class SkyFirelessLightningEntity extends Entity {
     @Override
     public void tick() {
         super.tick();
+
         if (this.ambientTick == 2) {
             if (this.getWorld().isClient()) {
-                this.getWorld()
-                        .playSound(
-                                this.getX(),
-                                this.getY(),
-                                this.getZ(),
-                                SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER,
-                                SoundCategory.WEATHER,
-                                15,
-                                0.8F + this.random.nextFloat() * 0.2F,
-                                false
-                        );
-                this.getWorld()
-                        .playSound(
-                                this.getX(),
-                                this.getY(),
-                                this.getZ(),
-                                SoundEvents.ENTITY_LIGHTNING_BOLT_IMPACT,
-                                SoundCategory.WEATHER,
-                                2.0F,
-                                0.5F + this.random.nextFloat() * 0.2F,
-                                false
-                        );
+                this.getWorld().playSound(
+                        this.getX(),
+                        this.getY(),
+                        this.getZ(),
+                        SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER,
+                        SoundCategory.WEATHER,
+                        15,
+                        0.8F + this.random.nextFloat() * 0.2F,
+                        false
+                );
+                this.getWorld().playSound(
+                        this.getX(),
+                        this.getY(),
+                        this.getZ(),
+                        SoundEvents.ENTITY_LIGHTNING_BOLT_IMPACT,
+                        SoundCategory.WEATHER,
+                        2.0F,
+                        0.5F + this.random.nextFloat() * 0.2F,
+                        false
+                );
             } else {
                 this.powerLightningRod();
                 cleanOxidation(this.getWorld(), this.getAffectedBlockPos());
@@ -104,18 +114,24 @@ public class SkyFirelessLightningEntity extends Entity {
         }
 
         this.ambientTick--;
+
         if (this.ambientTick < 0) {
             if (this.remainingActions == 0) {
-                if (this.getWorld() instanceof ServerWorld) {
-                    List<Entity> list = this.getWorld()
-                            .getOtherEntities(
-                                    this,
-                                    new Box(this.getX() - 15.0, this.getY() - 15.0, this.getZ() - 15.0, this.getX() + 15.0, this.getY() + 6.0 + 15.0, this.getZ() + 15.0),
-                                    entityx -> entityx.isAlive() && !this.struckEntities.contains(entityx)
-                            );
+                if (this.getWorld() instanceof ServerWorld serverWorld) {
+                    List<Entity> list = this.getWorld().getOtherEntities(
+                            this,
+                            new Box(
+                                    this.getX() - 15.0,
+                                    this.getY() - 15.0,
+                                    this.getZ() - 15.0,
+                                    this.getX() + 15.0,
+                                    this.getY() + 6.0 + 15.0,
+                                    this.getZ() + 15.0
+                            ),
+                            entityx -> entityx.isAlive() && !this.struckEntities.contains(entityx)
+                    );
 
-                    for (ServerPlayerEntity serverPlayerEntity : ((ServerWorld) this.getWorld())
-                            .getPlayers(serverPlayerEntityx -> serverPlayerEntityx.distanceTo(this) < 256.0F)) {
+                    for (ServerPlayerEntity serverPlayerEntity : serverWorld.getPlayers(p -> p.distanceTo(this) < 256.0F)) {
                         for (Entity struckEntity : list) {
                             if (struckEntity instanceof ServerPlayerEntity player) {
                                 Criteria.LIGHTNING_STRIKE.trigger(player, null, list);
@@ -123,7 +139,6 @@ public class SkyFirelessLightningEntity extends Entity {
                         }
                     }
                 }
-
                 this.discard();
             } else if (this.ambientTick < -this.random.nextInt(10)) {
                 this.remainingActions--;
@@ -133,52 +148,60 @@ public class SkyFirelessLightningEntity extends Entity {
         }
 
         if (this.ambientTick >= 0) {
-            if (!(this.getWorld() instanceof ServerWorld)) {
+            if (!(this.getWorld() instanceof ServerWorld serverWorld)) {
                 this.getWorld().setLightningTicksLeft(2);
             } else if (!this.cosmetic) {
-                List<Entity> list = this.getWorld()
-                        .getOtherEntities(
-                                this, new Box(this.getX() - 3.0, this.getY() - 3.0, this.getZ() - 3.0, this.getX() + 3.0, this.getY() + 6.0 + 3.0, this.getZ() + 3.0), Entity::isAlive
-                        );
+
+                ServerPlayerEntity owner = getOwnerPlayer();
+
+                List<Entity> list = this.getWorld().getOtherEntities(
+                        this,
+                        new Box(
+                                this.getX() - 3.0,
+                                this.getY() - 3.0,
+                                this.getZ() - 3.0,
+                                this.getX() + 3.0,
+                                this.getY() + 6.0 + 3.0,
+                                this.getZ() + 3.0
+                        ),
+                        Entity::isAlive
+                );
 
                 for (Entity entity : list) {
                     if (entity instanceof LivingEntity livingEntity) {
 
-                        livingEntity.damage(getWorld().getDamageSources().lightningBolt(), 9.0F);
+                        if (owner != null) {
+                            livingEntity.damage(serverWorld.getDamageSources().playerAttack(owner), 9.0F);
+                        } else {
+                            livingEntity.damage(serverWorld.getDamageSources().lightningBolt(), 9.0F);
+                        }
 
                         if (livingEntity instanceof PlayerEntity player) {
                             ModArcArmorItem.tryApplyIonsResistanceIfEquipped(player);
                         }
 
-                        if (this.channeler != null && channelerHasBrilliance()) {
-
-                            // Skip effect if the victim *is* the channeler (the summoner).
-                            if (livingEntity instanceof PlayerEntity player &&
-                                    player.getUuid().equals(this.channeler.getUuid())) {
-                                // ignore the creator entirely
-                            } else {
-                                livingEntity.addStatusEffect(
-                                        new StatusEffectInstance(
-                                                StatusEffects.BLINDNESS,
-                                                45,
-                                                0,
-                                                false,
-                                                true,
-                                                true
-                                        )
-                                );
+                        if (owner != null && ownerHasBrilliance(owner)) {
+                            if (!(livingEntity instanceof PlayerEntity player && player.getUuid().equals(owner.getUuid()))) {
+                                livingEntity.addStatusEffect(new StatusEffectInstance(
+                                        StatusEffects.BLINDNESS,
+                                        45,
+                                        0,
+                                        false,
+                                        true,
+                                        true
+                                ));
                             }
                         }
-
                     }
                 }
-
             }
         }
     }
 
-    public void setChanneler(ServerPlayerEntity player) {
-        this.channeler = player;
+    private boolean ownerHasBrilliance(ServerPlayerEntity owner) {
+        ItemStack chestplate = owner.getInventory().getArmorStack(2);
+        if (!(chestplate.getItem() instanceof ModArcArmorItem)) return false;
+        return ModArcArmorItem.hasItemInBundle(chestplate, ModItems.ASPECT_OF_BRILLIANCE);
     }
 
     private BlockPos getAffectedBlockPos() {
@@ -190,8 +213,9 @@ public class SkyFirelessLightningEntity extends Entity {
         BlockState blockState = world.getBlockState(pos);
         BlockPos blockPos;
         BlockState blockState2;
+
         if (blockState.isOf(Blocks.LIGHTNING_ROD)) {
-            blockPos = pos.offset((blockState.get(LightningRodBlock.FACING)).getOpposite());
+            blockPos = pos.offset(blockState.get(LightningRodBlock.FACING).getOpposite());
             blockState2 = world.getBlockState(blockPos);
         } else {
             blockPos = pos;
@@ -215,11 +239,8 @@ public class SkyFirelessLightningEntity extends Entity {
 
         for (int i = 0; i < count; i++) {
             Optional<BlockPos> optional = cleanOxidationAround(world, mutablePos);
-            if (!optional.isPresent()) {
-                break;
-            }
-
-            mutablePos.set((Vec3i) optional.get());
+            if (optional.isEmpty()) break;
+            mutablePos.set(optional.get());
         }
     }
 
@@ -232,7 +253,6 @@ public class SkyFirelessLightningEntity extends Entity {
                 return Optional.of(blockPos);
             }
         }
-
         return Optional.empty();
     }
 
@@ -242,16 +262,6 @@ public class SkyFirelessLightningEntity extends Entity {
         return distance < d * d;
     }
 
-    private boolean channelerHasBrilliance() {
-        if (this.channeler == null) return false;
-
-        ItemStack chestplate = channeler.getInventory().getArmorStack(2);
-        if (!(chestplate.getItem() instanceof ModArcArmorItem armor)) return false;
-
-        return ModArcArmorItem.hasItemInBundle(chestplate, ModItems.ASPECT_OF_BRILLIANCE);
-    }
-
-
     @Override
     protected void initDataTracker() {
     }
@@ -259,12 +269,18 @@ public class SkyFirelessLightningEntity extends Entity {
     @Override
     protected void writeCustomDataToNbt(NbtCompound nbt) {
         nbt.putDouble("HeightDifference", this.heightDifference);
+        if (ownerUUID != null) {
+            nbt.putUuid("Owner", ownerUUID);
+        }
     }
 
     @Override
     protected void readCustomDataFromNbt(NbtCompound nbt) {
         if (nbt.contains("HeightDifference")) {
             this.heightDifference = nbt.getDouble("HeightDifference");
+        }
+        if (nbt.containsUuid("Owner")) {
+            this.ownerUUID = nbt.getUuid("Owner");
         }
     }
 

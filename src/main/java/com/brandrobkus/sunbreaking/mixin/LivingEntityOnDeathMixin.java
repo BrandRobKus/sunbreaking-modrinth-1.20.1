@@ -10,12 +10,16 @@ import com.brandrobkus.sunbreaking.item.custom.ModArcArmorItem;
 import com.brandrobkus.sunbreaking.item.custom.ModSolarArmorItem;
 import com.brandrobkus.sunbreaking.item.custom.ModVoidArmorItem;
 import com.brandrobkus.sunbreaking.item.weapons.BaseHammerItem;
+import com.brandrobkus.sunbreaking.item.weapons.BondItem;
 import com.brandrobkus.sunbreaking.item.weapons.SolHammerItem;
+import com.brandrobkus.sunbreaking.item.weapons.fragments.FragmentHelper;
+import com.brandrobkus.sunbreaking.util.BondGlowTracked;
 import com.brandrobkus.sunbreaking.util.gui.PlayerSuperAccessor;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
@@ -24,13 +28,14 @@ import net.minecraft.entity.projectile.SpectralArrowEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
-public class LivingEntityOnDeathMixin {
+public class LivingEntityOnDeathMixin implements BondGlowTracked {
 
     @Inject(method = "onDeath", at = @At("HEAD"))
     private void onDeathInject(DamageSource source, CallbackInfo ci) {
@@ -41,14 +46,12 @@ public class LivingEntityOnDeathMixin {
         Entity attacker = source.getAttacker();
         Entity immediate = source.getSource();
 
-        if (immediate instanceof FirelessLightningEntity lightning) {
-            PlayerEntity player = lightning.getChanneler();
-            if (player != null) {
-                handleBondKill(player);
-                System.out.println("immediate=" + immediate + " attacker=" + attacker);
+        PlayerEntity creditedPlayer = null;
 
-            }
-            return;
+        if (immediate instanceof FirelessLightningEntity lightning) {
+            creditedPlayer = lightning.getOwnerPlayer();
+        } else if (attacker instanceof PlayerEntity player) {
+            creditedPlayer = player;
         }
 
         if (!(attacker instanceof PlayerEntity player)) return;
@@ -69,6 +72,29 @@ public class LivingEntityOnDeathMixin {
         if (immediate instanceof SolHammerProjectileEntity hammerProjectile) {
             handleHammerKill(player);
         }
+
+        if (creditedPlayer != null && immediate instanceof FirelessLightningEntity) {
+            handleBondKill(creditedPlayer);
+        }
+
+        if (creditedPlayer != null) {
+
+            ItemStack main = creditedPlayer.getMainHandStack();
+            ItemStack off = creditedPlayer.getOffHandStack();
+
+            ItemStack bond =
+                    main.getItem() instanceof BondItem ? main :
+                            off.getItem() instanceof BondItem ? off :
+                                    ItemStack.EMPTY;
+
+            if (!bond.isEmpty()
+                    && FragmentHelper.hasFragment(bond, ModItems.FRAGMENT_OF_BEACONS)
+                    && ((BondGlowTracked) victim).isBondGlowing()) {
+
+                PlayerSuperAccessor.get(creditedPlayer).addSuper(12f);
+            }
+        }
+
     }
 
     private void handleArrowKill(PlayerEntity player) {
@@ -82,7 +108,7 @@ public class LivingEntityOnDeathMixin {
 
         if (!hasRenewal) return;
 
-        PlayerSuperAccessor.get(player).setRenewedTicks(60);
+        PlayerSuperAccessor.get(player).setRenewedTicks(100);
     }
 
     private boolean hasFullNightstalkerSet(PlayerEntity player) {
@@ -121,13 +147,13 @@ public class LivingEntityOnDeathMixin {
         ItemStack chest = player.getInventory().getArmorStack(2);
         if (!(chest.getItem() instanceof ModArcArmorItem arcChest)) return;
 
-        boolean hasRecharge =
-                arcChest.hasItemInBundle(chest, ModItems.ASPECT_OF_RECHARGE);
+        boolean hasRecharge = arcChest.hasItemInBundle(chest, ModItems.ASPECT_OF_RECHARGE);
+        if (!hasRecharge) {
+            System.out.println("[BondKill] Chest armor missing ASPECT_OF_RECHARGE fragment.");
+            return;
+        }
 
-        if (!hasRecharge) return;
-
-        System.out.println("Applying Aspect of Recharge!");
-
+        System.out.println("[BondKill] Applying Aspect of Recharge!");
         PlayerSuperAccessor.get(player).setRechargeTicks(140);
     }
 
@@ -182,8 +208,37 @@ public class LivingEntityOnDeathMixin {
         if (target.getWorld().random.nextFloat() >= BULK_SHIELD_DISABLE_CHANCE) return;
 
         if (target instanceof PlayerEntity targetPlayer) {
-            targetPlayer.disableShield(true); // ← IMPORTANT
+            targetPlayer.disableShield(true);
         }
     }
 
+    @Unique
+    private boolean isBondGlowing;
+
+    @Unique
+    private int bondGlowTicks;
+
+    // === TICK DOWN ===
+    @Inject(method = "tick", at = @At("HEAD"))
+    private void tickBondGlow(CallbackInfo ci) {
+        if (bondGlowTicks > 0) {
+            bondGlowTicks--;
+            if (bondGlowTicks == 0) {
+                isBondGlowing = false;
+            }
+        }
+    }
+
+    // === SET ===
+    @Override
+    public void setBondGlow(int ticks) {
+        isBondGlowing = true;
+        bondGlowTicks = ticks;
+    }
+
+    // === GET ===
+    @Override
+    public boolean isBondGlowing() {
+        return isBondGlowing;
+    }
 }

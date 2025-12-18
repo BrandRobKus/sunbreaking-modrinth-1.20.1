@@ -69,6 +69,12 @@ public class ModEntities {
             FabricEntityTypeBuilder.<StormBallEntity>create(SpawnGroup.MISC, StormBallEntity::new)
                     .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
 
+    public static final EntityType<StormBallPrecisionEntity> PRECISION_STORM_BALL = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(Sunbreaking.MOD_ID, "precision_storm_ball"),
+            FabricEntityTypeBuilder.<StormBallPrecisionEntity>create(SpawnGroup.MISC, StormBallPrecisionEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
+
     public static final EntityType<GlaiveProjectileEntity> GLAIVE_PROJECTILE = Registry.register(
             Registries.ENTITY_TYPE,
             new Identifier(Sunbreaking.MOD_ID, "glaive_projectile"),

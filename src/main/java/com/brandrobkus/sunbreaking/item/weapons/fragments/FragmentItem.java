@@ -1,7 +1,6 @@
 package com.brandrobkus.sunbreaking.item.weapons.fragments;
 
 import com.brandrobkus.sunbreaking.item.ModItems;
-import com.brandrobkus.sunbreaking.util.ModTags;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -16,6 +15,7 @@ public class FragmentItem extends Item {
     public FragmentItem(Settings settings) {
         super(settings);
     }
+
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         if (stack.isOf(ModItems.FRAGMENT_OF_COMBUSTION)) {
@@ -49,9 +49,43 @@ public class FragmentItem extends Item {
             tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_searing.tooltip_1"));
         }
 
-        else if (!stack.isIn(ModTags.Items.SOLAR_FRAGMENTS)){
-            tooltip.add(Text.translatable("tooltip.sunbreaking.unregistered.tooltip").formatted(Formatting.YELLOW));
-            tooltip.add(Text.translatable("tooltip.sunbreaking.unregistered.tooltip_1").formatted(Formatting.YELLOW));
+        if (stack.isOf(ModItems.FRAGMENT_OF_EXPULSION)){
+            tooltip.add(Text.translatable("tooltip.sunbreaking.nightstalker_fragment.tooltip").formatted(Formatting.DARK_PURPLE));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.blank_spot.tooltip"));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_expulsion.tooltip"));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_expulsion.tooltip_1"));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_expulsion.tooltip_2"));
+        }
+
+        if (stack.isOf(ModItems.FRAGMENT_OF_INSTABILITY)){
+            tooltip.add(Text.translatable("tooltip.sunbreaking.nightstalker_fragment.tooltip").formatted(Formatting.DARK_PURPLE));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.blank_spot.tooltip"));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_instability.tooltip"));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_instability.tooltip_1"));
+        }
+
+        if (stack.isOf(ModItems.FRAGMENT_OF_CESSATION)){
+            tooltip.add(Text.translatable("tooltip.sunbreaking.nightstalker_fragment.tooltip").formatted(Formatting.DARK_PURPLE));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.blank_spot.tooltip"));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_cessation.tooltip"));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_cessation.tooltip_1"));
+        }
+
+        if (stack.isOf(ModItems.FRAGMENT_OF_VIGILANCE)){
+            tooltip.add(Text.translatable("tooltip.sunbreaking.nightstalker_fragment.tooltip").formatted(Formatting.DARK_PURPLE));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.blank_spot.tooltip"));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_vigilance.tooltip"));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_vigilance.tooltip_1"));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_expulsion.tooltip_2"));
+        }
+
+        else if (stack.getItem() instanceof FragmentItem
+                && !ModItems.REGISTERED_FRAGMENTS.contains(stack.getItem())) {
+
+            tooltip.add(Text.translatable("tooltip.sunbreaking.unregistered.tooltip")
+                    .formatted(Formatting.YELLOW));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.unregistered.tooltip_1")
+                    .formatted(Formatting.YELLOW));
         }
 
         super.appendTooltip(stack, world, tooltip, context);

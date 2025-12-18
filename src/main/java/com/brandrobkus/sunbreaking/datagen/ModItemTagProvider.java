@@ -93,7 +93,7 @@ public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
         getOrCreateTagBuilder(ModTags.Items.ARC_ASPECTS)
                 .add(ModItems.ASPECT_OF_SURGE)
                 .add(ModItems.ASPECT_OF_BRILLIANCE)
-                .add(ModItems.ASPECT_OF_IONS)
+                .add(ModItems.ASPECT_OF_RESISTANCE)
                 .add(ModItems.ASPECT_OF_RECHARGE)
         ;
 
@@ -110,7 +110,10 @@ public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 .add(ModItems.FRAGMENT_OF_VIGILANCE)
         ;
         getOrCreateTagBuilder(ModTags.Items.ARC_FRAGMENTS)
-
+                .add(ModItems.FRAGMENT_OF_SHOCK)
+                .add(ModItems.FRAGMENT_OF_VOLTS)
+                .add(ModItems.FRAGMENT_OF_FEEDBACK)
+                .add(ModItems.FRAGMENT_OF_BEACONS)
         ;
 
         getOrCreateTagBuilder(ModTags.Items.NIGHTSTALKER_ARMOR)

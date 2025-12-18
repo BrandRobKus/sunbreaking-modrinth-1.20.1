@@ -122,7 +122,7 @@
   "tooltip.sunbreaking.aspect_of_dilation.tooltip_1": "4 hearts of Absorption.",
   "item.sunbreaking.aspect_of_renewal": "Aspect of Renewal",
   "tooltip.sunbreaking.aspect_of_renewal.tooltip": "Kills with the Shadowshot Bow increase",
-  "tooltip.sunbreaking.aspect_of_renewal.tooltip_1": "Super meter charge speed for 7 seconds.",
+  "tooltip.sunbreaking.aspect_of_renewal.tooltip_1": "Super meter charge speed for 4 seconds.",
   "tooltip.sunbreaking.requires_nightstalker_aspect.tooltip": "Nightstalker Aspects",
 
 
@@ -146,7 +146,7 @@
   "item.sunbreaking.aspect_of_brilliance": "Aspect of Brilliance",
   "tooltip.sunbreaking.aspect_of_brilliance.tooltip": "Lightning Bolts you summon",
   "tooltip.sunbreaking.aspect_of_brilliance.tooltip_1": "Blind targets.",
-  "item.sunbreaking.aspect_of_ions": "Aspect of Ions",
+  "item.sunbreaking.aspect_of_resistance": "Aspect of Resistance",
   "tooltip.sunbreaking.aspect_of_ions.tooltip": "Getting struck by Lightning",
   "tooltip.sunbreaking.aspect_of_ions.tooltip_1": "grants Resistance for 5 seconds.",
   "item.sunbreaking.aspect_of_recharge": "Aspect of Recharge",
@@ -162,10 +162,20 @@
   "tooltip.sunbreaking.shadowshot_bow.tooltip_2": "if one is in your Inventory.",
   "tooltip.sunbreaking.requires_nightstalker_fragment.tooltip": "Nightstalker Fragments",
 
+  "tooltip.sunbreaking.nightstalker_fragment.tooltip": "Nightstalker Fragment",
   "item.sunbreaking.fragment_of_expulsion": "Fragment of Expulsion",
+  "tooltip.sunbreaking.fragment_of_expulsion.tooltip": "Increases effective",
+  "tooltip.sunbreaking.fragment_of_expulsion.tooltip_1": "Shadowshot Arrow radius",
+  "tooltip.sunbreaking.fragment_of_expulsion.tooltip_2": "Stacks up to IV",
   "item.sunbreaking.fragment_of_instability": "Fragment of Instability",
+  "tooltip.sunbreaking.fragment_of_instability.tooltip": "Shadowshot Nodes pull in",
+  "tooltip.sunbreaking.fragment_of_instability.tooltip_1": "combatants upon creation",
   "item.sunbreaking.fragment_of_cessation": "Fragment of Cessation",
+  "tooltip.sunbreaking.fragment_of_cessation.tooltip": "Shadowshot Nodes explode",
+  "tooltip.sunbreaking.fragment_of_cessation.tooltip_1": "At the end of their duration",
   "item.sunbreaking.fragment_of_vigilance": "Fragment of Vigilance",
+  "tooltip.sunbreaking.fragment_of_vigilance.tooltip": "Has a chance to not",
+  "tooltip.sunbreaking.fragment_of_vigilance.tooltip_1": "consume a Shadowshot Arrow",
 
   "item.sunbreaking.shadowshot_appearance_template.title": "Shadowshot Bow",
   "item.sunbreaking.shadowshot_appearance_template.base_slot": "Amethyst Shard",

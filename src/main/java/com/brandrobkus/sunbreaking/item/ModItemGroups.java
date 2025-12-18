@@ -80,6 +80,12 @@ public class ModItemGroups {
                         entries.add(ModItems.VOID_UPGRADE_SMITHING_TEMPLATE);
 
                         entries.add(ModItems.STORMCALLERS_BOND);
+
+                        entries.add(ModItems.FRAGMENT_OF_SHOCK);
+                        entries.add(ModItems.FRAGMENT_OF_VOLTS);
+                        entries.add(ModItems.FRAGMENT_OF_FEEDBACK);
+                        entries.add(ModItems.FRAGMENT_OF_BEACONS);
+
                         //entries.add(ModItems.ENDER_PEARL_BOND);
                         //entries.add(ModItems.FIREBALL_BOND);
                         //entries.add(ModItems.SNOWBALL_BOND);
@@ -91,7 +97,7 @@ public class ModItemGroups {
 
                         entries.add(ModItems.ASPECT_OF_SURGE);
                         entries.add(ModItems.ASPECT_OF_BRILLIANCE);
-                        entries.add(ModItems.ASPECT_OF_IONS);
+                        entries.add(ModItems.ASPECT_OF_RESISTANCE);
                         entries.add(ModItems.ASPECT_OF_RECHARGE);
 
                         entries.add(ModItems.ARC_LIGHT);

@@ -75,7 +75,7 @@ public class PlayerEntityMixin {
             if (lightning != null) {
                 lightning.refreshPositionAfterTeleport(x, y, z);
                 if (player instanceof ServerPlayerEntity serverPlayer) {
-                    lightning.setChanneler(serverPlayer);
+                    lightning.setOwner(player);
                 }
                 world.spawnEntity(lightning);
             }

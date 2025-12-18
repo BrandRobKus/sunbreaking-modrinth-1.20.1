@@ -11,6 +11,7 @@ import com.brandrobkus.sunbreaking.item.weapons.BondItem;
 import com.brandrobkus.sunbreaking.item.ModItemGroups;
 import com.brandrobkus.sunbreaking.item.ModItems;
 import com.brandrobkus.sunbreaking.item.weapons.ShadowshotBowItem;
+import com.brandrobkus.sunbreaking.network.ItemEffectToggleable;
 import com.brandrobkus.sunbreaking.network.ModNetworking;
 import com.brandrobkus.sunbreaking.util.*;
 import com.brandrobkus.sunbreaking.sound.ModSounds;
@@ -20,15 +21,18 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Sunbreaking implements ModInitializer {
 	public static final String MOD_ID = "sunbreaking";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+	public static final Identifier TOGGLE_ITEM_EFFECT = new Identifier(Sunbreaking.MOD_ID, "toggle_item_effect");
 
 	@Override
 	public void onInitialize() {
@@ -48,6 +52,15 @@ public class Sunbreaking implements ModInitializer {
 					});
 				}
 		);
+
+		ServerPlayNetworking.registerGlobalReceiver(TOGGLE_ITEM_EFFECT, (server, player, handler, buf, responseSender) -> {
+			server.execute(() -> {
+				ItemStack stack = player.getMainHandStack();
+				if (stack.getItem() instanceof ItemEffectToggleable toggleable) {
+					toggleable.onToggleEffect(stack, player);
+				}
+			});
+		});
 
 		ServerTickEvents.END_WORLD_TICK.register((ServerWorld world) -> {
 			BondItem.tick(world);
@@ -79,5 +92,7 @@ public class Sunbreaking implements ModInitializer {
 				}
 			}
 		});
+
+
 	}
 }

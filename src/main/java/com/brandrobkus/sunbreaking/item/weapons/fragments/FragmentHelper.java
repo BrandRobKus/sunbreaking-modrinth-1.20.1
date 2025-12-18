@@ -32,8 +32,6 @@ public final class FragmentHelper {
         return getFragmentCount(containerStack, fragment) > 0;
     }
 
-    /* ===================== TAG-BASED ===================== */
-
     public static int getTaggedFragmentCount(ItemStack containerStack, TagKey<Item> tag) {
         if (!containerStack.hasNbt()) return 0;
 

@@ -16,7 +16,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
 import net.minecraft.util.ClickType;
 import net.minecraft.util.Formatting;
@@ -107,7 +106,7 @@ public class ModArcArmorItem extends ArmorItem {
         ItemStack chest = player.getInventory().getArmorStack(2);
         if (!(chest.getItem() instanceof ModArcArmorItem)) return;
 
-        if (!hasItemInBundle(chest, ModItems.ASPECT_OF_IONS)) return;
+        if (!hasItemInBundle(chest, ModItems.ASPECT_OF_RESISTANCE)) return;
 
         player.addStatusEffect(new StatusEffectInstance(
                 StatusEffects.RESISTANCE,

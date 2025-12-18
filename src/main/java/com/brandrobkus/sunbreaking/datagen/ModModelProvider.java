@@ -36,7 +36,7 @@ public class ModModelProvider extends FabricModelProvider {
 
         itemModelGenerator.register(ModItems.ASPECT_OF_SURGE, Models.GENERATED);
         itemModelGenerator.register(ModItems.ASPECT_OF_BRILLIANCE, Models.GENERATED);
-        itemModelGenerator.register(ModItems.ASPECT_OF_IONS, Models.GENERATED);
+        itemModelGenerator.register(ModItems.ASPECT_OF_RESISTANCE, Models.GENERATED);
         itemModelGenerator.register(ModItems.ASPECT_OF_RECHARGE, Models.GENERATED);
 
         itemModelGenerator.register(ModItems.FRAGMENT_OF_COMBUSTION, Models.GENERATED);

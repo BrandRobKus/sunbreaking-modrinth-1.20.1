@@ -3,6 +3,7 @@ package com.brandrobkus.sunbreaking.item.weapons;
 import com.brandrobkus.sunbreaking.entity.custom.ShadowshotArrowEntity;
 import com.brandrobkus.sunbreaking.item.ModItems;
 import com.brandrobkus.sunbreaking.item.weapons.fragments.FragmentHelper;
+import com.brandrobkus.sunbreaking.network.ItemEffectToggleable;
 import com.brandrobkus.sunbreaking.sound.ModSounds;
 import com.brandrobkus.sunbreaking.util.ModTags;
 import com.brandrobkus.sunbreaking.util.gui.PlayerSuperAccessor;
@@ -38,52 +39,65 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-public class ShadowshotBowItem extends BowItem {
+public class ShadowshotBowItem extends BowItem implements ItemEffectToggleable {
     private static final Set<UUID> playersOnCooldown = new HashSet<>();
     private static final int MAX_STORAGE = 128;
+    public static final String SHADOWSHOT_KEY = "ShadowshotMode";
 
     public ShadowshotBowItem(Settings settings) {
         super(settings);
     }
 
-    @Override
-    public Predicate<ItemStack> getProjectiles() {
-        return stack -> stack.isIn(ModTags.Items.ARROWS);
+    public static boolean isShadowshotMode(ItemStack stack) {
+        return stack.getOrCreateNbt().getBoolean(SHADOWSHOT_KEY);
     }
 
-    public float getVoidSuperCost(ItemStack stack){
-        return 37.5f;
+    public float getVoidSuperCost(ItemStack stack) {
+        return isShadowshotMode(stack) ? 37.5f : 0f;
+    }
+
+    @Override
+    public void onToggleEffect(ItemStack stack, PlayerEntity player) {
+        NbtCompound nbt = stack.getOrCreateNbt();
+        nbt.putBoolean(SHADOWSHOT_KEY, !nbt.getBoolean(SHADOWSHOT_KEY));
     }
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getStackInHand(hand);
-        float voidSuperCost = getVoidSuperCost(stack);
-        float currentSuper = PlayerSuperAccessor.get(player).getSuper();
-        boolean canUseShadowshot = player.isInSneakingPose() && currentSuper >= voidSuperCost;
-        stack.getOrCreateNbt().putBoolean("sunbreaking_selectedShadowshot", canUseShadowshot);
+        boolean shadowshotMode = isShadowshotMode(stack);
+
+        ItemStack projectile = shadowshotMode ? findShadowshotArrow(player) : player.getProjectileType(stack);
+
+        if (!player.getAbilities().creativeMode && projectile.isEmpty()) {
+            return TypedActionResult.fail(stack);
+        }
+
+        if (shadowshotMode && !player.getAbilities().creativeMode) {
+            float voidSuperCost = getVoidSuperCost(stack);
+            if (PlayerSuperAccessor.get(player).getSuper() < voidSuperCost) {
+                player.playSound(ModSounds.COOLDOWN_INDICATOR, 1.0F, 1.0F);
+                PlayerSuperAccessor.get(player).addSuper(-voidSuperCost);
+                player.getItemCooldownManager().set(this, 20);
+                playersOnCooldown.add(player.getUuid());
+                return TypedActionResult.fail(stack);
+            }
+        }
+
         player.setCurrentHand(hand);
         return TypedActionResult.consume(stack);
     }
 
+
     @Override
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
-        float voidSuperCost = getVoidSuperCost(stack);
         if (!(user instanceof PlayerEntity player)) return;
 
-        boolean isClient = world.isClient;
-        boolean selectedShadowshot = stack.getOrCreateNbt().getBoolean("sunbreaking_selectedShadowshot");
-        ItemStack projectileStack = player.getProjectileType(stack);
-        boolean shootShadowshot = selectedShadowshot && PlayerSuperAccessor.get(player).getSuper() >= voidSuperCost;
+        float voidSuperCost = getVoidSuperCost(stack);
+        boolean shootShadowshot = isShadowshotMode(stack) && PlayerSuperAccessor.get(player).getSuper() >= voidSuperCost;
+        ItemStack projectileStack = shootShadowshot ? findShadowshotArrow(player) : player.getProjectileType(stack);
 
-        if (shootShadowshot || player.isCreative()) {
-            projectileStack = findShadowshotArrow(player);
-        }
-
-        if (projectileStack.isEmpty()) {
-            projectileStack = player.getProjectileType(stack);
-            if (projectileStack.isEmpty()) return;
-        }
+        if (projectileStack.isEmpty()) return;
 
         int useTime = this.getMaxUseTime(stack) - remainingUseTicks;
         float pullProgress = getPullProgress(useTime);
@@ -93,9 +107,8 @@ public class ShadowshotBowItem extends BowItem {
         boolean isNormalArrow = projectileStack.isOf(Items.ARROW);
         boolean infinite = hasInfinity && isNormalArrow;
 
-        if (!isClient) {
+        if (!world.isClient) {
             PersistentProjectileEntity projectile;
-
             if (shootShadowshot && projectileStack.getItem() == ModItems.SHADOWSHOT_ARROW) {
                 ShadowshotArrowEntity arrow = new ShadowshotArrowEntity(world, player);
                 arrow.setBowStack(stack);
@@ -103,13 +116,11 @@ public class ShadowshotBowItem extends BowItem {
                 arrow.setCritical(pullProgress == 1.0F);
                 projectile = arrow;
 
-                player.getItemCooldownManager().set(this, 20);
-                playersOnCooldown.add(player.getUuid());
-
-                if(!player.isCreative()) {
+                if (!player.isCreative()) {
                     PlayerSuperAccessor.get(player).addSuper(-voidSuperCost);
+                    player.getItemCooldownManager().set(this, 20);
+                    playersOnCooldown.add(player.getUuid());
                 }
-
             } else {
                 ArrowItem arrowItem = (ArrowItem) (projectileStack.getItem() instanceof ArrowItem ? projectileStack.getItem() : Items.ARROW);
                 projectile = arrowItem.createArrow(world, projectileStack, player);
@@ -118,43 +129,21 @@ public class ShadowshotBowItem extends BowItem {
 
                 int power = EnchantmentHelper.getLevel(Enchantments.POWER, stack);
                 if (power > 0) projectile.setDamage(projectile.getDamage() + power * 0.5 + 0.5);
-
                 int punch = EnchantmentHelper.getLevel(Enchantments.PUNCH, stack);
                 if (punch > 0) projectile.setPunch(punch);
+                if (EnchantmentHelper.getLevel(Enchantments.FLAME, stack) > 0) projectile.setOnFireFor(100);
 
-                if (EnchantmentHelper.getLevel(Enchantments.FLAME, stack) > 0) {
-                    projectile.setOnFireFor(100);
-                }
-
-                if (!isNormalArrow) {
-                    projectile.pickupType = PersistentProjectileEntity.PickupPermission.DISALLOWED;
-                } else if (infinite) {
-                    projectile.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
-                }
+                if (!isNormalArrow) projectile.pickupType = PersistentProjectileEntity.PickupPermission.DISALLOWED;
+                else if (infinite) projectile.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
             }
 
             world.spawnEntity(projectile);
 
             boolean consumeArrow = !infinite && !player.getAbilities().creativeMode;
-
-            if (consumeArrow && shootShadowshot) {
-                int vigilanceStacks =
-                        FragmentHelper.getFragmentCount(stack, ModItems.FRAGMENT_OF_VIGILANCE);
-
-                float saveChance = Math.min(1.0f, vigilanceStacks * 0.25f);
-
-                if (world.getRandom().nextFloat() < saveChance) {
-                    consumeArrow = false;
-                }
-            }
-
             if (consumeArrow) {
                 projectileStack.decrement(1);
-                if (projectileStack.isEmpty()) {
-                    player.getInventory().removeOne(projectileStack);
-                }
+                if (projectileStack.isEmpty()) player.getInventory().removeOne(projectileStack);
             }
-
         }
 
         world.playSound(null, player.getX(), player.getY(), player.getZ(),
@@ -165,17 +154,13 @@ public class ShadowshotBowItem extends BowItem {
     }
 
     private ItemStack findShadowshotArrow(PlayerEntity player) {
-        for (ItemStack s : player.getInventory().main) {
-            if (!s.isEmpty() && s.getItem() == ModItems.SHADOWSHOT_ARROW) return s;
-        }
-        for (ItemStack s : player.getInventory().offHand) {
-            if (!s.isEmpty() && s.getItem() == ModItems.SHADOWSHOT_ARROW) return s;
-        }
+        for (ItemStack s : player.getInventory().main) if (!s.isEmpty() && s.getItem() == ModItems.SHADOWSHOT_ARROW) return s;
+        for (ItemStack s : player.getInventory().offHand) if (!s.isEmpty() && s.getItem() == ModItems.SHADOWSHOT_ARROW) return s;
         return ItemStack.EMPTY;
     }
 
     public static void tick(World world) {
-
+        if (!world.isClient) playersOnCooldown.removeIf(playerId -> world.getPlayerByUuid(playerId) == null);
     }
 
     // ========================= BUNDLE STORAGE =========================

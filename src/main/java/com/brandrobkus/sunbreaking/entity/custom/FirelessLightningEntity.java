@@ -3,6 +3,10 @@ package com.brandrobkus.sunbreaking.entity.custom;
 import com.brandrobkus.sunbreaking.item.ModItems;
 import com.brandrobkus.sunbreaking.item.custom.ModArcArmorItem;
 import com.brandrobkus.sunbreaking.item.custom.aspects.StormcallingAspectHandler;
+import com.brandrobkus.sunbreaking.item.weapons.BondItem;
+import com.brandrobkus.sunbreaking.item.weapons.fragments.FragmentHelper;
+import com.brandrobkus.sunbreaking.util.BondGlowTracked;
+import com.brandrobkus.sunbreaking.util.gui.PlayerSuperAccessor;
 import com.google.common.collect.Sets;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.*;
@@ -10,6 +14,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,10 +30,15 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldEvents;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 public class FirelessLightningEntity extends Entity {
@@ -37,8 +47,8 @@ public class FirelessLightningEntity extends Entity {
     public long seed;
     private int remainingActions;
     private boolean cosmetic;
-    @Nullable
-    private ServerPlayerEntity channeler;
+    private UUID ownerUUID;
+
     private final Set<Entity> struckEntities = Sets.newHashSet();
 
     public FirelessLightningEntity(EntityType<? extends FirelessLightningEntity> entityType, World world) {
@@ -140,19 +150,57 @@ public class FirelessLightningEntity extends Entity {
 
                 for (Entity entity : list) {
                     if (entity instanceof LivingEntity livingEntity) {
-                        livingEntity.damage(serverWorld.getDamageSources().lightningBolt(), 7.0F);
+                        ServerPlayerEntity owner = getOwnerPlayer();
+
+                        DamageSource source =
+                                owner != null
+                                        ? serverWorld.getDamageSources().playerAttack(owner)
+                                        : serverWorld.getDamageSources().lightningBolt();
+
+                        livingEntity.damage(source, 7.0F);
+
+                        if (owner != null) {
+                            ItemStack main = owner.getMainHandStack();
+                            ItemStack off = owner.getOffHandStack();
 
 
-                        if (livingEntity instanceof PlayerEntity player) {
+                            ItemStack bond =
+                                    main.getItem() instanceof BondItem ? main :
+                                            off.getItem() instanceof BondItem ? off :
+                                                    ItemStack.EMPTY;
+
+                            if (!bond.isEmpty()) {
+                                int beacons = FragmentHelper.getFragmentCount(bond, ModItems.FRAGMENT_OF_BEACONS);
+                                if (beacons > 0) {
+                                    if (livingEntity instanceof BondGlowTracked tracked) {
+                                        tracked.setBondGlow(200 * beacons);
+                                    }
+
+                                    livingEntity.addStatusEffect(new StatusEffectInstance(
+                                            StatusEffects.GLOWING,
+                                            200 * beacons,
+                                            0,
+                                            false,
+                                            true,
+                                            true
+                                    ));
+
+                                }
+                            }
+                        }
+
+
+
+                    if (livingEntity instanceof PlayerEntity player) {
                             ModArcArmorItem.tryApplyIonsResistanceIfEquipped(player);
                         }
 
-                        if (livingEntity.isDead() && channeler != null) {
-                            StormcallingAspectHandler.handleKill((ServerWorld) this.getWorld(), channeler, livingEntity, true);
+                        if (livingEntity.isDead() && owner != null) {
+                            StormcallingAspectHandler.handleKill((ServerWorld) this.getWorld(), owner, livingEntity, true);
                         }
 
-                        if (channeler != null && channelerHasBrilliance()) {
-                            if (!(livingEntity instanceof PlayerEntity player && player.getUuid().equals(channeler.getUuid()))) {
+                        if (owner != null && ownerHasBrilliance(owner)) {
+                            if (!(livingEntity instanceof PlayerEntity player && player.getUuid().equals(owner.getUuid()))) {
                                 livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 45, 0, false, true, true));
                             }
                         }
@@ -162,23 +210,23 @@ public class FirelessLightningEntity extends Entity {
         }
     }
 
-    private boolean channelerHasBrilliance() {
-        if (this.channeler == null) return false;
-
-        ItemStack chestplate = channeler.getInventory().getArmorStack(2);
-        if (!(chestplate.getItem() instanceof ModArcArmorItem armor)) return false;
+    private boolean ownerHasBrilliance(ServerPlayerEntity owner) {
+        ItemStack chestplate = owner.getInventory().getArmorStack(2);
+        if (!(chestplate.getItem() instanceof ModArcArmorItem)) return false;
 
         return ModArcArmorItem.hasItemInBundle(chestplate, ModItems.ASPECT_OF_BRILLIANCE);
     }
 
-    public void setChanneler(ServerPlayerEntity player) {
-        this.channeler = player;
+    public void setOwner(PlayerEntity player) {
+        this.ownerUUID = player.getUuid();
     }
 
     @Nullable
-    public ServerPlayerEntity getChanneler() {
-        return this.channeler;
+    public ServerPlayerEntity getOwnerPlayer() {
+        if (ownerUUID == null || !(getWorld() instanceof ServerWorld serverWorld)) return null;
+        return serverWorld.getServer().getPlayerManager().getPlayer(ownerUUID);
     }
+
 
     private BlockPos getAffectedBlockPos() {
         Vec3d vec3d = this.getPos();

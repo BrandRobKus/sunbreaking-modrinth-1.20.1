@@ -82,7 +82,7 @@ public class StormCloudEntity extends ProjectileEntity {
                 );
 
                 if (ownerPlayer != null) {
-                    lightning.setChanneler(ownerPlayer);
+                    lightning.setOwner(ownerPlayer);
                 }
 
                 lightning.setHeightDifference(this.getY() - entity.getY());

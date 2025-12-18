@@ -9,8 +9,8 @@ public class ModEventHandler {
     public static void register() {
         AttackEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
             if (player instanceof PlayerEntity) {
-                if (ModVoidArmorItem.hasFullSuitOfArmorOn((PlayerEntity) player)) {
-                    ModVoidArmorItem.onEntityHit((PlayerEntity) player);
+                if (ModVoidArmorItem.hasFullSuitOfArmorOn(player)) {
+                    ModVoidArmorItem.onEntityHit(player);
                 }
             }
             return ActionResult.PASS;

@@ -7,6 +7,7 @@ import org.lwjgl.glfw.GLFW;
 
 public class ModKeyBindings {
     public static KeyBinding TOGGLE_INVISIBILITY;
+    public static KeyBinding TOGGLE_ITEM_EFFECT;
 
     public static void register() {
         TOGGLE_INVISIBILITY = KeyBindingHelper.registerKeyBinding(
@@ -14,6 +15,14 @@ public class ModKeyBindings {
                         "key.sunbreaking.toggle_invisibility",
                         InputUtil.Type.KEYSYM,
                         GLFW.GLFW_KEY_V,
+                        "category.sunbreaking"
+                )
+        );
+        TOGGLE_ITEM_EFFECT = KeyBindingHelper.registerKeyBinding(
+                new KeyBinding(
+                        "key.sunbreaking.toggle_item_effect",
+                        InputUtil.Type.KEYSYM,
+                        GLFW.GLFW_KEY_R,
                         "category.sunbreaking"
                 )
         );

@@ -5,6 +5,9 @@ import com.brandrobkus.sunbreaking.entity.ModEntities;
 import com.brandrobkus.sunbreaking.item.ModItems;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.item.Item;
@@ -30,6 +33,21 @@ public class StormBallEntity extends ThrownItemEntity {
 
     public StormBallEntity(LivingEntity livingEntity, World world) {
         super(ModEntities.STORM_BALL, livingEntity, world);
+    }
+
+    public static final TrackedData<Boolean> SHOCK = DataTracker.registerData(StormBallEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    public static final TrackedData<Integer> VOLTS = DataTracker.registerData(StormBallEntity.class, TrackedDataHandlerRegistry.INTEGER);
+
+    @Override
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.dataTracker.startTracking(SHOCK, false);
+        this.dataTracker.startTracking(VOLTS, 0);
+    }
+
+    public void setFragmentData(boolean shock, int volts) {
+        this.dataTracker.set(SHOCK, shock);
+        this.dataTracker.set(VOLTS, volts);
     }
 
     @Override
@@ -104,7 +122,6 @@ public class StormBallEntity extends ThrownItemEntity {
 
     private void spawnStormCloudAndLightning() {
         if (!this.getWorld().isClient()) {
-            // Spawn StormCloud
             StormCloudEntity stormCloud = new StormCloudEntity(ModEntities.STORM_CLOUD, this.getWorld());
             stormCloud.refreshPositionAndAngles(bounceX, bounceY, bounceZ, this.getYaw(), this.getPitch());
             if (this.getOwner() instanceof PlayerEntity player) {
@@ -115,11 +132,12 @@ public class StormBallEntity extends ThrownItemEntity {
             FirelessLightningEntity lightning = new FirelessLightningEntity(ModEntities.FIRELESS_LIGHTNING, this.getWorld());
             lightning.refreshPositionAndAngles(bounceX, bounceY, bounceZ, 0, 0);
             if (this.getOwner() instanceof PlayerEntity player) {
-                lightning.setChanneler((ServerPlayerEntity) player);
+                lightning.setOwner(player);
             }
             this.getWorld().spawnEntity(lightning);
         }
     }
+
 
     private void triggerExplosion() {
         if (!this.getWorld().isClient()) {

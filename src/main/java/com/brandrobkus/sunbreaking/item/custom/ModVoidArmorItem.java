@@ -70,7 +70,7 @@ public class ModVoidArmorItem extends ArmorItem {
         }
 
         float superAmount = PlayerSuperAccessor.get(player).getSuper();
-        int effectTimer = Math.round(superAmount * 2.8f);
+        int effectTimer = Math.round(superAmount * 0.28f/-superDrain);
         if (superAmount <= 0f) {
             cancelInvisibility(player);
             nbt.putBoolean(INVIS_ACTIVE, false);

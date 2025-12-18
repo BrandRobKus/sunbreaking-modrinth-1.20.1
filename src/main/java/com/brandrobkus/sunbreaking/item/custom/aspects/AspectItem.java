@@ -88,7 +88,7 @@ public class AspectItem extends Item {
             tooltip.add(Text.translatable("tooltip.sunbreaking.aspect_of_brilliance.tooltip"));
             tooltip.add(Text.translatable("tooltip.sunbreaking.aspect_of_brilliance.tooltip_1"));
         }
-        if (stack.isOf(ModItems.ASPECT_OF_IONS)) {
+        if (stack.isOf(ModItems.ASPECT_OF_RESISTANCE)) {
             tooltip.add(Text.translatable("tooltip.sunbreaking.stormcaller_aspect.tooltip").formatted(Formatting.AQUA));
             tooltip.add(Text.translatable("tooltip.sunbreaking.blank_spot.tooltip"));
             tooltip.add(Text.translatable("tooltip.sunbreaking.aspect_of_ions.tooltip"));

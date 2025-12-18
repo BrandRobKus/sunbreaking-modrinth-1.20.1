@@ -17,6 +17,7 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
+import java.util.Set;
 
 public class ModItems {
 
@@ -227,6 +228,26 @@ public class ModItems {
     public static final Item STORMCALLERS_BOND = registerItem("stormcallers_bond",
             new BondItem(new FabricItemSettings().maxCount(1)));
 
+    public static final Item FRAGMENT_OF_SHOCK = registerItem("fragment_of_shock",
+            new FragmentItem(new FabricItemSettings().maxCount(1)));
+            //Press R to toggle between base mode and "precision mode" which only uses 12.5f Super meter on use
+            //Precision mode throws a "Precision Storm Ball Entity" which summons a FirelessLightningEntity on impact
+    public static final Item FRAGMENT_OF_VOLTS = registerItem("fragment_of_volts",
+            new FragmentItem(new FabricItemSettings().maxCount(2)));
+            //Throws up to two StormBallEntities at once depending on how many Fragment of Volts equipped.
+            //StormBallEntity is thrown at normal speed, if only one stack of Volts, the second StormBallEntity is thrown at 2/3 the speed
+            //If 2 stacks of Volts, third StormBallEntity is thrown at 4/3 the speed
+            //costs an additional 25f Super meter to use per stack of Volts
+            //Works with Fragment of Shock, costing an extra 12f instead of 25f to use per Stack
+    public static final Item FRAGMENT_OF_FEEDBACK = registerItem("fragment_of_feedback",
+            new FragmentItem(new FabricItemSettings().maxCount(1)));
+            //While holding this item in your main or off hand, targets hitting you have a chance of being struck by
+            //a FirelessLightningEntity equal to the value of your Super meter, then drains 25% from your Super meter
+    public static final Item FRAGMENT_OF_BEACONS = registerItem("fragment_of_beacons",
+            new FragmentItem(new FabricItemSettings().maxCount(4)));
+            //Combatants struck by Lightning from the Bond gain 10 seconds of Glowing per stack of Beacons.
+            //Defeating Glowing targets grants an additional 12f Super meter
+
     public static final Item ENDER_PEARL_BOND = registerItem("ender_pearl_bond",
             new EnderPearlBondItem(new FabricItemSettings().maxCount(1)));
     public static final Item FIREBALL_BOND = registerItem("fireball_bond",
@@ -267,13 +288,12 @@ public class ModItems {
             new AspectItem(new FabricItemSettings().maxCount(1)));
             //Lightning Strikes cause Blindness for a short duration. (finished)
             //Killing Blinded targets grants a bar of Gear Energy
-    public static final Item ASPECT_OF_IONS = registerItem("aspect_of_ions",
+    public static final Item ASPECT_OF_RESISTANCE = registerItem("aspect_of_resistance",
             new AspectItem(new FabricItemSettings().maxCount(1)));
             //Getting struck by Lightning grants Resistance for a short time (finished)
     public static final Item ASPECT_OF_RECHARGE = registerItem("aspect_of_recharge",
             new AspectItem(new FabricItemSettings().maxCount(1)));
             //Kills with the Stormcaller's Bond increase Super Energy gain for a short time
-
 
     public static final Item WOODEN_GLAIVE = registerItem("wooden_glaive",
             new GlaiveItem(ToolMaterials.WOOD, 4, -2.8F, new Item.Settings()));
@@ -287,6 +307,17 @@ public class ModItems {
             new GlaiveItem(ToolMaterials.DIAMOND, 4, -2.8F, new Item.Settings()));
     public static final Item NETHERITE_GLAIVE = registerItem("netherite_glaive",
             new GlaiveItem(ToolMaterials.NETHERITE, 4, -2.8F, new Item.Settings().fireproof()));
+
+    public static final Set<Item> REGISTERED_FRAGMENTS = Set.of(
+            ModItems.FRAGMENT_OF_COMBUSTION,
+            ModItems.FRAGMENT_OF_BLISTERING,
+            ModItems.FRAGMENT_OF_ASHES,
+            ModItems.FRAGMENT_OF_SEARING,
+            ModItems.FRAGMENT_OF_EXPULSION,
+            ModItems.FRAGMENT_OF_INSTABILITY,
+            ModItems.FRAGMENT_OF_CESSATION,
+            ModItems.FRAGMENT_OF_VIGILANCE
+    );
 
     private static Item registerItem(String name, Item item){
         return Registry.register(Registries.ITEM, new Identifier(Sunbreaking.MOD_ID, name), item);

@@ -1,111 +1,148 @@
 package com.brandrobkus.sunbreaking.item.weapons;
 
 import com.brandrobkus.sunbreaking.entity.custom.StormBallEntity;
+import com.brandrobkus.sunbreaking.entity.custom.StormBallPrecisionEntity;
 import com.brandrobkus.sunbreaking.item.ModItems;
-import com.brandrobkus.sunbreaking.network.ModNetworking;
+import com.brandrobkus.sunbreaking.item.weapons.fragments.FragmentHelper;
+import com.brandrobkus.sunbreaking.network.ItemEffectToggleable;
 import com.brandrobkus.sunbreaking.sound.ModSounds;
 import com.brandrobkus.sunbreaking.util.ModTags;
 import com.brandrobkus.sunbreaking.util.gui.PlayerSuperAccessor;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.item.BundleTooltipData;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.item.TooltipData;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.inventory.StackReference;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
-import net.minecraft.util.ClickType;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.*;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
-import net.minecraft.server.network.ServerPlayerEntity;
 
 import java.util.*;
 import java.util.stream.Stream;
 
-public class BondItem extends Item {
-    private static final Set<UUID> playersOnCooldown = new HashSet<>();
+public class BondItem extends Item implements ItemEffectToggleable {
+
     private static final int MAX_STORAGE = 128;
+    public static final String PRECISION_KEY = "PrecisionMode";
+    private static final Set<UUID> playersOnCooldown = new HashSet<>();
 
     public BondItem(Settings settings) {
         super(settings.maxDamage(300));
     }
 
-    public float getArcSuperCost(ItemStack stack){
-        return 37.5f;
+    public static boolean isPrecisionMode(ItemStack stack) {
+        return stack.getOrCreateNbt().getBoolean(PRECISION_KEY);
     }
 
+    public float getArcSuperCost(ItemStack stack) {
+        boolean shock = FragmentHelper.hasFragment(stack, ModItems.FRAGMENT_OF_SHOCK);
+        int volts = FragmentHelper.getFragmentCount(stack, ModItems.FRAGMENT_OF_VOLTS);
+
+        if (shock && isPrecisionMode(stack)) {
+            return 12.5f + 12.5f * volts;
+        } else {
+            return 37.5f + 25f * volts;
+        }
+    }
+
+    @Override
+    public void onToggleEffect(ItemStack stack, PlayerEntity player) {
+        if (!FragmentHelper.hasFragment(stack, ModItems.FRAGMENT_OF_SHOCK)) {
+            if (player.getWorld().isClient) {
+                player.sendMessage(Text.translatable("message.sunbreaking.precision_requires_shock").formatted(Formatting.RED), true);
+            }
+            return;
+        }
+
+        if (!player.getWorld().isClient) {
+            NbtCompound nbt = stack.getOrCreateNbt();
+            boolean newValue = !nbt.getBoolean(PRECISION_KEY);
+            nbt.putBoolean(PRECISION_KEY, newValue);
+        }
+    }
+
+
+    @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-
         ItemStack stack = user.getStackInHand(hand);
-        float arcSuperCost = getArcSuperCost(stack);
-        float superValue = PlayerSuperAccessor.get(user).getSuper();
-        if (superValue < arcSuperCost && !user.isCreative()) {
-            if (world.isClient)
-                user.playSound(ModSounds.COOLDOWN_INDICATOR, SoundCategory.PLAYERS, 1, 1);
-            int cooldownTime = 15;
-            user.getItemCooldownManager().set(this, cooldownTime);
+
+        if (user.getMainHandStack().getItem() != this && user.getOffHandStack().getItem() != this) {
+            stack.getOrCreateNbt().putBoolean(PRECISION_KEY, false);
+        }
+
+        if (playersOnCooldown.contains(user.getUuid())) {
+            return TypedActionResult.fail(stack);
+        }
+
+        boolean shock = FragmentHelper.hasFragment(stack, ModItems.FRAGMENT_OF_SHOCK);
+        int volts = FragmentHelper.getFragmentCount(stack, ModItems.FRAGMENT_OF_VOLTS);
+        boolean precision = isPrecisionMode(stack);
+
+        float totalCost = (precision && shock)
+                ? 12.5f + 12.5f * volts
+                : 37.5f + 25f * volts;
+
+        if (!user.isCreative() && PlayerSuperAccessor.get(user).getSuper() < totalCost) {
+            user.playSound(ModSounds.COOLDOWN_INDICATOR, 1.0F, 1.0F);
+            user.getItemCooldownManager().set(this, 15);
             playersOnCooldown.add(user.getUuid());
-
-            return TypedActionResult.fail(user.getStackInHand(hand));
+            return TypedActionResult.fail(stack);
         }
 
-        PlayerSuperAccessor.get(user).addSuper(-arcSuperCost);
-
-        float newSuper = PlayerSuperAccessor.get(user).getSuper();
-        float newGear = PlayerSuperAccessor.get(user).getGear();
-
-        PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeFloat(newSuper);
-        buf.writeFloat(newGear);
-
-        if (user instanceof ServerPlayerEntity serverPlayer) {
-            ServerPlayNetworking.send(serverPlayer, ModNetworking.SUPER_GEAR_SYNC, buf);
-        }
-
-        ItemStack itemStack = user.getStackInHand(hand);
-
-        if (itemStack.getDamage() >= itemStack.getMaxDamage()) {
-            return TypedActionResult.fail(itemStack);
-        }
-
-        world.playSound(null, user.getX(), user.getY(), user.getZ(),
-                ModSounds.STORM_BALL, SoundCategory.PLAYERS, 1.5F, 1.0F);
+        PlayerSuperAccessor.get(user).addSuper(-totalCost);
 
         if (!world.isClient) {
-            StormBallEntity stormBallEntity = new StormBallEntity(user, world);
-            stormBallEntity.setItem(new ItemStack(ModItems.STORM_BALL));
-            stormBallEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, 1.0F, 1.0F);
-            world.spawnEntity(stormBallEntity);
+            int throwsCount = 1 + volts;
+
+            for (int i = 0; i < throwsCount; i++) {
+                ThrownItemEntity ball;
+
+                if (precision && shock) {
+                    ball = new StormBallPrecisionEntity(user, world);
+                } else {
+                    StormBallEntity regularBall = new StormBallEntity(user, world);
+                    regularBall.setFragmentData(shock, volts);
+                    ball = regularBall;
+                }
+
+                float speed = switch (i) {
+                    case 1 -> 0.66f;
+                    case 2 -> 1.33f;
+                    default -> 1.0f;
+                };
+
+                ball.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, speed, 1.0F);
+                world.spawnEntity(ball);
+            }
+
+            world.playSound(null, user.getBlockPos(), ModSounds.STORM_BALL, SoundCategory.PLAYERS, 1.5F, 1.0F);
 
             if (!user.getAbilities().creativeMode) {
-                itemStack.damage(1, user, (player) -> player.sendToolBreakStatus(hand));
-
-                int cooldownTime = 20;
-                user.getItemCooldownManager().set(this, cooldownTime);
+                stack.damage(1, user, p -> p.sendToolBreakStatus(hand));
+                user.getItemCooldownManager().set(this, 20);
                 playersOnCooldown.add(user.getUuid());
             }
         }
 
-        return TypedActionResult.success(itemStack, world.isClient());
+        return TypedActionResult.success(stack, world.isClient());
     }
 
     public static void tick(World world) {
         if (!world.isClient) {
             playersOnCooldown.removeIf(playerId -> {
                 ServerPlayerEntity player = (ServerPlayerEntity) world.getPlayerByUuid(playerId);
-                return false;
+                return player == null;
             });
         }
     }
