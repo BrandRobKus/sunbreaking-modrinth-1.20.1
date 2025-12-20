@@ -1,11 +1,11 @@
-// 1.20.1	2025-12-17T20:40:31.9308901	Sunbreaking/Tags for minecraft:item
+// 1.20.1	2025-12-20T11:43:22.7597806	Sunbreaking/Tags for minecraft:item
 c2a5ae7756d618ee20ae1ce9929d1c1fd2ffeed7 data\sunbreaking\tags\items\hammer_of_sol.json
 2dcdc20bb8aa6ae5a43539ded456429495b4d1a2 data\sunbreaking\tags\items\solar_fragments.json
 d633ef084a36e731dfcd63186f52976c9d89b17b data\sunbreaking\tags\items\void_aspects.json
 3c300c1576caac86324842667bb55d65cedd7e14 data\sunbreaking\tags\items\arc_fragments.json
 a8935d77a61d18bfdc98e5e289c69f7e18deb37e data\sunbreaking\tags\items\gear_meter.json
-57e2e0245e3d4ff7421570b516869e4509ca1868 data\sunbreaking\tags\items\void_fragments.json
 be644f58bfcf1978c2da7caf1eea1b4ffe25c792 data\sunbreaking\tags\items\arc_aspects.json
+57e2e0245e3d4ff7421570b516869e4509ca1868 data\sunbreaking\tags\items\void_fragments.json
 7fb8eb7e3847576914c6f3b84b826862754fd85a data\sunbreaking\tags\items\solar_aspects.json
 31d1b5635dce74e0d48df4e249fb1c920c1020c9 data\sunbreaking\tags\items\shadowshots.json
 6f38325fb74e87a491316e18280f8350fd6395ba data\sunbreaking\tags\items\super_meter.json

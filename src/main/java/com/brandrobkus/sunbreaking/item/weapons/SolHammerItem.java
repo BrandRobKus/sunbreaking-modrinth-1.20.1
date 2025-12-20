@@ -126,7 +126,7 @@ public class SolHammerItem extends ToolItem implements Vanishable {
             buf.writeFloat(newGear);
 
             if (player instanceof ServerPlayerEntity serverPlayer) {
-                ServerPlayNetworking.send(serverPlayer, ModNetworking.SUPER_GEAR_SYNC, buf);
+                ServerPlayNetworking.send(serverPlayer, ModNetworking.GEAR_SYNC, buf);
             }
 
             player.incrementStat(Stats.USED.getOrCreateStat(this));

@@ -49,6 +49,11 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModItems.FRAGMENT_OF_INSTABILITY, Models.GENERATED);
         itemModelGenerator.register(ModItems.FRAGMENT_OF_VIGILANCE, Models.GENERATED);
 
+        itemModelGenerator.register(ModItems.FRAGMENT_OF_SHOCK, Models.GENERATED);
+        itemModelGenerator.register(ModItems.FRAGMENT_OF_VOLTS, Models.GENERATED);
+        itemModelGenerator.register(ModItems.FRAGMENT_OF_FEEDBACK, Models.GENERATED);
+        itemModelGenerator.register(ModItems.FRAGMENT_OF_BEACONS, Models.GENERATED);
+
         itemModelGenerator.registerArmor(((ArmorItem) ModItems.SUNBREAKERS_HELMET));
         itemModelGenerator.registerArmor(((ArmorItem) ModItems.SUNBREAKERS_CUIRASS));
         itemModelGenerator.registerArmor(((ArmorItem) ModItems.SUNBREAKERS_GREAVES));

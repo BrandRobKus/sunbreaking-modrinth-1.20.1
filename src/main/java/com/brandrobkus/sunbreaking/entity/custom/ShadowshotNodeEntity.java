@@ -158,7 +158,7 @@ public class ShadowshotNodeEntity extends Entity {
             spawnParticles();
             rotateNode();
         } else {
-            if (!this.getWorld().isClient && timeAlive <= 20) {
+            if (!this.getWorld().isClient) {
                 applyInstabilityPull();
             }
 

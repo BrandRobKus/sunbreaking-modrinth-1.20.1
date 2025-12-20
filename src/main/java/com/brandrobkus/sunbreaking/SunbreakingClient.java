@@ -55,6 +55,7 @@ public class SunbreakingClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.STORM_CLOUD, StormCloudRenderer::new);
         EntityRendererRegistry.register(ModEntities.STORM_BALL, FlyingItemEntityRenderer::new);
         EntityRendererRegistry.register(ModEntities.PRECISION_STORM_BALL, FlyingItemEntityRenderer::new);
+        EntityRendererRegistry.register(ModEntities.HAMMER_EXPLOSIVE_CHUNK, FlyingItemEntityRenderer::new);
         EntityRendererRegistry.register(ModEntities.FIRELESS_LIGHTNING, FirelessLightningEntityRenderer::new);
         EntityRendererRegistry.register(ModEntities.SKY_FIRELESS_LIGHTNING, SkyFirelessLightningRenderer::new);
 

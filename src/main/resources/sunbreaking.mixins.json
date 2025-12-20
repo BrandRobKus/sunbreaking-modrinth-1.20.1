@@ -7,7 +7,7 @@
 		"PlayerSuperMixin",
 		"PlayerEntityMixin",
 		"MinecraftServerMixin",
-		"LivingEntityOnDeathMixin"
+      	"LivingEntityCatchAllMixin"
 	],
 	"client": [
 		"PlayerEntityRendererMixin",

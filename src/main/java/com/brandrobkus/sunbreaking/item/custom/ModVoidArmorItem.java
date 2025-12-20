@@ -93,7 +93,7 @@ public class ModVoidArmorItem extends ArmorItem {
             PacketByteBuf buf = PacketByteBufs.create();
             buf.writeFloat(PlayerSuperAccessor.get(player).getSuper());
             buf.writeFloat(PlayerSuperAccessor.get(player).getGear());
-            ServerPlayNetworking.send(serverPlayer, ModNetworking.SUPER_GEAR_SYNC, buf);
+            ServerPlayNetworking.send(serverPlayer, ModNetworking.GEAR_SYNC, buf);
         }
 
         if (hasExecution) {

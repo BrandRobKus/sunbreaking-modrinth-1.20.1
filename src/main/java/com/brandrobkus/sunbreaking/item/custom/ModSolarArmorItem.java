@@ -54,7 +54,7 @@ public class ModSolarArmorItem extends ArmorItem {
                 buf.writeFloat(newSuper);
                 buf.writeFloat(newGear);
                 if (player instanceof ServerPlayerEntity serverPlayer) {
-                    ServerPlayNetworking.send(serverPlayer, ModNetworking.SUPER_GEAR_SYNC, buf);
+                    ServerPlayNetworking.send(serverPlayer, ModNetworking.GEAR_SYNC, buf);
                 }
 
             }

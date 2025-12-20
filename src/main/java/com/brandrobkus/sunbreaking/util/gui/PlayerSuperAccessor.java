@@ -5,7 +5,7 @@ import net.minecraft.entity.player.PlayerEntity;
 public class PlayerSuperAccessor {
     public boolean solarFireResistant;
 
-    public static SunbreakingSuperComponent get(PlayerEntity player) {
+    public static SunbreakingMeterComponent get(PlayerEntity player) {
         return ((PlayerSuperHolder) player).sunbreaking_getSuper();
     }
     public static void setResolveTicks(PlayerEntity player, int ticks) {

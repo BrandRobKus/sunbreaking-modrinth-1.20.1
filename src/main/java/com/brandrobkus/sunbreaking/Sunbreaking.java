@@ -3,7 +3,6 @@ package com.brandrobkus.sunbreaking;
 import com.brandrobkus.sunbreaking.command.FireteamCommand;
 import com.brandrobkus.sunbreaking.enchantment.ModEnchantments;
 import com.brandrobkus.sunbreaking.entity.ModEntities;
-import com.brandrobkus.sunbreaking.event.DamageTracker;
 import com.brandrobkus.sunbreaking.event.ServerTickHandler;
 import com.brandrobkus.sunbreaking.command.fireteam.FireteamEvents;
 import com.brandrobkus.sunbreaking.item.custom.ModVoidArmorItem;
@@ -45,29 +44,21 @@ public class Sunbreaking implements ModInitializer {
 		ModDamageTypes.registerModDamageTypes();
 		ServerPlayNetworking.registerGlobalReceiver(
 				ModNetworking.TOGGLE_INVISIBILITY,
-				(server, player, handler, buf, responseSender) -> {
+				(server, player, handler, buf, responseSender)
+						-> server.execute(() -> ModVoidArmorItem.toggleInvisibility(player)));
 
-					server.execute(() -> {
-						ModVoidArmorItem.toggleInvisibility(player);
-					});
-				}
-		);
-
-		ServerPlayNetworking.registerGlobalReceiver(TOGGLE_ITEM_EFFECT, (server, player, handler, buf, responseSender) -> {
-			server.execute(() -> {
-				ItemStack stack = player.getMainHandStack();
-				if (stack.getItem() instanceof ItemEffectToggleable toggleable) {
-					toggleable.onToggleEffect(stack, player);
-				}
-			});
-		});
+		ServerPlayNetworking.registerGlobalReceiver(TOGGLE_ITEM_EFFECT, (server, player, handler, buf, responseSender) -> server.execute(() -> {
+            ItemStack stack = player.getMainHandStack();
+            if (stack.getItem() instanceof ItemEffectToggleable toggleable) {
+                toggleable.onToggleEffect(stack, player);
+            }
+        }));
 
 		ServerTickEvents.END_WORLD_TICK.register((ServerWorld world) -> {
 			BondItem.tick(world);
 			ShadowshotBowItem.tick(world);
 		});
 
-		DamageTracker.register();
 		ServerTickHandler.register();
 		SunbreakingServerTicks.register();
 		FireteamCommand.register();
@@ -88,7 +79,7 @@ public class Sunbreaking implements ModInitializer {
 					PacketByteBuf buf = PacketByteBufs.create();
 					buf.writeFloat(newSuper);
 					buf.writeFloat(gear);
-					ServerPlayNetworking.send(player, ModNetworking.SUPER_GEAR_SYNC, buf);
+					ServerPlayNetworking.send(player, ModNetworking.GEAR_SYNC, buf);
 				}
 			}
 		});

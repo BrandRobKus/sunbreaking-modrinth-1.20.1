@@ -45,7 +45,7 @@ public class SmokeBombItem extends Item {
         buf.writeFloat(newGear);
 
         if (user instanceof ServerPlayerEntity serverPlayer) {
-            ServerPlayNetworking.send(serverPlayer, ModNetworking.SUPER_GEAR_SYNC, buf);
+            ServerPlayNetworking.send(serverPlayer, ModNetworking.GEAR_SYNC, buf);
         }
 
         world.playSound(

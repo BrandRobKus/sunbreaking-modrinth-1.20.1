@@ -115,7 +115,7 @@ public class GlaiveItem extends SwordItem {
                 buf.writeFloat(newSuper);
                 buf.writeFloat(newGear);
                 if (player instanceof ServerPlayerEntity serverPlayer) {
-                    ServerPlayNetworking.send(serverPlayer, ModNetworking.SUPER_GEAR_SYNC, buf);
+                    ServerPlayNetworking.send(serverPlayer, ModNetworking.GEAR_SYNC, buf);
                 }
             }
         }
@@ -167,7 +167,7 @@ public class GlaiveItem extends SwordItem {
             buf.writeFloat(newGear);
 
             if (user instanceof ServerPlayerEntity serverPlayer) {
-                ServerPlayNetworking.send(serverPlayer, ModNetworking.SUPER_GEAR_SYNC, buf);
+                ServerPlayNetworking.send(serverPlayer, ModNetworking.GEAR_SYNC, buf);
             }
 
             user.incrementStat(Stats.USED.getOrCreateStat(this));
@@ -195,7 +195,7 @@ public class GlaiveItem extends SwordItem {
         buf.writeFloat(newGear);
 
         if (user instanceof ServerPlayerEntity serverPlayer) {
-            ServerPlayNetworking.send(serverPlayer, ModNetworking.SUPER_GEAR_SYNC, buf);
+            ServerPlayNetworking.send(serverPlayer, ModNetworking.GEAR_SYNC, buf);
         }
 
         if (getEnergy(stack) <= 0 && !isCreative) return TypedActionResult.fail(stack);

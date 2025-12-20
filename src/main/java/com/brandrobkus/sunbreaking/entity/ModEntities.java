@@ -75,6 +75,12 @@ public class ModEntities {
             FabricEntityTypeBuilder.<StormBallPrecisionEntity>create(SpawnGroup.MISC, StormBallPrecisionEntity::new)
                     .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
 
+    public static final EntityType<HammerExplosiveChunkEntity> HAMMER_EXPLOSIVE_CHUNK = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(Sunbreaking.MOD_ID, "hammer_explosive_chunk"),
+            FabricEntityTypeBuilder.<HammerExplosiveChunkEntity>create(SpawnGroup.MISC, HammerExplosiveChunkEntity::new)
+                    .dimensions(EntityDimensions.fixed(1.5f, 1.5f)).build());
+
     public static final EntityType<GlaiveProjectileEntity> GLAIVE_PROJECTILE = Registry.register(
             Registries.ENTITY_TYPE,
             new Identifier(Sunbreaking.MOD_ID, "glaive_projectile"),

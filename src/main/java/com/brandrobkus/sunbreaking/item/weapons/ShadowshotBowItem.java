@@ -77,7 +77,6 @@ public class ShadowshotBowItem extends BowItem implements ItemEffectToggleable {
             float voidSuperCost = getVoidSuperCost(stack);
             if (PlayerSuperAccessor.get(player).getSuper() < voidSuperCost) {
                 player.playSound(ModSounds.COOLDOWN_INDICATOR, 1.0F, 1.0F);
-                PlayerSuperAccessor.get(player).addSuper(-voidSuperCost);
                 player.getItemCooldownManager().set(this, 20);
                 playersOnCooldown.add(player.getUuid());
                 return TypedActionResult.fail(stack);

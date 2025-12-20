@@ -128,6 +128,17 @@
 
   "item.sunbreaking.stormcallers_bond": "Stormcaller's Bond",
   "tooltip.sunbreaking.requires_stormcaller_fragment.tooltip_1": "Stormcaller Fragments",
+  "tooltip.sunbreaking.stormcaller_fragment.tooltip": "Stormcaller Fragment",
+
+  "item.sunbreaking.fragment_of_shock": "Fragment of Shock",
+  "tooltip.sunbreaking.fragment_of_shock.tooltip": "Press R to activate",
+  "tooltip.sunbreaking.fragment_of_shock.tooltip_1": "Precision Mode, which summons",
+  "tooltip.sunbreaking.fragment_of_shock.tooltip_2": "a single Lightning Bolt",
+  "tooltip.sunbreaking.fragment_of_shock.tooltip_3": "at reduced cost",
+
+  "item.sunbreaking.fragment_of_volts": "Fragment of Volts",
+  "item.sunbreaking.fragment_of_feedback": "Fragment of Feedback",
+  "item.sunbreaking.fragment_of_beacons": "Fragment of Beacons",
 
   "item.sunbreaking.stormcallers_headdress": "Stormcaller's Headdress",
   "item.sunbreaking.stormcallers_robes": "Stormcaller's Robes",
@@ -213,11 +224,5 @@
   "item.sunbreaking.arc_upgrade_template.base_slot": "Arc Light",
   "item.sunbreaking.arc_upgrade_template.addition_slot": "Arc Upgrade",
   "item.sunbreaking.arc_upgrade_template.apply": "Apply",
-  "item.sunbreaking.arc_upgrade_template.base": "Base",
-
-  "enchantment.sunbreaking.dilation": "Dilation",
-  "enchantment.sunbreaking.limitless": "Limitless",
-  "enchantment.sunbreaking.reprisal": "Reprisal",
-
-  "enchantment.sunbreaking.amplitude": "Amplitude"
+  "item.sunbreaking.arc_upgrade_template.base": "Base"
 }

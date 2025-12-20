@@ -1,8 +1,9 @@
 package com.brandrobkus.sunbreaking.util.gui;
 
-public class SunbreakingSuperComponent {
+public class SunbreakingMeterComponent {
     private float superValue = 0f;
     private float gearValue = 0f;
+    private float invisibilityCooldown = 0f;
 
     public void addSuper(float amount) {
         superValue += amount;
@@ -16,15 +17,24 @@ public class SunbreakingSuperComponent {
         if (gearValue < 0f) gearValue = 0f;
     }
 
+    public void addInvisibilityCooldown(float amount) {
+        invisibilityCooldown += amount;
+        if (invisibilityCooldown > 100f) invisibilityCooldown = 100f;
+        if (invisibilityCooldown < 0f) invisibilityCooldown = 0f;
+    }
+
     public float getSuper() { return superValue; }
     public float getGear()  { return gearValue; }
+    public float getInvisibilityCooldown()  { return invisibilityCooldown; }
 
     public void setSuper(float value) {
         superValue = Math.max(0, Math.min(value, 100));
     }
-
     public void setGear(float value) {
         gearValue = Math.max(0, Math.min(value, 100));
+    }
+    public void setInvisibilityCooldown(float value) {
+        invisibilityCooldown = Math.max(0, Math.min(value, 100));
     }
 
     private int resolveTicks = 0;
@@ -50,6 +60,5 @@ public class SunbreakingSuperComponent {
     public void setRechargeTicks(int ticks) {
         this.rechargeTicks = ticks;
     }
-
 
 }

@@ -7,7 +7,7 @@ import com.brandrobkus.sunbreaking.item.custom.ModVoidArmorItem;
 import com.brandrobkus.sunbreaking.item.weapons.*;
 import com.brandrobkus.sunbreaking.util.ModTags;
 import com.brandrobkus.sunbreaking.util.gui.PlayerSuperAccessor;
-import com.brandrobkus.sunbreaking.util.gui.SunbreakingSuperComponent;
+import com.brandrobkus.sunbreaking.util.gui.SunbreakingMeterComponent;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.entity.player.PlayerEntity;
@@ -47,7 +47,7 @@ public class SuperHudOverlay {
 
         if (!hasGearItem && !hasSuperItem) return;
 
-        SunbreakingSuperComponent superComp = PlayerSuperAccessor.get(client.player);
+        SunbreakingMeterComponent superComp = PlayerSuperAccessor.get(client.player);
         float superValue = superComp.getSuper();
         float gearValue  = superComp.getGear();
 

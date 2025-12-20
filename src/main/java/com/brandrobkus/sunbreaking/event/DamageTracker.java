@@ -1,64 +1,51 @@
 package com.brandrobkus.sunbreaking.event;
 
-import com.brandrobkus.sunbreaking.util.gui.PlayerSuperAccessor;
-import com.brandrobkus.sunbreaking.util.gui.SunbreakingSuperComponent;
 import com.brandrobkus.sunbreaking.network.ModNetworking;
+import com.brandrobkus.sunbreaking.util.gui.PlayerSuperAccessor;
+import com.brandrobkus.sunbreaking.util.gui.SunbreakingMeterComponent;
 
-import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.world.World;
 
-public class DamageTracker {
+public final class DamageTracker {
 
-    public static void register() {
+    private DamageTracker() {}
 
-        AttackEntityCallback.EVENT.register((player, world, hand, target, hitResult) -> {
-            if (!(target instanceof LivingEntity)) return ActionResult.PASS;
+    public static void onDamageApplied(
+            LivingEntity target,
+            DamageSource source,
+            float damage
+    ) {
+        if (damage <= 0f) return;
+        if (!(source.getAttacker() instanceof ServerPlayerEntity player)) return;
+        if (player.getWorld().isClient()) return;
 
-            if (!world.isClient()) {
-                float damage = (float) player.getAttributeValue(
-                        net.minecraft.entity.attribute.EntityAttributes.GENERIC_ATTACK_DAMAGE
-                );
+        SunbreakingMeterComponent comp = PlayerSuperAccessor.get(player);
 
-                SunbreakingSuperComponent comp = PlayerSuperAccessor.get(player);
-
-                comp.addSuper(damage);
-                comp.addGear(damage * 2f);
-
-                if (player instanceof ServerPlayerEntity serverPlayer) {
-                    sendSyncPacket(serverPlayer, comp);
-                }
-
-            }
-
-            return ActionResult.PASS;
-        });
-    }
-
-    public static void onProjectileHit(LivingEntity target, PersistentProjectileEntity projectile, float damage) {
-        if (!target.getWorld().isClient()) {
-            if (projectile.getOwner() instanceof ServerPlayerEntity player) {
-                SunbreakingSuperComponent comp = PlayerSuperAccessor.get(player);
-
-                comp.addSuper(damage * 0.5f);
-                comp.addGear(damage * 1f);
-
-                sendSyncPacket(player, comp);
-            }
+        if (source.getSource() instanceof PersistentProjectileEntity) {
+            comp.addSuper(damage * 0.5f);
+            comp.addGear(damage);
+        } else {
+            comp.addSuper(damage);
+            comp.addGear(damage * 2f);
         }
+
+        sync(player, comp);
     }
 
-    private static void sendSyncPacket(ServerPlayerEntity player, SunbreakingSuperComponent comp) {
+    private static void sync(
+            ServerPlayerEntity player,
+            SunbreakingMeterComponent comp
+    ) {
         PacketByteBuf buf = PacketByteBufs.create();
         buf.writeFloat(comp.getSuper());
         buf.writeFloat(comp.getGear());
-        ServerPlayNetworking.send(player, ModNetworking.SUPER_GEAR_SYNC, buf);
+        ServerPlayNetworking.send(player, ModNetworking.GEAR_SYNC, buf);
     }
 }

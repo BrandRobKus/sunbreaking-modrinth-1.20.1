@@ -1,6 +1,8 @@
 package com.brandrobkus.sunbreaking.entity.custom;
 
 import com.brandrobkus.sunbreaking.enchantment.ModEnchantmentHelper;
+import com.brandrobkus.sunbreaking.item.ModItems;
+import com.brandrobkus.sunbreaking.item.weapons.fragments.FragmentHelper;
 import com.brandrobkus.sunbreaking.sound.ModSounds;
 import com.brandrobkus.sunbreaking.enchantment.ModEnchantments;
 import com.brandrobkus.sunbreaking.entity.ModEntities;
@@ -257,7 +259,7 @@ public class SolHammerProjectileEntity extends PersistentProjectileEntity{
         int combustion = this.dataTracker.get(COMBUSTION);
         boolean blistering = this.dataTracker.get(BLISTERING);
 
-        float radius = 2.0F + combustion;
+        float radius = 2.0F + combustion * 0.75f;
 
         BlockPos pos = this.getBlockPos();
 
@@ -276,7 +278,7 @@ public class SolHammerProjectileEntity extends PersistentProjectileEntity{
         );
 
         if (this.dataTracker.get(ASHES)) {
-            spawnAshesProjectile(pos);
+            spawnAshesProjectile(pos, combustion);
         }
     }
 
@@ -304,18 +306,41 @@ public class SolHammerProjectileEntity extends PersistentProjectileEntity{
         }
     }
 
-    private void spawnAshesProjectile(BlockPos pos) {
-        for (int i = 0; i < 3; i++) {
-            PersistentProjectileEntity arrow =
-                    new net.minecraft.entity.projectile.ArrowEntity(this.getWorld(), pos.getX(), pos.getY(), pos.getZ());
+    private void spawnAshesProjectile(BlockPos pos, int combustion) {
+        if (this.getWorld().isClient()) return;
 
-            arrow.setVelocity(
-                    (this.random.nextDouble() - 0.5) * 0.8,
-                    0.4,
-                    (this.random.nextDouble() - 0.5) * 0.8
+        double baseAngle = this.random.nextDouble() * Math.PI * 2.0;
+        double speed = 0.8;
+        double yVel = 0.4;
+
+        double[] angles = new double[] {
+                baseAngle,
+                baseAngle + (2.0 * Math.PI / 3.0),
+                baseAngle - (2.0 * Math.PI / 3.0)
+        };
+
+        float explosionRadius = 1.5f + (combustion * 0.5f);
+
+        for (double angle : angles) {
+            HammerExplosiveChunkEntity chunk =
+                    new HammerExplosiveChunkEntity(
+                            ModEntities.HAMMER_EXPLOSIVE_CHUNK,
+                            this.getWorld()
+                    );
+
+            chunk.setPosition(
+                    pos.getX() + 0.5,
+                    pos.getY() + 0.5,
+                    pos.getZ() + 0.5
             );
 
-            this.getWorld().spawnEntity(arrow);
+            double xVel = Math.cos(angle) * speed;
+            double zVel = Math.sin(angle) * speed;
+
+            chunk.setVelocity(xVel * 0.25f, yVel * 0.5f, zVel * 0.25f);
+            chunk.setExplosionRadius(explosionRadius);
+
+            this.getWorld().spawnEntity(chunk);
         }
     }
 

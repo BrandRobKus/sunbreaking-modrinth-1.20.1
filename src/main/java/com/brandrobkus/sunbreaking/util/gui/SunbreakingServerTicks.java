@@ -21,7 +21,7 @@ public class SunbreakingServerTicks {
     }
 
     private static void tickRenewal(ServerPlayerEntity player) {
-        SunbreakingSuperComponent comp = PlayerSuperAccessor.get(player);
+        SunbreakingMeterComponent comp = PlayerSuperAccessor.get(player);
 
         int ticks = comp.getRenewedTicks();
         if (ticks > 0) {
@@ -33,10 +33,11 @@ public class SunbreakingServerTicks {
         }
     }
 
-    private static void syncSuper(ServerPlayerEntity player, SunbreakingSuperComponent comp) {
+    private static void syncSuper(ServerPlayerEntity player, SunbreakingMeterComponent comp) {
         PacketByteBuf buf = PacketByteBufs.create();
         buf.writeFloat(comp.getSuper());
         buf.writeFloat(comp.getGear());
-        ServerPlayNetworking.send(player, ModNetworking.SUPER_GEAR_SYNC, buf);
+        buf.writeFloat(comp.getInvisibilityCooldown());
+        ServerPlayNetworking.send(player, ModNetworking.GEAR_SYNC, buf);
     }
 }

@@ -5,6 +5,7 @@ import com.brandrobkus.sunbreaking.entity.custom.FirelessLightningEntity;
 import com.brandrobkus.sunbreaking.entity.custom.ShadowshotArrowEntity;
 import com.brandrobkus.sunbreaking.command.fireteam.FireteamManager;
 import com.brandrobkus.sunbreaking.entity.custom.SolHammerProjectileEntity;
+import com.brandrobkus.sunbreaking.event.DamageTracker;
 import com.brandrobkus.sunbreaking.item.ModItems;
 import com.brandrobkus.sunbreaking.item.custom.ModArcArmorItem;
 import com.brandrobkus.sunbreaking.item.custom.ModSolarArmorItem;
@@ -19,7 +20,6 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
@@ -35,7 +35,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
-public class LivingEntityOnDeathMixin implements BondGlowTracked {
+public class LivingEntityCatchAllMixin implements BondGlowTracked {
 
     @Inject(method = "onDeath", at = @At("HEAD"))
     private void onDeathInject(DamageSource source, CallbackInfo ci) {
@@ -240,5 +240,22 @@ public class LivingEntityOnDeathMixin implements BondGlowTracked {
     @Override
     public boolean isBondGlowing() {
         return isBondGlowing;
+    }
+
+    @Inject(
+            method = "damage",
+            at = @At("RETURN")
+    )
+    private void afterDamage(
+            DamageSource source,
+            float amount,
+            CallbackInfoReturnable<Boolean> cir
+    ) {
+        if (!cir.getReturnValue()) return;
+
+        LivingEntity self = (LivingEntity)(Object)this;
+        if (self.getWorld().isClient()) return;
+
+        DamageTracker.onDamageApplied(self, source, amount);
     }
 }

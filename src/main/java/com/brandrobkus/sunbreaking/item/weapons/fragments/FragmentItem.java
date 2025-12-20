@@ -79,6 +79,15 @@ public class FragmentItem extends Item {
             tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_expulsion.tooltip_2"));
         }
 
+        if (stack.isOf(ModItems.FRAGMENT_OF_SHOCK)){
+            tooltip.add(Text.translatable("tooltip.sunbreaking.stormcaller_fragment.tooltip").formatted(Formatting.AQUA));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.blank_spot.tooltip"));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_shock.tooltip"));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_shock.tooltip_1"));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_shock.tooltip_2"));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_shock.tooltip_3"));
+        }
+
         else if (stack.getItem() instanceof FragmentItem
                 && !ModItems.REGISTERED_FRAGMENTS.contains(stack.getItem())) {
 

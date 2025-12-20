@@ -316,7 +316,8 @@ public class ModItems {
             ModItems.FRAGMENT_OF_EXPULSION,
             ModItems.FRAGMENT_OF_INSTABILITY,
             ModItems.FRAGMENT_OF_CESSATION,
-            ModItems.FRAGMENT_OF_VIGILANCE
+            ModItems.FRAGMENT_OF_VIGILANCE,
+            ModItems.FRAGMENT_OF_SHOCK
     );
 
     private static Item registerItem(String name, Item item){
