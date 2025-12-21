@@ -1,12 +1,13 @@
 package com.brandrobkus.sunbreaking.entity.custom;
 
+import com.brandrobkus.sunbreaking.Sunbreaking;
 import com.brandrobkus.sunbreaking.item.ModItems;
 import com.brandrobkus.sunbreaking.item.custom.ModArcArmorItem;
 import com.brandrobkus.sunbreaking.item.custom.aspects.StormcallingAspectHandler;
 import com.brandrobkus.sunbreaking.item.weapons.BondItem;
 import com.brandrobkus.sunbreaking.item.weapons.fragments.FragmentHelper;
 import com.brandrobkus.sunbreaking.util.BondGlowTracked;
-import com.brandrobkus.sunbreaking.util.gui.PlayerSuperAccessor;
+import com.brandrobkus.sunbreaking.util.ModDamageTypes;
 import com.google.common.collect.Sets;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.*;
@@ -15,33 +16,33 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageType;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldEvents;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
-import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Stream;
 
 public class FirelessLightningEntity extends Entity {
+    public static final RegistryKey<DamageType> FIRELESS_LIGHTNING = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier(Sunbreaking.MOD_ID, "fireless_lightning"));
     private double heightDifference = 0;
     private int ambientTick;
     public long seed;
@@ -150,19 +151,21 @@ public class FirelessLightningEntity extends Entity {
 
                 for (Entity entity : list) {
                     if (entity instanceof LivingEntity livingEntity) {
+                        MinecraftServer server = serverWorld.getServer();
                         ServerPlayerEntity owner = getOwnerPlayer();
 
-                        DamageSource source =
-                                owner != null
-                                        ? serverWorld.getDamageSources().playerAttack(owner)
-                                        : serverWorld.getDamageSources().lightningBolt();
+                        DamageSource source = new DamageSource(
+                                serverWorld.getRegistryManager()
+                                        .get(RegistryKeys.DAMAGE_TYPE)
+                                        .entryOf(FIRELESS_LIGHTNING),
+                                owner
+                        );
 
                         livingEntity.damage(source, 7.0F);
 
                         if (owner != null) {
                             ItemStack main = owner.getMainHandStack();
                             ItemStack off = owner.getOffHandStack();
-
 
                             ItemStack bond =
                                     main.getItem() instanceof BondItem ? main :
@@ -175,7 +178,6 @@ public class FirelessLightningEntity extends Entity {
                                     if (livingEntity instanceof BondGlowTracked tracked) {
                                         tracked.setBondGlow(200 * beacons);
                                     }
-
                                     livingEntity.addStatusEffect(new StatusEffectInstance(
                                             StatusEffects.GLOWING,
                                             200 * beacons,
@@ -184,21 +186,15 @@ public class FirelessLightningEntity extends Entity {
                                             true,
                                             true
                                     ));
-
                                 }
                             }
                         }
-
-
-
                     if (livingEntity instanceof PlayerEntity player) {
                             ModArcArmorItem.tryApplyIonsResistanceIfEquipped(player);
                         }
-
                         if (livingEntity.isDead() && owner != null) {
                             StormcallingAspectHandler.handleKill((ServerWorld) this.getWorld(), owner, livingEntity, true);
                         }
-
                         if (owner != null && ownerHasBrilliance(owner)) {
                             if (!(livingEntity instanceof PlayerEntity player && player.getUuid().equals(owner.getUuid()))) {
                                 livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 45, 0, false, true, true));
@@ -226,7 +222,6 @@ public class FirelessLightningEntity extends Entity {
         if (ownerUUID == null || !(getWorld() instanceof ServerWorld serverWorld)) return null;
         return serverWorld.getServer().getPlayerManager().getPlayer(ownerUUID);
     }
-
 
     private BlockPos getAffectedBlockPos() {
         Vec3d vec3d = this.getPos();
@@ -279,7 +274,6 @@ public class FirelessLightningEntity extends Entity {
                 return Optional.of(blockPos);
             }
         }
-
         return Optional.empty();
     }
 

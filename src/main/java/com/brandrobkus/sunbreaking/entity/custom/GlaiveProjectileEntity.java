@@ -1,5 +1,6 @@
 package com.brandrobkus.sunbreaking.entity.custom;
 
+import com.brandrobkus.sunbreaking.Sunbreaking;
 import com.brandrobkus.sunbreaking.entity.ModEntities;
 import com.brandrobkus.sunbreaking.sound.ModSounds;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -7,6 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageType;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -15,14 +17,18 @@ import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class GlaiveProjectileEntity extends PersistentProjectileEntity {
+    public static final RegistryKey<DamageType> GLAIVE_PROJECTILE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier(Sunbreaking.MOD_ID, "glaive_projectile"));
     private ItemStack glaiveStack;
     private boolean dealtDamage;
     private float damage;
@@ -106,7 +112,10 @@ public class GlaiveProjectileEntity extends PersistentProjectileEntity {
         }
 
         Entity entity2 = this.getOwner();
-        DamageSource damageSource = this.getDamageSources().trident(this, (entity2 == null ? this : entity2));
+        DamageSource damageSource = new DamageSource(
+                entityHitResult.getEntity().getEntityWorld().getRegistryManager()
+                        .get(RegistryKeys.DAMAGE_TYPE)
+                        .entryOf(GLAIVE_PROJECTILE));
         this.dealtDamage = true;
         SoundEvent soundEvent = ModSounds.GLAIVE_EXPLOSION;
         if (entity.damage(damageSource, f)) {
@@ -131,10 +140,6 @@ public class GlaiveProjectileEntity extends PersistentProjectileEntity {
 
 
         this.playSound(soundEvent, g, 1.0F);
-    }
-
-    public boolean hasChanneling() {
-        return EnchantmentHelper.hasChanneling(this.glaiveStack);
     }
 
     protected boolean tryPickup(PlayerEntity player) {

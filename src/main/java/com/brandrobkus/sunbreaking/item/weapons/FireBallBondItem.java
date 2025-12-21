@@ -46,9 +46,7 @@ public class FireBallBondItem extends Item {
             if (!user.getAbilities().creativeMode) {
                 itemStack.damage(1, user, (player) -> player.sendToolBreakStatus(hand));
 
-                int bondCooldownReduction = EnchantmentHelper.getLevel(ModEnchantments.AMPLITUDE, itemStack);
-
-                int cooldownTime = 100 - (bondCooldownReduction * 15);
+                int cooldownTime = 100;
                 user.getItemCooldownManager().set(this, cooldownTime);
                 playersOnCooldown.add(user.getUuid());
             }

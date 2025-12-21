@@ -8,9 +8,9 @@ import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 public class ClientTickHandler {
     public static void register() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            while (ModKeyBindings.TOGGLE_INVISIBILITY.wasPressed()) {
+            while (ModKeyBindings.TOGGLE_ARMOR_EFFECT.wasPressed()) {
                 ClientPlayNetworking.send(
-                        ModNetworking.TOGGLE_INVISIBILITY,
+                        ModNetworking.TOGGLE_ARMOR_EFFECT,
                         PacketByteBufs.empty()
                 );
             }

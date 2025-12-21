@@ -46,9 +46,7 @@ public class SnowballBondItem extends Item {
             if (!user.getAbilities().creativeMode) {
                 itemStack.damage(1, user, (player) -> player.sendToolBreakStatus(hand));
 
-                int bondCooldownReduction = EnchantmentHelper.getLevel(ModEnchantments.AMPLITUDE, itemStack);
-
-                int cooldownTime = 60 - (bondCooldownReduction * 10);
+                int cooldownTime = 60;
                 user.getItemCooldownManager().set(this, cooldownTime);
                 playersOnCooldown.add(user.getUuid());
             }

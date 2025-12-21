@@ -64,9 +64,20 @@ public class ModVoidArmorItem extends ArmorItem {
         boolean invisActive = nbt.getBoolean(INVIS_ACTIVE);
         boolean hasExecution = hasItemInBundle(chestplate, ModItems.ASPECT_OF_EXECUTION);
 
-        if (!invisActive) {
+        if (!invisActive && !player.isInvisible()) {
             player.removeStatusEffect(StatusEffects.STRENGTH);
             return;
+        }
+
+        if (player.isInvisible() && !invisActive && hasExecution) {
+            player.addStatusEffect(new StatusEffectInstance(
+                    StatusEffects.STRENGTH,
+                    8,
+                    1,
+                    false,
+                    false,
+                    true
+            ));
         }
 
         float superAmount = PlayerSuperAccessor.get(player).getSuper();
@@ -93,6 +104,7 @@ public class ModVoidArmorItem extends ArmorItem {
             PacketByteBuf buf = PacketByteBufs.create();
             buf.writeFloat(PlayerSuperAccessor.get(player).getSuper());
             buf.writeFloat(PlayerSuperAccessor.get(player).getGear());
+            //buf.writeFloat(PlayerSuperAccessor.get(player).getInvisibilityCooldown());
             ServerPlayNetworking.send(serverPlayer, ModNetworking.GEAR_SYNC, buf);
         }
 
@@ -199,7 +211,6 @@ public class ModVoidArmorItem extends ArmorItem {
         player.removeStatusEffect(StatusEffects.STRENGTH);
     }
 
-    /* ==================== ARMOR CHECK ======================== */
     public static boolean hasFullSuitOfArmorOn(PlayerEntity player) {
         return player.getInventory().getArmorStack(0).getItem() instanceof ModVoidArmorItem &&
                 player.getInventory().getArmorStack(1).getItem() instanceof ModVoidArmorItem &&
@@ -365,7 +376,13 @@ public class ModVoidArmorItem extends ArmorItem {
 
     @Override
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
-        if (!isChestplate()) return;
+        if (!isChestplate()){
+            tooltip.add(Text.translatable("tooltip.sunbreaking.void_armor.tooltip").formatted(Formatting.LIGHT_PURPLE));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.void_armor.tooltip_1").formatted(Formatting.LIGHT_PURPLE));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.void_armor.tooltip_2").formatted(Formatting.LIGHT_PURPLE));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.void_armor.tooltip_3").formatted(Formatting.RED));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.void_armor.tooltip_4").formatted(Formatting.RED));
+        } else if (isChestplate()){
 
         List<Text> itemNames = getBundledItemNames(stack);
         if (!itemNames.isEmpty()) {
@@ -377,6 +394,13 @@ public class ModVoidArmorItem extends ArmorItem {
         if (itemNames.isEmpty()) {
             tooltip.add(Text.translatable("tooltip.sunbreaking.requires_sunbreaker_fragment.tooltip").formatted(Formatting.DARK_PURPLE));
             tooltip.add(Text.translatable("tooltip.sunbreaking.requires_nightstalker_aspect.tooltip").formatted(Formatting.DARK_PURPLE));
+        }
+
+        tooltip.add(Text.translatable("tooltip.sunbreaking.void_armor.tooltip").formatted(Formatting.LIGHT_PURPLE));
+        tooltip.add(Text.translatable("tooltip.sunbreaking.void_armor.tooltip_1").formatted(Formatting.LIGHT_PURPLE));
+        tooltip.add(Text.translatable("tooltip.sunbreaking.void_armor.tooltip_2").formatted(Formatting.LIGHT_PURPLE));
+        tooltip.add(Text.translatable("tooltip.sunbreaking.void_armor.tooltip_3").formatted(Formatting.RED));
+        tooltip.add(Text.translatable("tooltip.sunbreaking.void_armor.tooltip_4").formatted(Formatting.RED));
         }
     }
 

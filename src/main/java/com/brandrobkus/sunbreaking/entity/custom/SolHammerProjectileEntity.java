@@ -1,12 +1,10 @@
 package com.brandrobkus.sunbreaking.entity.custom;
 
+import com.brandrobkus.sunbreaking.Sunbreaking;
 import com.brandrobkus.sunbreaking.enchantment.ModEnchantmentHelper;
-import com.brandrobkus.sunbreaking.item.ModItems;
-import com.brandrobkus.sunbreaking.item.weapons.fragments.FragmentHelper;
 import com.brandrobkus.sunbreaking.sound.ModSounds;
 import com.brandrobkus.sunbreaking.enchantment.ModEnchantments;
 import com.brandrobkus.sunbreaking.entity.ModEntities;
-import com.brandrobkus.sunbreaking.util.ModDamageTypes;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -21,10 +19,12 @@ import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -32,12 +32,12 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class SolHammerProjectileEntity extends PersistentProjectileEntity{
+    public static final RegistryKey<DamageType> HAMMER_STRIKE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier(Sunbreaking.MOD_ID, "hammer_strike"));
     private static final TrackedData<Byte> RECALL = DataTracker.registerData(SolHammerProjectileEntity.class, TrackedDataHandlerRegistry.BYTE);
     private static final TrackedData<Boolean> ENCHANTED = DataTracker.registerData(SolHammerProjectileEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private ItemStack hammerStack;
     private boolean dealtDamage;
     private boolean hasLanded = false;
-    private boolean hasBulk;
 
     public int returnTimer;
     private float rotationZ = 0.0f;
@@ -100,7 +100,6 @@ public class SolHammerProjectileEntity extends PersistentProjectileEntity{
     }
 
     public void setHasBulk(boolean hasBulk) {
-        this.hasBulk = hasBulk;
         this.dataTracker.set(HAS_BULK, hasBulk);
     }
 
@@ -218,7 +217,7 @@ public class SolHammerProjectileEntity extends PersistentProjectileEntity{
 
         RegistryEntry<DamageType> entry = getWorld().getRegistryManager()
                 .get(RegistryKeys.DAMAGE_TYPE)
-                .getEntry(ModDamageTypes.HAMMER_STRIKE)
+                .getEntry(HAMMER_STRIKE)
                 .orElseThrow();
 
         DamageSource src = new DamageSource(entry, this, owner != null ? owner : this);

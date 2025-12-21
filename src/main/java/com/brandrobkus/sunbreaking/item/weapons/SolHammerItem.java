@@ -1,5 +1,6 @@
 package com.brandrobkus.sunbreaking.item.weapons;
 
+import com.brandrobkus.sunbreaking.Sunbreaking;
 import com.brandrobkus.sunbreaking.entity.custom.SolHammerProjectileEntity;
 import com.brandrobkus.sunbreaking.item.ModItems;
 import com.brandrobkus.sunbreaking.item.weapons.fragments.FragmentHelper;
@@ -33,6 +34,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -51,6 +53,8 @@ import java.util.*;
 import java.util.stream.Stream;
 
 public class SolHammerItem extends ToolItem implements Vanishable {
+    public static final RegistryKey<DamageType> HAMMER_STRIKE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier(Sunbreaking.MOD_ID, "hammer_strike"));
+    public static final RegistryKey<DamageType> BULK_HAMMER_STRIKE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier(Sunbreaking.MOD_ID, "bulk_hammer_strike"));
     private final float attackDamage;
     public static final int USE_THRESHOLD = 10;
     public static final float PROJECTILE_SPEED = 2.5F;
@@ -174,7 +178,7 @@ public class SolHammerItem extends ToolItem implements Vanishable {
 
             RegistryEntry<DamageType> entry = world.getRegistryManager()
                     .get(RegistryKeys.DAMAGE_TYPE)
-                    .getEntry(ModDamageTypes.BULK_HAMMER_STRIKE)
+                    .getEntry(BULK_HAMMER_STRIKE)
                     .orElseThrow();
 
             DamageSource src = new DamageSource(entry, attacker, attacker);
@@ -189,7 +193,7 @@ public class SolHammerItem extends ToolItem implements Vanishable {
 
             RegistryEntry<DamageType> entry = world.getRegistryManager()
                     .get(RegistryKeys.DAMAGE_TYPE)
-                    .getEntry(ModDamageTypes.HAMMER_STRIKE)
+                    .getEntry(HAMMER_STRIKE)
                     .orElseThrow();
 
             DamageSource src = new DamageSource(entry, attacker, attacker);

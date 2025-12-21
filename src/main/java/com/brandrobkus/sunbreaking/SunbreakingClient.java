@@ -9,16 +9,12 @@ import com.brandrobkus.sunbreaking.entity.ModEntities;
 import com.brandrobkus.sunbreaking.client.renderer.ModModelLayers;
 import com.brandrobkus.sunbreaking.client.renderer.ShadowshotNodeModel;
 import com.brandrobkus.sunbreaking.client.renderer.ShadowshotNodeRenderer;
-import com.brandrobkus.sunbreaking.item.ModItems;
-import com.brandrobkus.sunbreaking.item.weapons.BondItem;
-import com.brandrobkus.sunbreaking.item.weapons.fragments.FragmentHelper;
 import com.brandrobkus.sunbreaking.network.ItemEffectToggleable;
 import com.brandrobkus.sunbreaking.network.ModNetworking;
 import com.brandrobkus.sunbreaking.util.ModModelPredicateProvider;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
@@ -76,6 +72,14 @@ public class SunbreakingClient implements ClientModInitializer {
             }
 
         });
+
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            if (ModKeyBindings.TOGGLE_ARMOR_EFFECT.wasPressed()) {
+                PacketByteBuf buf = PacketByteBufs.create();
+                ClientPlayNetworking.send(ModNetworking.TOGGLE_ARMOR_EFFECT, buf);
+            }
+        });
+
 
     }
     private void registerItemModels() {

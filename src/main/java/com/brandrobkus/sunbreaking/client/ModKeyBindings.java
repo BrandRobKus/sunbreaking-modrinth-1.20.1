@@ -6,11 +6,11 @@ import net.minecraft.client.util.InputUtil;
 import org.lwjgl.glfw.GLFW;
 
 public class ModKeyBindings {
-    public static KeyBinding TOGGLE_INVISIBILITY;
+    public static KeyBinding TOGGLE_ARMOR_EFFECT;
     public static KeyBinding TOGGLE_ITEM_EFFECT;
 
     public static void register() {
-        TOGGLE_INVISIBILITY = KeyBindingHelper.registerKeyBinding(
+        TOGGLE_ARMOR_EFFECT = KeyBindingHelper.registerKeyBinding(
                 new KeyBinding(
                         "key.sunbreaking.toggle_invisibility",
                         InputUtil.Type.KEYSYM,

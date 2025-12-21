@@ -1,7 +1,10 @@
 package com.brandrobkus.sunbreaking.item.weapons;
 
+import com.brandrobkus.sunbreaking.Sunbreaking;
 import com.brandrobkus.sunbreaking.entity.custom.BaseHammerProjectileEntity;
 import com.brandrobkus.sunbreaking.entity.custom.BaseHammerProjectileEntity;
+import com.brandrobkus.sunbreaking.item.ModItems;
+import com.brandrobkus.sunbreaking.item.weapons.fragments.FragmentHelper;
 import com.brandrobkus.sunbreaking.network.ModNetworking;
 import com.brandrobkus.sunbreaking.sound.ModSounds;
 import com.brandrobkus.sunbreaking.enchantment.ModEnchantments;
@@ -24,11 +27,13 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.*;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.util.math.BlockPos;
@@ -40,6 +45,8 @@ import java.util.Set;
 import java.util.UUID;
 
 public class BaseHammerItem extends ToolItem implements Vanishable {
+    public static final RegistryKey<DamageType> HAMMER_STRIKE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier(Sunbreaking.MOD_ID, "hammer_strike"));
+    public static final RegistryKey<DamageType> BULK_HAMMER_STRIKE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier(Sunbreaking.MOD_ID, "bulk_hammer_strike"));
 
     private final float attackDamage;
     public static final int USE_THRESHOLD = 10;
@@ -126,34 +133,36 @@ public class BaseHammerItem extends ToolItem implements Vanishable {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         stack.damage(1, attacker, e -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
+
         World world = attacker.getWorld();
-        RegistryEntry<DamageType> entry = world.getRegistryManager()
-                .get(RegistryKeys.DAMAGE_TYPE)
-                .getEntry(ModDamageTypes.HAMMER_STRIKE)
-                .orElseThrow();
-
-        DamageSource src = new DamageSource(
-                entry,
-                attacker,
-                attacker
-        );
-
         float damageAmount = this.attackDamage;
 
         if (hasBulk(stack)) {
             damageAmount += 4.0F;
 
+            RegistryEntry<DamageType> entry = world.getRegistryManager()
+                    .get(RegistryKeys.DAMAGE_TYPE)
+                    .getEntry(BULK_HAMMER_STRIKE)
+                    .orElseThrow();
+
+            DamageSource src = new DamageSource(entry, attacker, attacker);
+            target.damage(src, damageAmount);
+
         } else {
             int bludgeoningLevel = EnchantmentHelper.getLevel(ModEnchantments.BLUDGEONING, stack);
-
             if (bludgeoningLevel > 0) {
                 float extra = 1.0F + (bludgeoningLevel - 1) * 0.5F;
                 damageAmount += extra;
             }
+
+            RegistryEntry<DamageType> entry = world.getRegistryManager()
+                    .get(RegistryKeys.DAMAGE_TYPE)
+                    .getEntry(HAMMER_STRIKE)
+                    .orElseThrow();
+
+            DamageSource src = new DamageSource(entry, attacker, attacker);
+            target.damage(src, damageAmount);
         }
-
-        target.damage(src, damageAmount);
-
         return true;
     }
 

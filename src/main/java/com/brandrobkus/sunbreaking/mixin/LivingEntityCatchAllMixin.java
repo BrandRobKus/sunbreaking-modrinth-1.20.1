@@ -25,7 +25,9 @@ import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.SpectralArrowEntity;
+import net.minecraft.entity.projectile.thrown.PotionEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -253,8 +255,16 @@ public class LivingEntityCatchAllMixin implements BondGlowTracked {
     ) {
         if (!cir.getReturnValue()) return;
 
-        LivingEntity self = (LivingEntity)(Object)this;
+        LivingEntity self = (LivingEntity) (Object) this;
         if (self.getWorld().isClient()) return;
+
+        if (!(source.getAttacker() instanceof ServerPlayerEntity)) return;
+        if (source.getSource() instanceof PersistentProjectileEntity) return;
+        if (source.getSource() instanceof FirelessLightningEntity) return;
+        if (source.getSource() instanceof PotionEntity) return;
+        if (source.isIn(DamageTypeTags.IS_EXPLOSION)) return;
+        if (source.isIn(DamageTypeTags.IS_LIGHTNING)) return;
+        if (source.isIn(DamageTypeTags.IS_PROJECTILE)) return;
 
         DamageTracker.onDamageApplied(self, source, amount);
     }

@@ -113,6 +113,8 @@
   "tooltip.sunbreaking.aspect_of_obscurity.tooltip_0": "Pressing it again removes it.",
   "tooltip.sunbreaking.aspect_of_obscurity.tooltip_1": "Thrown Smoke Bombs grant Invisibility",
   "tooltip.sunbreaking.aspect_of_obscurity.tooltip_2": "to your Fireteam members.",
+  "tooltip.sunbreaking.aspect_of_obscurity.tooltip_3": "Being Invisible this way drains",
+  "tooltip.sunbreaking.aspect_of_obscurity.tooltip_4": "your Super Meter!",
   "item.sunbreaking.aspect_of_execution": "Aspect of Execution",
   "tooltip.sunbreaking.aspect_of_execution.tooltip": "While Invisible, grants Strength II.",
   "tooltip.sunbreaking.aspect_of_execution.tooltip_1": "Melee hitting with this armor",
@@ -124,14 +126,18 @@
   "tooltip.sunbreaking.aspect_of_renewal.tooltip": "Kills with the Shadowshot Bow increase",
   "tooltip.sunbreaking.aspect_of_renewal.tooltip_1": "Super meter charge speed for 4 seconds.",
   "tooltip.sunbreaking.requires_nightstalker_aspect.tooltip": "Nightstalker Aspects",
-
+  "tooltip.sunbreaking.void_armor.tooltip": "This armor piece also goes",
+  "tooltip.sunbreaking.void_armor.tooltip_1": "invisible when Invisibility",
+  "tooltip.sunbreaking.void_armor.tooltip_2": "is applied.",
+  "tooltip.sunbreaking.void_armor.tooltip_3": "Melee hitting combatants",
+  "tooltip.sunbreaking.void_armor.tooltip_4": "removes Invisibility",
 
   "item.sunbreaking.stormcallers_bond": "Stormcaller's Bond",
   "tooltip.sunbreaking.requires_stormcaller_fragment.tooltip_1": "Stormcaller Fragments",
   "tooltip.sunbreaking.stormcaller_fragment.tooltip": "Stormcaller Fragment",
 
   "item.sunbreaking.fragment_of_shock": "Fragment of Shock",
-  "tooltip.sunbreaking.fragment_of_shock.tooltip": "Press R to activate",
+  "tooltip.sunbreaking.fragment_of_shock.tooltip": "Press %s to activate",
   "tooltip.sunbreaking.fragment_of_shock.tooltip_1": "Precision Mode, which summons",
   "tooltip.sunbreaking.fragment_of_shock.tooltip_2": "a single Lightning Bolt",
   "tooltip.sunbreaking.fragment_of_shock.tooltip_3": "at reduced cost",
@@ -149,11 +155,10 @@
 
   "item.sunbreaking.aspect_of_surge": "Aspect of Surge",
   "tooltip.sunbreaking.aspect_of_surge.tooltip": "Sprinting for a short time grants",
-  "tooltip.sunbreaking.aspect_of_surge.tooltip_1": "up to Speed II.",
-  "tooltip.sunbreaking.aspect_of_surge.tooltip_2": "Extended sprint grants",
-  "tooltip.sunbreaking.aspect_of_surge.tooltip_3": "Speed II until sprinting ends.",
+  "tooltip.sunbreaking.aspect_of_surge.tooltip_1": "Speed II after pressing %s.",
   "tooltip.sunbreaking.aspect_of_surge.tooltip_4": "With Speed II, melee hitting a target",
   "tooltip.sunbreaking.aspect_of_surge.tooltip_5": "summons a Lightning Bolt at its location.",
+  "tooltip.sunbreaking.aspect_of_surge.tooltip_6": "Running with Speed II drains your Super Meter!",
   "item.sunbreaking.aspect_of_brilliance": "Aspect of Brilliance",
   "tooltip.sunbreaking.aspect_of_brilliance.tooltip": "Lightning Bolts you summon",
   "tooltip.sunbreaking.aspect_of_brilliance.tooltip_1": "Blind targets.",
@@ -224,5 +229,9 @@
   "item.sunbreaking.arc_upgrade_template.base_slot": "Arc Light",
   "item.sunbreaking.arc_upgrade_template.addition_slot": "Arc Upgrade",
   "item.sunbreaking.arc_upgrade_template.apply": "Apply",
-  "item.sunbreaking.arc_upgrade_template.base": "Base"
+  "item.sunbreaking.arc_upgrade_template.base": "Base",
+
+  "death.attack.glaive_projectile": "%1$s thought Glaives were only Melee Weapons",
+  "death.attack.glaive_projectile.player": "%2$s was shot by %1$s, who was using a pointy stick? How does that work?",
+  "death.attack.fireless_lightning": "%1$s crossed a Stormcaller"
 }

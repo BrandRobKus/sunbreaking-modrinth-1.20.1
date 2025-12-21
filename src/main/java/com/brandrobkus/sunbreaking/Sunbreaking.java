@@ -5,6 +5,7 @@ import com.brandrobkus.sunbreaking.enchantment.ModEnchantments;
 import com.brandrobkus.sunbreaking.entity.ModEntities;
 import com.brandrobkus.sunbreaking.event.ServerTickHandler;
 import com.brandrobkus.sunbreaking.command.fireteam.FireteamEvents;
+import com.brandrobkus.sunbreaking.item.custom.ModArcArmorItem;
 import com.brandrobkus.sunbreaking.item.custom.ModVoidArmorItem;
 import com.brandrobkus.sunbreaking.item.weapons.BondItem;
 import com.brandrobkus.sunbreaking.item.ModItemGroups;
@@ -43,9 +44,21 @@ public class Sunbreaking implements ModInitializer {
 		ModSounds.registerSounds();
 		ModDamageTypes.registerModDamageTypes();
 		ServerPlayNetworking.registerGlobalReceiver(
-				ModNetworking.TOGGLE_INVISIBILITY,
-				(server, player, handler, buf, responseSender)
-						-> server.execute(() -> ModVoidArmorItem.toggleInvisibility(player)));
+				ModNetworking.TOGGLE_ARMOR_EFFECT,
+				(server, player, handler, buf, responseSender) ->
+						server.execute(() -> {
+							ItemStack chest = player.getInventory().getArmorStack(2);
+
+							if (chest.getItem() instanceof ModVoidArmorItem) {
+								ModVoidArmorItem.toggleInvisibility(player);
+							}
+
+							if (chest.getItem() instanceof ModArcArmorItem) {
+								ModArcArmorItem.toggleSpeed(player);
+							}
+						})
+		);
+
 
 		ServerPlayNetworking.registerGlobalReceiver(TOGGLE_ITEM_EFFECT, (server, player, handler, buf, responseSender) -> server.execute(() -> {
             ItemStack stack = player.getMainHandStack();
@@ -76,9 +89,11 @@ public class Sunbreaking implements ModInitializer {
 
 					float newSuper = PlayerSuperAccessor.get(player).getSuper();
 					float gear = PlayerSuperAccessor.get(player).getGear();
+					float invisibilityCooldown = PlayerSuperAccessor.get(player).getInvisibilityCooldown();
 					PacketByteBuf buf = PacketByteBufs.create();
 					buf.writeFloat(newSuper);
 					buf.writeFloat(gear);
+					buf.writeFloat(invisibilityCooldown);
 					ServerPlayNetworking.send(player, ModNetworking.GEAR_SYNC, buf);
 				}
 			}

@@ -60,7 +60,7 @@ public class BondItem extends Item implements ItemEffectToggleable {
     public void onToggleEffect(ItemStack stack, PlayerEntity player) {
         if (!FragmentHelper.hasFragment(stack, ModItems.FRAGMENT_OF_SHOCK)) {
             if (player.getWorld().isClient) {
-                player.sendMessage(Text.translatable("message.sunbreaking.precision_requires_shock").formatted(Formatting.RED), true);
+                player.playSound(ModSounds.COOLDOWN_INDICATOR, 1,1);
             }
             return;
         }

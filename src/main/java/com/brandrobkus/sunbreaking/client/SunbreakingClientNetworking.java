@@ -11,14 +11,14 @@ public class SunbreakingClientNetworking {
         ClientPlayNetworking.registerGlobalReceiver(ModNetworking.GEAR_SYNC, (client, handler, buf, responseSender) -> {
             float superValue = buf.readFloat();
             float gearValue = buf.readFloat();
-            float invisibilityCooldown = buf.readFloat();
+            //float invisibilityCooldown = buf.readFloat();
 
             client.execute(() -> {
                 if (client.player != null) {
                     SunbreakingMeterComponent comp = PlayerSuperAccessor.get(client.player);
                     comp.setSuper(superValue);
                     comp.setGear(gearValue);
-                    comp.setGear(invisibilityCooldown);
+                    //comp.setInvisibilityCooldown(invisibilityCooldown);
                 }
             });
         });

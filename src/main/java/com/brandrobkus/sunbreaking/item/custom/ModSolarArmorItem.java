@@ -51,11 +51,11 @@ public class ModSolarArmorItem extends ArmorItem {
                 float newSuper = PlayerSuperAccessor.get(player).getSuper();
                 float newGear = PlayerSuperAccessor.get(player).getGear();
                 PacketByteBuf buf = PacketByteBufs.create();
-                buf.writeFloat(newSuper);
-                buf.writeFloat(newGear);
-                if (player instanceof ServerPlayerEntity serverPlayer) {
-                    ServerPlayNetworking.send(serverPlayer, ModNetworking.GEAR_SYNC, buf);
-                }
+                if (!(player instanceof ServerPlayerEntity serverPlayer)) return;
+                buf.writeFloat(PlayerSuperAccessor.get(player).getSuper());
+                buf.writeFloat(PlayerSuperAccessor.get(player).getGear());
+                //buf.writeFloat(PlayerSuperAccessor.get(player).getInvisibilityCooldown());
+                ServerPlayNetworking.send(serverPlayer, ModNetworking.GEAR_SYNC, buf);
 
             }
         }

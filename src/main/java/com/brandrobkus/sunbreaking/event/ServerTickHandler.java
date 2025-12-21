@@ -29,10 +29,12 @@ public class ServerTickHandler {
 
                 comp.addSuper(0.05f);
                 comp.addGear(0.2f);
+                comp.addInvisibilityCooldown(1f);
 
                 PacketByteBuf buf = PacketByteBufs.create();
                 buf.writeFloat(comp.getSuper());
                 buf.writeFloat(comp.getGear());
+                buf.writeFloat(comp.getInvisibilityCooldown());
 
                 ServerPlayNetworking.send(player, ModNetworking.GEAR_SYNC, buf);
             });

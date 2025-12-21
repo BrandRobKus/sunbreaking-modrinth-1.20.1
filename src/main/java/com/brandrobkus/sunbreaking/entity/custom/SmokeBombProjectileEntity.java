@@ -171,14 +171,14 @@ public class SmokeBombProjectileEntity extends ThrownItemEntity {
 
         for (LivingEntity entity : targets) {
 
-            if (entity == owner) {
+            if (!(entity instanceof PlayerEntity player)) continue;
+
+            if (entity == owner && ModVoidArmorItem.hasFullSuitOfArmorOn(player)){
                 entity.addStatusEffect(new StatusEffectInstance(StatusEffects.INVISIBILITY, duration));
                 entity.playSound(ModSounds.INVISIBILITY_TRIGGER, 1.0F, 1.0F);
                 affectedAny = true;
                 continue;
             }
-
-            if (!(entity instanceof PlayerEntity player)) continue;
 
             if (!areFireteamMembers(owner, player)) continue;
 

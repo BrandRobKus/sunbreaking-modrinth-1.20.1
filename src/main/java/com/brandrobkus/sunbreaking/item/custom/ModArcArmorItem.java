@@ -1,8 +1,12 @@
 package com.brandrobkus.sunbreaking.item.custom;
 
 import com.brandrobkus.sunbreaking.item.ModItems;
+import com.brandrobkus.sunbreaking.network.ModNetworking;
 import com.brandrobkus.sunbreaking.sound.ModSounds;
 import com.brandrobkus.sunbreaking.util.ModTags;
+import com.brandrobkus.sunbreaking.util.gui.PlayerSuperAccessor;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.item.BundleTooltipData;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.item.TooltipData;
@@ -14,8 +18,10 @@ import net.minecraft.inventory.StackReference;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
 import net.minecraft.util.ClickType;
 import net.minecraft.util.Formatting;
@@ -30,9 +36,14 @@ import java.util.stream.Stream;
 
 public class ModArcArmorItem extends ArmorItem {
     private static final int MAX_STORAGE = 128;
-    private static final String SPEED_KEY = "aspectSpeed";
-    private static final String SPEED_KEY_2 = "aspectSpeed2";
-    private static final String SPRINT_TIME = "sprintTime";
+    public static final String SPEED_ACTIVE = "ArcSpeedActive";
+    private static final String SPEED_READY = "SpeedReady";
+    public static final String SPRINT_TIME = "SprintTime";
+    private static final String SPEED_GRACE = "SpeedGrace";
+    private static final int SPRINT_REQUIRED = 180;
+    private static final int GRACE_TICKS = 5;
+
+    public float superDrain = -0.0625f;
 
     public ModArcArmorItem(ArmorMaterial material, Type type, Settings settings) {
         super(material, type, settings);
@@ -47,44 +58,116 @@ public class ModArcArmorItem extends ArmorItem {
     }
 
     private void evaluateArmorEffects(PlayerEntity player) {
-        World world = player.getWorld();
+        if (!(player instanceof ServerPlayerEntity serverPlayer)) return;
+
         ItemStack chestplate = player.getInventory().getArmorStack(2);
         if (!(chestplate.getItem() instanceof ModArcArmorItem)) return;
+        if (!hasItemInBundle(chestplate, ModItems.ASPECT_OF_SURGE)) return;
 
         NbtCompound nbt = chestplate.getOrCreateNbt();
 
-        boolean hasSurge = hasItemInBundle(chestplate, ModItems.ASPECT_OF_SURGE);
-
+        boolean speedActive = nbt.getBoolean(SPEED_ACTIVE);
         int sprintTime = nbt.getInt(SPRINT_TIME);
 
-        if (hasSurge && player.isSprinting()) {
-            sprintTime++;
-
-            if (sprintTime >= 180 && sprintTime < 600) {
-                int remaining = player.hasStatusEffect(StatusEffects.SPEED)
-                        ? player.getStatusEffect(StatusEffects.SPEED).getDuration()
-                        : 0;
-                player.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, remaining, 0, false, true, true));
-                nbt.putBoolean(SPEED_KEY, true);
+        if (player.isSprinting()) {
+            if (!speedActive) {
+                sprintTime++;
+                if (sprintTime == SPRINT_REQUIRED) {
+                    serverPlayer.playSound(
+                            ModSounds.GEAR_COOLDOWN_END,
+                            SoundCategory.PLAYERS,
+                            0.8f,
+                            1.1f
+                    );
+                    nbt.putBoolean(SPEED_READY, true);
+                }
             }
-
-            if (sprintTime >= 600) {
-                int remaining = player.hasStatusEffect(StatusEffects.SPEED)
-                        ? player.getStatusEffect(StatusEffects.SPEED).getDuration()
-                        : 0;
-                player.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, remaining, 1, false, true, true));
-                nbt.putBoolean(SPEED_KEY_2, true);
-                nbt.putBoolean(SPEED_KEY, false);
-            }
-
         } else {
             sprintTime = 0;
-            nbt.putBoolean(SPEED_KEY, false);
-            nbt.putBoolean(SPEED_KEY_2, false);
+            nbt.putBoolean(SPEED_READY, false);
+
+            if (speedActive) {
+                int grace = nbt.getInt(SPEED_GRACE);
+                if (grace > 0) {
+                    nbt.putInt(SPEED_GRACE, grace - 1);
+                } else {
+                    cancelSpeed(player);
+                    nbt.putBoolean(SPEED_ACTIVE, false);
+                }
+            }
         }
+
         nbt.putInt(SPRINT_TIME, sprintTime);
+        boolean activeNow = nbt.getBoolean(SPEED_ACTIVE);
+        if (!activeNow) return;
+
+        float superAmount = PlayerSuperAccessor.get(player).getSuper();
+        if (superAmount <= 0f) {
+            cancelSpeed(player);
+            nbt.putBoolean(SPEED_ACTIVE, false);
+            return;
+        }
+
+        int effectTimer = Math.round(superAmount * 0.28f / -superDrain);
+
+        player.addStatusEffect(new StatusEffectInstance(
+                StatusEffects.SPEED,
+                effectTimer,
+                1,
+                false,
+                true,
+                true
+        ));
+
+        PlayerSuperAccessor.get(player).addSuper(superDrain);
+
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeFloat(PlayerSuperAccessor.get(player).getSuper());
+        buf.writeFloat(PlayerSuperAccessor.get(player).getGear());
+        //buf.writeFloat(PlayerSuperAccessor.get(player).getInvisibilityCooldown());
+        ServerPlayNetworking.send(serverPlayer, ModNetworking.GEAR_SYNC, buf);
     }
 
+    public static void toggleSpeed(PlayerEntity player) {
+        System.out.println("[ARC] toggleSpeed called");
+        if (!(player instanceof ServerPlayerEntity)) return;
+        if (!hasFullSuitOfArmorOn(player)) return;
+
+        ItemStack chestplate = player.getInventory().getArmorStack(2);
+        if (!(chestplate.getItem() instanceof ModArcArmorItem)) return;
+        if (!hasItemInBundle(chestplate, ModItems.ASPECT_OF_SURGE)) return;
+
+        NbtCompound nbt = chestplate.getOrCreateNbt();
+
+        if (!nbt.getBoolean(SPEED_READY)) return;
+        if (PlayerSuperAccessor.get(player).getSuper() <= 0f) return;
+
+        boolean active = nbt.getBoolean(SPEED_ACTIVE);
+
+        if (active) {
+            cancelSpeed(player);
+            nbt.putBoolean(SPEED_ACTIVE, false);
+            return;
+        }
+
+        nbt.putBoolean(SPEED_ACTIVE, true);
+        nbt.putInt(SPEED_GRACE, GRACE_TICKS);
+        System.out.println("[ARC] SPEED_ACTIVE set true");
+        nbt.putInt(SPEED_GRACE, GRACE_TICKS);
+
+        player.addStatusEffect(new StatusEffectInstance(
+                StatusEffects.SPEED,
+                5,
+                1,
+                false,
+                true,
+                true
+        ));
+    }
+
+    private static void cancelSpeed(PlayerEntity player) {
+        player.removeStatusEffect(StatusEffects.SPEED);
+    }
 
     public static boolean hasFullSuitOfArmorOn(PlayerEntity player) {
         return player.getInventory().getArmorStack(0).getItem() instanceof ModArcArmorItem &&
