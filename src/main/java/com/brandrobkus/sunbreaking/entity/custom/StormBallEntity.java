@@ -15,7 +15,6 @@ import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -151,7 +150,7 @@ public class StormBallEntity extends ThrownItemEntity {
                     impactPos.getX(),
                     impactPos.getY(),
                     impactPos.getZ(),
-                    2,
+                    1,
                     false,
                     World.ExplosionSourceType.NONE
             );

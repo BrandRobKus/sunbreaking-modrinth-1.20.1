@@ -18,6 +18,10 @@ public class FragmentItem extends Item {
         super(settings);
     }
 
+    public boolean hasGlint(ItemStack stack) {
+        return true;
+    }
+
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         if (stack.isIn(ModTags.Items.SOLAR_FRAGMENTS)) {
@@ -83,6 +87,20 @@ public class FragmentItem extends Item {
             tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_shock.tooltip_1"));
             tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_shock.tooltip_2"));
             tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_shock.tooltip_3"));
+        }
+        if (stack.isOf(ModItems.FRAGMENT_OF_VOLTS)){
+            tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_volts.tooltip"));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_volts.tooltip_1"));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_combustion.tooltip_1").formatted(Formatting.RED));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_volts.tooltip_2"));
+        }
+
+        if (stack.isOf(ModItems.FRAGMENT_OF_BEACONS)){
+            tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_beacons.tooltip"));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_beacons.tooltip_1"));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_beacons.tooltip_2"));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_beacons.tooltip_3"));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_beacons.tooltip_4"));
         }
 
         else if (stack.getItem() instanceof FragmentItem

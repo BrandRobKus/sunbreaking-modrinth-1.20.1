@@ -7,7 +7,7 @@ import net.minecraft.recipe.Ingredient;
 import java.util.function.Supplier;
 
 public enum ModToolMaterials implements ToolMaterial {
-    SOLAR(5, 550, 4.5f, 3.5f, 25,
+    SOLAR(5, 550, 4.5f, 5f, 25,
             () -> Ingredient.ofItems(ModItems.SOLAR_LIGHT));
 
     private final int miningLevel;

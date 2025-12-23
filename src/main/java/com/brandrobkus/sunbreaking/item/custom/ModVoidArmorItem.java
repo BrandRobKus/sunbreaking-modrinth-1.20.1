@@ -58,14 +58,12 @@ public class ModVoidArmorItem extends ArmorItem {
     private void evaluateArmorEffects(PlayerEntity player) {
         ItemStack chestplate = player.getInventory().getArmorStack(2);
         if (!(chestplate.getItem() instanceof ModVoidArmorItem)) return;
-
         NbtCompound nbt = chestplate.getOrCreateNbt();
 
         boolean invisActive = nbt.getBoolean(INVIS_ACTIVE);
         boolean hasExecution = hasItemInBundle(chestplate, ModItems.ASPECT_OF_EXECUTION);
 
         if (!invisActive && !player.isInvisible()) {
-            player.removeStatusEffect(StatusEffects.STRENGTH);
             return;
         }
 
@@ -142,11 +140,11 @@ public class ModVoidArmorItem extends ArmorItem {
 
         if (PlayerSuperAccessor.get(player).getSuper() <= 0f) return;
 
-        if(PlayerSuperAccessor.get(player).getSuper() >= 12f) {
+        if(PlayerSuperAccessor.get(player).getSuper() >= 50f) {
             applyInvisibilityBurst(player);
             nbt.putBoolean(INVIS_ACTIVE, true);
             PlayerSuperAccessor.get(player).addSuper(-12f);
-        } else if (PlayerSuperAccessor.get(player).getSuper() < 12f) {
+        } else if (PlayerSuperAccessor.get(player).getSuper() < 50f) {
             ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
             serverPlayer.playSound(
                     ModSounds.COOLDOWN_INDICATOR,
@@ -162,7 +160,7 @@ public class ModVoidArmorItem extends ArmorItem {
 
         player.addStatusEffect(new StatusEffectInstance(
                 StatusEffects.INVISIBILITY,
-                100,
+                10,
                 0,
                 false,
                 true,

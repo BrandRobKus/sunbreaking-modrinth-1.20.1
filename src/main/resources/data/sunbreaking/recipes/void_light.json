@@ -1,24 +1,13 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "#A#",
-    "ANA",
-    "#I#"
-  ],
-  "key": {
-    "#": {
-      "item": "minecraft:ender_pearl"
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "sunbreaking:fleeting_void_light"
     },
-    "N": {
+    {
       "item": "minecraft:nether_star"
-    },
-    "A": {
-      "item": "minecraft:amethyst_shard"
-    },
-    "I": {
-      "item": "minecraft:netherite_ingot"
     }
-  },
+  ],
   "result": {
     "item": "sunbreaking:void_light",
     "count": 1

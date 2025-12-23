@@ -25,7 +25,6 @@ import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.SpectralArrowEntity;
-import net.minecraft.entity.projectile.thrown.PotionEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -71,12 +70,14 @@ public class LivingEntityCatchAllMixin implements BondGlowTracked {
             }
         }
 
-        if (immediate instanceof SolHammerProjectileEntity hammerProjectile) {
+        boolean isLightning = source.getSource() instanceof FirelessLightningEntity;
+
+        if (immediate instanceof SolHammerProjectileEntity) {
             handleHammerKill(player);
         }
 
-        if (creditedPlayer != null && immediate instanceof FirelessLightningEntity) {
-            handleBondKill(creditedPlayer);
+        if (isLightning) {
+            handleBondKill(player);
         }
 
         if (creditedPlayer != null) {
@@ -149,14 +150,12 @@ public class LivingEntityCatchAllMixin implements BondGlowTracked {
         ItemStack chest = player.getInventory().getArmorStack(2);
         if (!(chest.getItem() instanceof ModArcArmorItem arcChest)) return;
 
-        boolean hasRecharge = arcChest.hasItemInBundle(chest, ModItems.ASPECT_OF_RECHARGE);
-        if (!hasRecharge) {
-            System.out.println("[BondKill] Chest armor missing ASPECT_OF_RECHARGE fragment.");
-            return;
-        }
+        boolean hasRecharge =
+                arcChest.hasItemInBundle(chest, ModItems.ASPECT_OF_RECHARGE);
 
-        System.out.println("[BondKill] Applying Aspect of Recharge!");
-        PlayerSuperAccessor.get(player).setRechargeTicks(140);
+        if (!hasRecharge) return;
+
+        PlayerSuperAccessor.get(player).setRenewedTicks(140);
     }
 
     private boolean hasFullStormcallerSet(PlayerEntity player) {
@@ -255,17 +254,9 @@ public class LivingEntityCatchAllMixin implements BondGlowTracked {
     ) {
         if (!cir.getReturnValue()) return;
 
+        boolean isArrow = false;
         LivingEntity self = (LivingEntity) (Object) this;
         if (self.getWorld().isClient()) return;
-
-        if (!(source.getAttacker() instanceof ServerPlayerEntity)) return;
-        if (source.getSource() instanceof PersistentProjectileEntity) return;
-        if (source.getSource() instanceof FirelessLightningEntity) return;
-        if (source.getSource() instanceof PotionEntity) return;
-        if (source.isIn(DamageTypeTags.IS_EXPLOSION)) return;
-        if (source.isIn(DamageTypeTags.IS_LIGHTNING)) return;
-        if (source.isIn(DamageTypeTags.IS_PROJECTILE)) return;
-
         DamageTracker.onDamageApplied(self, source, amount);
     }
 }

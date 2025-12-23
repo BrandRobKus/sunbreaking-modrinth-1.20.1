@@ -1,21 +1,13 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " # ",
-    "#N#",
-    " I "
-  ],
-  "key": {
-    "#": {
-      "item": "minecraft:fire_charge"
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "sunbreaking:diminished_solar_light"
     },
-    "N": {
+    {
       "item": "minecraft:nether_star"
-    },
-    "I": {
-      "item": "minecraft:netherite_ingot"
     }
-  },
+  ],
   "result": {
     "item": "sunbreaking:solar_light",
     "count": 1

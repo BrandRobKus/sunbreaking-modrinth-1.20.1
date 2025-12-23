@@ -7,7 +7,6 @@ import com.brandrobkus.sunbreaking.item.custom.aspects.StormcallingAspectHandler
 import com.brandrobkus.sunbreaking.item.weapons.BondItem;
 import com.brandrobkus.sunbreaking.item.weapons.fragments.FragmentHelper;
 import com.brandrobkus.sunbreaking.util.BondGlowTracked;
-import com.brandrobkus.sunbreaking.util.ModDamageTypes;
 import com.google.common.collect.Sets;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.*;
@@ -158,8 +157,10 @@ public class FirelessLightningEntity extends Entity {
                                 serverWorld.getRegistryManager()
                                         .get(RegistryKeys.DAMAGE_TYPE)
                                         .entryOf(FIRELESS_LIGHTNING),
+                                this,
                                 owner
                         );
+
 
                         livingEntity.damage(source, 7.0F);
 
@@ -295,6 +296,7 @@ public class FirelessLightningEntity extends Entity {
     @Override
     protected void readCustomDataFromNbt(NbtCompound nbt) {
         if (nbt.contains("HeightDifference")) {
+            this.heightDifference = nbt.getDouble("HeightDifference");
             this.heightDifference = nbt.getDouble("HeightDifference");
         }
     }

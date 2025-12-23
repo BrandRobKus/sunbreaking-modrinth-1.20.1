@@ -6,6 +6,7 @@ import com.brandrobkus.sunbreaking.entity.ModEntities;
 import com.brandrobkus.sunbreaking.event.ServerTickHandler;
 import com.brandrobkus.sunbreaking.command.fireteam.FireteamEvents;
 import com.brandrobkus.sunbreaking.item.custom.ModArcArmorItem;
+import com.brandrobkus.sunbreaking.item.custom.ModSolarArmorItem;
 import com.brandrobkus.sunbreaking.item.custom.ModVoidArmorItem;
 import com.brandrobkus.sunbreaking.item.weapons.BondItem;
 import com.brandrobkus.sunbreaking.item.ModItemGroups;
@@ -55,6 +56,10 @@ public class Sunbreaking implements ModInitializer {
 
 							if (chest.getItem() instanceof ModArcArmorItem) {
 								ModArcArmorItem.toggleSpeed(player);
+							}
+
+							if (chest.getItem() instanceof ModSolarArmorItem) {
+								ModSolarArmorItem.toggleFireproof(player);
 							}
 						})
 		);

@@ -1,22 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "#L#",
+    "#F#",
     "#N#",
-    "#D#"
+    "#F#"
   ],
   "key": {
     "#": {
       "item": "minecraft:cobblestone"
     },
-    "L": {
-      "item": "minecraft:lightning_rod"
+    "F": {
+      "item": "sunbreaking:flickering_arc_light"
     },
     "N": {
       "item": "minecraft:netherite_upgrade_smithing_template"
-    },
-    "D": {
-      "item": "minecraft:diamond_block"
     }
   },
   "result": {

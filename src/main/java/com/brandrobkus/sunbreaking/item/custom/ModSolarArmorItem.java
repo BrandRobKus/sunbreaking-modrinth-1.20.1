@@ -22,6 +22,7 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
 import net.minecraft.util.ClickType;
 import net.minecraft.util.Formatting;
@@ -34,7 +35,8 @@ import java.util.stream.Stream;
 
 public class ModSolarArmorItem extends ArmorItem {
     private static final int MAX_STORAGE = 128;
-    private static final String FIRE_RESISTANT_KEY = "AspectFireResistant";
+    private static final String FIREPROOF = "SolarFireproof";
+    public float superDrain = -0.0625f;
 
     public ModSolarArmorItem(ArmorMaterial material, Type type, Settings settings) {
         super(material, type, settings);
@@ -44,22 +46,7 @@ public class ModSolarArmorItem extends ArmorItem {
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if (!world.isClient() && entity instanceof PlayerEntity player && hasFullSuitOfArmorOn(player)) {
             evaluateArmorEffects(player);
-            ItemStack chestplate = player.getInventory().getArmorStack(2);
-            boolean isFireResistant = chestplate.getOrCreateNbt().getBoolean(FIRE_RESISTANT_KEY);
-            if (hasFullSuitOfArmorOn(player) && player.isOnFire() && isFireResistant){
-                PlayerSuperAccessor.get(player).addGear(0.1f);
-                float newSuper = PlayerSuperAccessor.get(player).getSuper();
-                float newGear = PlayerSuperAccessor.get(player).getGear();
-                PacketByteBuf buf = PacketByteBufs.create();
-                if (!(player instanceof ServerPlayerEntity serverPlayer)) return;
-                buf.writeFloat(PlayerSuperAccessor.get(player).getSuper());
-                buf.writeFloat(PlayerSuperAccessor.get(player).getGear());
-                //buf.writeFloat(PlayerSuperAccessor.get(player).getInvisibilityCooldown());
-                ServerPlayNetworking.send(serverPlayer, ModNetworking.GEAR_SYNC, buf);
-
-            }
         }
-
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
@@ -67,25 +54,101 @@ public class ModSolarArmorItem extends ArmorItem {
         if (!hasFullSuitOfArmorOn(player)) {
             return;
         }
-
         ItemStack chestplate = player.getInventory().getArmorStack(2);
         if (!(chestplate.getItem() instanceof ModSolarArmorItem)) return;
 
         NbtCompound nbt = chestplate.getOrCreateNbt();
-        boolean hasTemperingAspect = hasItemInBundle(chestplate, ModItems.ASPECT_OF_TEMPERING);
+        boolean fireproofActive = nbt.getBoolean(FIREPROOF);
 
-        if (hasFullSuitOfArmorOn(player) && hasTemperingAspect) {
-            if (!player.hasStatusEffect(StatusEffects.FIRE_RESISTANCE)) {
-                player.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 10, 0, false, false, false));
-            }
-            nbt.putBoolean(FIRE_RESISTANT_KEY, true);
-        } else {
-            nbt.putBoolean(FIRE_RESISTANT_KEY, false);
+        if (!fireproofActive && player.isOnFire()) {
+            PlayerSuperAccessor.get(player).addGear(0.05f);
+            return;
+        }
+
+        if (!fireproofActive && !player.isOnFire()) {
+            return;
+        }
+
+        float superAmount = PlayerSuperAccessor.get(player).getSuper();
+        int effectTimer = Math.round(superAmount * 0.28f/-superDrain);
+
+        if (superAmount <= 0f) {
+            cancelFireproof(player);
+            nbt.putBoolean(FIREPROOF, false);
+            return;
+        }
+
+        player.addStatusEffect(new StatusEffectInstance(
+                StatusEffects.FIRE_RESISTANCE,
+                effectTimer,
+                0,
+                false,
+                true,
+                true
+        ));
+
+        if (player.isOnFire()) {
+            PlayerSuperAccessor.get(player).addSuper(superDrain);
+            PlayerSuperAccessor.get(player).addGear(0.1f);
+        }
+
+        if (player instanceof ServerPlayerEntity serverPlayer) {
+            PacketByteBuf buf = PacketByteBufs.create();
+            buf.writeFloat(PlayerSuperAccessor.get(player).getSuper());
+            buf.writeFloat(PlayerSuperAccessor.get(player).getGear());
+            ServerPlayNetworking.send(serverPlayer, ModNetworking.GEAR_SYNC, buf);
         }
     }
 
+    public static void toggleFireproof(PlayerEntity player) {
+        if (!(player instanceof ServerPlayerEntity)) return;
+        if (!hasFullSuitOfArmorOn(player)) return;
 
-    private boolean hasFullSuitOfArmorOn(PlayerEntity player) {
+        ItemStack chestplate = player.getInventory().getArmorStack(2);
+        if (!(chestplate.getItem() instanceof ModSolarArmorItem)) return;
+
+        boolean hasTempering = hasItemInBundle(chestplate, ModItems.ASPECT_OF_TEMPERING);
+        if (!hasTempering) return;
+
+        NbtCompound nbt = chestplate.getOrCreateNbt();
+        boolean active = nbt.getBoolean(FIREPROOF);
+
+        if (active) {
+            cancelFireproof(player);
+            nbt.putBoolean(FIREPROOF, false);
+            return;
+        } else {
+            applyFireproof(player);
+            nbt.putBoolean(FIREPROOF, true);
+        }
+        if (PlayerSuperAccessor.get(player).getSuper() <= 0f) return;
+    }
+
+    private static void applyFireproof(PlayerEntity player) {
+        World world = player.getWorld();
+
+        player.addStatusEffect(new StatusEffectInstance(
+                StatusEffects.FIRE_RESISTANCE,
+                100,
+                0,
+                false,
+                true,
+                true
+        ));
+
+        world.playSound(null, player.getX(), player.getY(), player.getZ(),
+                ModSounds.COOLDOWN_END, SoundCategory.PLAYERS, 1f, 1f);
+    }
+
+    private static void cancelFireproof(PlayerEntity player) {
+        player.removeStatusEffect(StatusEffects.FIRE_RESISTANCE);
+        World world = player.getWorld();
+
+        world.playSound(null, player.getX(), player.getY(), player.getZ(),
+                ModSounds.TOGGLE_SOUND, SoundCategory.PLAYERS, 1f, 1f);
+    }
+
+    private static boolean hasFullSuitOfArmorOn(PlayerEntity player) {
         return !player.getInventory().getArmorStack(0).isEmpty()
                 && !player.getInventory().getArmorStack(1).isEmpty()
                 && !player.getInventory().getArmorStack(2).isEmpty()

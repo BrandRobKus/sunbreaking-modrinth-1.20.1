@@ -27,7 +27,7 @@ public class ModSounds {
     public static final SoundEvent COOLDOWN_INDICATOR = registerSoundEvent("cooldown_indicator");
     public static final SoundEvent ASPECT_REMOVE = registerSoundEvent("aspect_remove");
     public static final SoundEvent ASPECT_EQUIP = registerSoundEvent("aspect_equip");
-
+    public static final SoundEvent TOGGLE_SOUND = registerSoundEvent("toggle_sound");
 
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(Sunbreaking.MOD_ID, name);

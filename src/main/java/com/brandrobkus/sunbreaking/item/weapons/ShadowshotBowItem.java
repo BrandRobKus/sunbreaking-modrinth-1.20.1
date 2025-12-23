@@ -36,7 +36,6 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
 import java.util.*;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class ShadowshotBowItem extends BowItem implements ItemEffectToggleable {
@@ -58,6 +57,11 @@ public class ShadowshotBowItem extends BowItem implements ItemEffectToggleable {
 
     @Override
     public void onToggleEffect(ItemStack stack, PlayerEntity player) {
+        World world = player.getWorld();
+
+        world.playSound(null, player.getX(), player.getY(), player.getZ(),
+                ModSounds.TOGGLE_SOUND, SoundCategory.PLAYERS, 1f, 1f);
+
         NbtCompound nbt = stack.getOrCreateNbt();
         nbt.putBoolean(SHADOWSHOT_KEY, !nbt.getBoolean(SHADOWSHOT_KEY));
     }
@@ -86,7 +90,6 @@ public class ShadowshotBowItem extends BowItem implements ItemEffectToggleable {
         player.setCurrentHand(hand);
         return TypedActionResult.consume(stack);
     }
-
 
     @Override
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {

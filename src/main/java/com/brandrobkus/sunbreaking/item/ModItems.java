@@ -32,16 +32,12 @@ public class ModItems {
 
     public static final Item FRAGMENT_OF_COMBUSTION = registerItem("fragment_of_combustion",
             new FragmentItem(new FabricItemSettings().maxCount(2)));
-            //Increases blast radius by 1 per Combustion item slotted, but also takes 25% more Super meter per Combustion item slotted
     public static final Item FRAGMENT_OF_BLISTERING = registerItem("fragment_of_blistering",
             new FragmentItem(new FabricItemSettings().maxCount(1)));
-            //Sets the explosion location on fire
     public static final Item FRAGMENT_OF_ASHES = registerItem("fragment_of_ashes",
             new FragmentItem(new FabricItemSettings().maxCount(1)));
-            //Spawns three small "clusters" that spread from the explosion location and explode
     public static final Item FRAGMENT_OF_SEARING = registerItem("fragment_of_searing",
             new FragmentItem(new FabricItemSettings().maxCount(4)));
-            //Melee attacks at full damage set targets on fire for a short duration
 
     public static final Item WOODEN_HAMMER = registerItem("wooden_hammer",
             new BaseHammerItem(ToolMaterials.WOOD, 4, -2.8F, new Item.Settings()));
@@ -58,6 +54,8 @@ public class ModItems {
 
     public static final Item SOLAR_LIGHT = registerItem("solar_light",
             new Item(new FabricItemSettings().maxCount(16).fireproof()));
+    public static final Item DIMINISHED_SOLAR_LIGHT = registerItem("diminished_solar_light",
+            new Item(new FabricItemSettings().maxCount(16).fireproof()));
     public static final Item SOLAR_UPGRADE_SMITHING_TEMPLATE = registerItem(
             "solar_upgrade_smithing_template",
             new SmithingTemplateItem(
@@ -66,8 +64,8 @@ public class ModItems {
                     Text.translatable("item.sunbreaking.solar_upgrade_template.addition_slot"),
                     Text.translatable("item.sunbreaking.solar_upgrade_template.apply"),
                     Text.translatable("item.sunbreaking.solar_upgrade_template.base"),
-                    List.of(new Identifier("sunbreaking", "item/addition_slot")),
-                    List.of(new Identifier("sunbreaking", "item/base_slot"))));
+                    List.of(new Identifier(Sunbreaking.MOD_ID, "item/addition_slot")),
+                    List.of(new Identifier(Sunbreaking.MOD_ID, "item/base_slot"))));
 
     public static final Item HAMMER_APPEARANCE_SMITHING_TEMPLATE = registerItem(
             "hammer_appearance_smithing_template",
@@ -77,8 +75,8 @@ public class ModItems {
                     Text.translatable("item.sunbreaking.hammer_appearance_template.addition_slot"),
                     Text.translatable("item.sunbreaking.hammer_appearance_template.apply"),
                     Text.translatable("item.sunbreaking.hammer_appearance_template.base"),
-                    List.of(new Identifier("sunbreaking", "item/addition_slot")),
-                    List.of(new Identifier("sunbreaking", "item/base_slot"))));
+                    List.of(new Identifier(Sunbreaking.MOD_ID, "item/addition_slot")),
+                    List.of(new Identifier(Sunbreaking.MOD_ID, "item/base_slot"))));
     public static final Item BLAZING_APPEARANCE_SMITHING_TEMPLATE = registerItem(
             "blazing_appearance_smithing_template",
             new SmithingTemplateItem(
@@ -87,8 +85,8 @@ public class ModItems {
                     Text.translatable("item.sunbreaking.blazing_appearance_template.addition_slot"),
                     Text.translatable("item.sunbreaking.blazing_appearance_template.apply"),
                     Text.translatable("item.sunbreaking.blazing_appearance_template.base"),
-                    List.of(new Identifier("sunbreaking", "item/addition_slot")),
-                    List.of(new Identifier("sunbreaking", "item/base_slot"))));
+                    List.of(new Identifier(Sunbreaking.MOD_ID, "item/addition_slot")),
+                    List.of(new Identifier(Sunbreaking.MOD_ID, "item/base_slot"))));
     public static final Item HELLBENT_APPEARANCE_SMITHING_TEMPLATE = registerItem(
             "hellbent_appearance_smithing_template",
             new SmithingTemplateItem(
@@ -97,8 +95,8 @@ public class ModItems {
                     Text.translatable("item.sunbreaking.hellbent_appearance_template.addition_slot"),
                     Text.translatable("item.sunbreaking.hellbent_appearance_template.apply"),
                     Text.translatable("item.sunbreaking.hellbent_appearance_template.base"),
-                    List.of(new Identifier("sunbreaking", "item/addition_slot")),
-                    List.of(new Identifier("sunbreaking", "item/base_slot"))));
+                    List.of(new Identifier(Sunbreaking.MOD_ID, "item/addition_slot")),
+                    List.of(new Identifier(Sunbreaking.MOD_ID, "item/base_slot"))));
     public static final Item FLAT_APPEARANCE_SMITHING_TEMPLATE = registerItem(
             "flat_appearance_smithing_template",
             new SmithingTemplateItem(
@@ -107,8 +105,8 @@ public class ModItems {
                     Text.translatable("item.sunbreaking.flat_appearance_template.addition_slot"),
                     Text.translatable("item.sunbreaking.flat_appearance_template.apply"),
                     Text.translatable("item.sunbreaking.flat_appearance_template.base"),
-                    List.of(new Identifier("sunbreaking", "item/addition_slot")),
-                    List.of(new Identifier("sunbreaking", "item/base_slot"))));
+                    List.of(new Identifier(Sunbreaking.MOD_ID, "item/addition_slot")),
+                    List.of(new Identifier(Sunbreaking.MOD_ID, "item/base_slot"))));
 
     public static final Item SUNBREAKERS_HELMET = registerItem("sunbreakers_helmet",
             new ModSolarArmorItem(ModArmorMaterials.SOLAR, ArmorItem.Type.HELMET, new FabricItemSettings().maxCount(1).fireproof()));
@@ -121,16 +119,14 @@ public class ModItems {
 
     public static final Item ASPECT_OF_TEMPERING = registerItem("aspect_of_tempering",
             new AspectItem(new FabricItemSettings().maxCount(1)));
-            //Grants fire resistance. Gain increased Gear Energy progress while on fire (finished)
     public static final Item ASPECT_OF_RADIANCE = registerItem("aspect_of_radiance",
             new AspectItem(new FabricItemSettings().maxCount(1)));
-            //Melee kills grant Radiant for a short time (finished)
     public static final Item ASPECT_OF_SOLACE = registerItem("aspect_of_solace",
             new AspectItem(new FabricItemSettings().maxCount(1)));
-            //kills at low health grant Restoration for a short time (finished)
     public static final Item ASPECT_OF_RESOLVE = registerItem("aspect_of_resolve",
             new AspectItem(new FabricItemSettings().maxCount(1)));
-            //kills with Hammer of Sol increases Super gain for short time. (finished)
+    public static final Item ASPECT_OF_BENEVOLENCE = registerItem("aspect_of_benevolence",
+            new AspectItem(new FabricItemSettings().maxCount(1)));
 
     public static final Item SHADOWSHOT_BOW = registerItem("shadowshot_bow",
             new ShadowshotBowItem(new FabricItemSettings().maxDamage(500)));
@@ -141,17 +137,12 @@ public class ModItems {
 
     public static final Item FRAGMENT_OF_EXPULSION = registerItem("fragment_of_expulsion",
             new FragmentItem(new FabricItemSettings().maxCount(4)));
-            //Increases radius of Shadowshot Arrow AOE per stack
     public static final Item FRAGMENT_OF_INSTABILITY = registerItem("fragment_of_instability",
             new FragmentItem(new FabricItemSettings().maxCount(1)));
-            //Draws nearby targets into the Shadowshot Node, strength is inversely determined by proximity to node origin
     public static final Item FRAGMENT_OF_CESSATION = registerItem("fragment_of_cessation",
             new FragmentItem(new FabricItemSettings().maxCount(1)));
-            //At the end of the Shadowshot Node's life, it explodes
-            //Explosion grants Weakness 1 for 5 seconds for anything damaged by the explosion
     public static final Item FRAGMENT_OF_VIGILANCE = registerItem("fragment_of_vigilance",
             new FragmentItem(new FabricItemSettings().maxCount(4)));
-            //Has an additive 25% chance not to consume a Shadowshot Arrow per Fragment
 
     public static final Item SHADOWSHOT_APPEARANCE_SMITHING_TEMPLATE = registerItem(
             "shadowshot_appearance_smithing_template",
@@ -161,8 +152,8 @@ public class ModItems {
                     Text.translatable("item.sunbreaking.shadowshot_appearance_template.addition_slot"),
                     Text.translatable("item.sunbreaking.shadowshot_appearance_template.apply"),
                     Text.translatable("item.sunbreaking.shadowshot_appearance_template.base"),
-                    List.of(new Identifier("sunbreaking", "item/addition_slot")),
-                    List.of(new Identifier("sunbreaking", "item/base_slot"))));
+                    List.of(new Identifier(Sunbreaking.MOD_ID, "item/addition_slot")),
+                    List.of(new Identifier(Sunbreaking.MOD_ID, "item/base_slot"))));
     public static final Item WOODCARVED_APPEARANCE_SMITHING_TEMPLATE = registerItem(
             "woodcarved_appearance_smithing_template",
             new SmithingTemplateItem(
@@ -171,8 +162,8 @@ public class ModItems {
                     Text.translatable("item.sunbreaking.woodcarved_appearance_template.addition_slot"),
                     Text.translatable("item.sunbreaking.woodcarved_appearance_template.apply"),
                     Text.translatable("item.sunbreaking.woodcarved_appearance_template.base"),
-                    List.of(new Identifier("sunbreaking", "item/addition_slot")),
-                    List.of(new Identifier("sunbreaking", "item/base_slot"))));
+                    List.of(new Identifier(Sunbreaking.MOD_ID, "item/addition_slot")),
+                    List.of(new Identifier(Sunbreaking.MOD_ID, "item/base_slot"))));
     public static final Item VANILLA_APPEARANCE_SMITHING_TEMPLATE = registerItem(
             "vanilla_appearance_smithing_template",
             new SmithingTemplateItem(
@@ -181,13 +172,14 @@ public class ModItems {
                     Text.translatable("item.sunbreaking.vanilla_appearance_template.addition_slot"),
                     Text.translatable("item.sunbreaking.vanilla_appearance_template.apply"),
                     Text.translatable("item.sunbreaking.vanilla_appearance_template.base"),
-                    List.of(new Identifier("sunbreaking", "item/addition_slot")),
-                    List.of(new Identifier("sunbreaking", "item/base_slot"))));
+                    List.of(new Identifier(Sunbreaking.MOD_ID, "item/addition_slot")),
+                    List.of(new Identifier(Sunbreaking.MOD_ID, "item/base_slot"))));
 
     public static final Item SHADOWSHOT_ARROW = registerItem("shadowshot_arrow",
             new ShadowshotArrowItem(new FabricItemSettings()));
 
     public static final Item VOID_LIGHT = registerItem("void_light", new Item(new FabricItemSettings().maxCount(16).fireproof()));
+    public static final Item FLEETING_VOID_LIGHT = registerItem("fleeting_void_light", new Item(new FabricItemSettings().maxCount(16).fireproof()));
     public static final Item VOID_LIGHT_SHARD = registerItem("void_light_shard", new Item(new FabricItemSettings()));
     public static final Item VOID_UPGRADE_SMITHING_TEMPLATE = registerItem(
             "void_upgrade_smithing_template",
@@ -197,8 +189,8 @@ public class ModItems {
                     Text.translatable("item.sunbreaking.void_upgrade_template.addition_slot"),
                     Text.translatable("item.sunbreaking.void_upgrade_template.apply"),
                     Text.translatable("item.sunbreaking.void_upgrade_template.base"),
-                    List.of(new Identifier("sunbreaking", "item/addition_slot_bow")),
-                    List.of(new Identifier("sunbreaking", "item/base_slot_void"))));
+                    List.of(new Identifier(Sunbreaking.MOD_ID, "item/addition_slot_bow")),
+                    List.of(new Identifier(Sunbreaking.MOD_ID, "item/base_slot_void"))));
 
     public static final Item NIGHTSTALKERS_MASK = registerItem("nightstalkers_mask",
             new ModVoidArmorItem(ModArmorMaterials.VOID, ArmorItem.Type.HELMET, new FabricItemSettings().maxCount(1).fireproof()));
@@ -211,16 +203,14 @@ public class ModItems {
 
     public static final Item ASPECT_OF_OBSCURITY = registerItem("aspect_of_obscurity",
             new AspectItem(new FabricItemSettings().maxCount(1)));
-            //hold sneak for invisibility, smoke bombs cause invisibility for your Fireteam as well (finished)
     public static final Item ASPECT_OF_EXECUTION = registerItem("aspect_of_execution",
             new AspectItem(new FabricItemSettings().maxCount(1)));
-            //Being invisible grants Flawless Execution for your next hit (finished)
     public static final Item ASPECT_OF_DILATION = registerItem("aspect_of_dilation",
             new AspectItem(new FabricItemSettings().maxCount(1)));
-            //Kills while at low health grant 3 hearts of Absorption for a moderate duration (finished)
     public static final Item ASPECT_OF_RENEWAL = registerItem("aspect_of_renewal",
             new AspectItem(new FabricItemSettings().maxCount(1)));
-            //Kills with the Shadowshot Bow increase Super Energy gain for a short time (finished)
+    public static final Item ASPECT_OF_HARVEST = registerItem("aspect_of_harvest",
+            new AspectItem(new FabricItemSettings().maxCount(1)));
 
     public static final Item SMOKE_BOMB = registerItem("smoke_bomb",
             new SmokeBombItem(new FabricItemSettings().maxCount(16)));
@@ -230,36 +220,20 @@ public class ModItems {
 
     public static final Item FRAGMENT_OF_SHOCK = registerItem("fragment_of_shock",
             new FragmentItem(new FabricItemSettings().maxCount(1)));
-            //Press R to toggle between base mode and "precision mode" which only uses 12.5f Super meter on use
-            //Precision mode throws a "Precision Storm Ball Entity" which summons a FirelessLightningEntity on impact
     public static final Item FRAGMENT_OF_VOLTS = registerItem("fragment_of_volts",
             new FragmentItem(new FabricItemSettings().maxCount(2)));
-            //Throws up to two StormBallEntities at once depending on how many Fragment of Volts equipped.
-            //StormBallEntity is thrown at normal speed, if only one stack of Volts, the second StormBallEntity is thrown at 2/3 the speed
-            //If 2 stacks of Volts, third StormBallEntity is thrown at 4/3 the speed
-            //costs an additional 25f Super meter to use per stack of Volts
-            //Works with Fragment of Shock, costing an extra 12f instead of 25f to use per Stack
     public static final Item FRAGMENT_OF_FEEDBACK = registerItem("fragment_of_feedback",
             new FragmentItem(new FabricItemSettings().maxCount(1)));
-            //While holding this item in your main or off hand, targets hitting you have a chance of being struck by
-            //a FirelessLightningEntity equal to the value of your Super meter, then drains 25% from your Super meter
     public static final Item FRAGMENT_OF_BEACONS = registerItem("fragment_of_beacons",
             new FragmentItem(new FabricItemSettings().maxCount(4)));
-            //Combatants struck by Lightning from the Bond gain 10 seconds of Glowing per stack of Beacons.
-            //Defeating Glowing targets grants an additional 12f Super meter
-
-    public static final Item ENDER_PEARL_BOND = registerItem("ender_pearl_bond",
-            new EnderPearlBondItem(new FabricItemSettings().maxCount(1)));
-    public static final Item FIREBALL_BOND = registerItem("fireball_bond",
-            new FireBallBondItem(new FabricItemSettings().maxCount(1)));
-    public static final Item SNOWBALL_BOND = registerItem("snowball_bond",
-            new SnowballBondItem(new FabricItemSettings().maxCount(1)));
-
     public static final Item STORM_BALL = registerItem("storm_ball",
             new StormBallItem(new FabricItemSettings()));
 
     public static final Item ARC_LIGHT = registerItem("arc_light",
             new Item(new FabricItemSettings().maxCount(16).fireproof()));
+    public static final Item FLICKERING_ARC_LIGHT = registerItem("flickering_arc_light",
+            new Item(new FabricItemSettings().maxCount(16).fireproof()));
+
     public static final Item ARC_UPGRADE_SMITHING_TEMPLATE = registerItem(
             "arc_upgrade_smithing_template",
             new SmithingTemplateItem(
@@ -269,7 +243,7 @@ public class ModItems {
                     Text.translatable("item.sunbreaking.arc_upgrade_template.apply"),
                     Text.translatable("item.sunbreaking.arc_upgrade_template.base"),
                     List.of(new Identifier("minecraft", "item/empty_armor_slot_helmet")),
-                    List.of(new Identifier("sunbreaking", "item/base_slot_arc"))));
+                    List.of(new Identifier(Sunbreaking.MOD_ID, "item/base_slot_arc"))));
 
     public static final Item STORMCALLERS_HEADDRESS = registerItem("stormcallers_headdress",
             new ModArcArmorItem(ModArmorMaterials.ARC, ArmorItem.Type.HELMET, new FabricItemSettings().maxCount(1).fireproof()));
@@ -282,18 +256,15 @@ public class ModItems {
 
     public static final Item ASPECT_OF_SURGE = registerItem("aspect_of_surge",
             new AspectItem(new FabricItemSettings().maxCount(1)));
-            //Sprinting for a short time grants speed 1, then speed 2 for longer durations.
-            //At speed 2, hitting a target with a melee ability spawns lightning at that location (finished)
     public static final Item ASPECT_OF_BRILLIANCE = registerItem("aspect_of_brilliance",
             new AspectItem(new FabricItemSettings().maxCount(1)));
-            //Lightning Strikes cause Blindness for a short duration. (finished)
-            //Killing Blinded targets grants a bar of Gear Energy
     public static final Item ASPECT_OF_RESISTANCE = registerItem("aspect_of_resistance",
             new AspectItem(new FabricItemSettings().maxCount(1)));
-            //Getting struck by Lightning grants Resistance for a short time (finished)
     public static final Item ASPECT_OF_RECHARGE = registerItem("aspect_of_recharge",
             new AspectItem(new FabricItemSettings().maxCount(1)));
             //Kills with the Stormcaller's Bond increase Super Energy gain for a short time
+    public static final Item ASPECT_OF_FREQUENCY = registerItem("aspect_of_frequency",
+            new AspectItem(new FabricItemSettings().maxCount(1)));
 
     public static final Item WOODEN_GLAIVE = registerItem("wooden_glaive",
             new GlaiveItem(ToolMaterials.WOOD, 4, -2.8F, new Item.Settings()));
@@ -308,16 +279,40 @@ public class ModItems {
     public static final Item NETHERITE_GLAIVE = registerItem("netherite_glaive",
             new GlaiveItem(ToolMaterials.NETHERITE, 4, -2.8F, new Item.Settings().fireproof()));
 
+    public static final Set<Item> REGISTERED_ASPECTS = Set.of(
+            ModItems.ASPECT_OF_TEMPERING,
+            ModItems.ASPECT_OF_RADIANCE,
+            ModItems.ASPECT_OF_SOLACE,
+            ModItems.ASPECT_OF_RESOLVE,
+            ModItems.ASPECT_OF_BENEVOLENCE,
+
+            ModItems.ASPECT_OF_DILATION,
+            ModItems.ASPECT_OF_EXECUTION,
+            ModItems.ASPECT_OF_OBSCURITY,
+            ModItems.ASPECT_OF_RENEWAL,
+            ModItems.ASPECT_OF_HARVEST,
+
+            ModItems.ASPECT_OF_BRILLIANCE,
+            ModItems.ASPECT_OF_SURGE,
+            ModItems.ASPECT_OF_RESISTANCE,
+            ModItems.ASPECT_OF_RECHARGE,
+            ModItems.ASPECT_OF_FREQUENCY
+    );
+
     public static final Set<Item> REGISTERED_FRAGMENTS = Set.of(
             ModItems.FRAGMENT_OF_COMBUSTION,
             ModItems.FRAGMENT_OF_BLISTERING,
             ModItems.FRAGMENT_OF_ASHES,
             ModItems.FRAGMENT_OF_SEARING,
+
             ModItems.FRAGMENT_OF_EXPULSION,
             ModItems.FRAGMENT_OF_INSTABILITY,
             ModItems.FRAGMENT_OF_CESSATION,
             ModItems.FRAGMENT_OF_VIGILANCE,
-            ModItems.FRAGMENT_OF_SHOCK
+
+            ModItems.FRAGMENT_OF_SHOCK,
+            ModItems.FRAGMENT_OF_VOLTS,
+            ModItems.FRAGMENT_OF_BEACONS
     );
 
     private static Item registerItem(String name, Item item){

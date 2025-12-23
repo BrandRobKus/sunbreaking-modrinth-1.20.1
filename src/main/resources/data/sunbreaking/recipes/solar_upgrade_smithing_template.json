@@ -3,20 +3,17 @@
   "pattern": [
     "#F#",
     "#N#",
-    "#G#"
+    "#F#"
   ],
   "key": {
     "#": {
       "item": "minecraft:netherrack"
     },
     "F": {
-      "item": "minecraft:fire_charge"
+      "item": "sunbreaking:diminished_solar_light"
     },
     "N": {
       "item": "minecraft:netherite_upgrade_smithing_template"
-    },
-    "G": {
-      "item": "minecraft:gold_block"
     }
   },
   "result": {

@@ -5,8 +5,6 @@ import com.brandrobkus.sunbreaking.enchantment.ModEnchantmentHelper;
 import com.brandrobkus.sunbreaking.enchantment.ModEnchantments;
 import com.brandrobkus.sunbreaking.sound.ModSounds;
 import com.brandrobkus.sunbreaking.entity.ModEntities;
-import com.brandrobkus.sunbreaking.util.ModDamageTypes;
-import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -40,7 +38,6 @@ public class BaseHammerProjectileEntity extends PersistentProjectileEntity {
     private boolean dealtDamage;
     private boolean hasLanded = false;
     private boolean hasBulk;
-    private BlockState inBlockState;
     public int returnTimer;
     private float rotationX = 0.0f;
 
@@ -221,7 +218,7 @@ public class BaseHammerProjectileEntity extends PersistentProjectileEntity {
 
     @Override
     protected void onBlockHit(BlockHitResult blockHitResult) {
-        this.inBlockState = this.getWorld().getBlockState(blockHitResult.getBlockPos());
+        this.getWorld().getBlockState(blockHitResult.getBlockPos());
         super.onBlockHit(blockHitResult);
         Vec3d vec3d = blockHitResult.getPos().subtract(this.getX(), this.getY(), this.getZ());
         this.setVelocity(vec3d);

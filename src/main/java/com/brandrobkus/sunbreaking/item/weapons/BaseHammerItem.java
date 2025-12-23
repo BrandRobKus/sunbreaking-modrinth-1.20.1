@@ -163,6 +163,12 @@ public class BaseHammerItem extends ToolItem implements Vanishable {
             DamageSource src = new DamageSource(entry, attacker, attacker);
             target.damage(src, damageAmount);
         }
+
+        int searing = FragmentHelper.getFragmentCount(stack, ModItems.FRAGMENT_OF_SEARING);
+        if (FragmentHelper.hasFragment(stack, ModItems.FRAGMENT_OF_SEARING)) {
+            target.setOnFireFor(3 * searing);
+        }
+
         return true;
     }
 
@@ -179,39 +185,32 @@ public class BaseHammerItem extends ToolItem implements Vanishable {
         if (slot == EquipmentSlot.MAINHAND) {
             ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
 
+            float extra = 0;
+            int bludgeoning = EnchantmentHelper.getLevel(ModEnchantments.BLUDGEONING, stack);
+            if (bludgeoning > 0) {
+                extra = 1.0F + (bludgeoning - 1) * 0.5F;
+            }
+
             if (hasBulk(stack)) {
                 builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                        new EntityAttributeModifier(
-                                ATTACK_DAMAGE_MODIFIER_ID,
-                                "Weapon modifier",
-                                this.attackDamage + 4,
+                        new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Weapon modifier",
+                                this.attackDamage + 4 + extra,
                                 EntityAttributeModifier.Operation.ADDITION));
-
                 builder.put(EntityAttributes.GENERIC_ATTACK_SPEED,
-                        new EntityAttributeModifier(
-                                ATTACK_SPEED_MODIFIER_ID,
-                                "Bulk Tool modifier",
-                                -3.1F,
-                                EntityAttributeModifier.Operation.ADDITION));
+                        new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Bulk Tool modifier",
+                                -3.1F, EntityAttributeModifier.Operation.ADDITION));
             } else {
                 builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                        new EntityAttributeModifier(
-                                ATTACK_DAMAGE_MODIFIER_ID,
-                                "Weapon modifier",
-                                this.attackDamage,
+                        new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Weapon modifier",
+                                this.attackDamage + extra,
                                 EntityAttributeModifier.Operation.ADDITION));
-
                 builder.put(EntityAttributes.GENERIC_ATTACK_SPEED,
-                        new EntityAttributeModifier(
-                                ATTACK_SPEED_MODIFIER_ID,
-                                "Tool modifier",
-                                -2.8F,
-                                EntityAttributeModifier.Operation.ADDITION));
+                        new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Tool modifier",
+                                -2.8F, EntityAttributeModifier.Operation.ADDITION));
             }
 
             return builder.build();
         }
-
         return super.getAttributeModifiers(stack, slot);
     }
 

@@ -23,21 +23,27 @@ public class ModModelProvider extends FabricModelProvider {
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
         itemModelGenerator.register(ModItems.STORM_BALL, Models.GENERATED);
+        itemModelGenerator.register(ModItems.DIMINISHED_SOLAR_LIGHT, Models.GENERATED);
+        itemModelGenerator.register(ModItems.FLEETING_VOID_LIGHT, Models.GENERATED);
+        itemModelGenerator.register(ModItems.FLICKERING_ARC_LIGHT, Models.GENERATED);
 
         itemModelGenerator.register(ModItems.ASPECT_OF_TEMPERING, Models.GENERATED);
         itemModelGenerator.register(ModItems.ASPECT_OF_RADIANCE, Models.GENERATED);
         itemModelGenerator.register(ModItems.ASPECT_OF_SOLACE, Models.GENERATED);
         itemModelGenerator.register(ModItems.ASPECT_OF_RESOLVE, Models.GENERATED);
+        itemModelGenerator.register(ModItems.ASPECT_OF_BENEVOLENCE, Models.GENERATED);
 
         itemModelGenerator.register(ModItems.ASPECT_OF_OBSCURITY, Models.GENERATED);
         itemModelGenerator.register(ModItems.ASPECT_OF_EXECUTION, Models.GENERATED);
         itemModelGenerator.register(ModItems.ASPECT_OF_DILATION, Models.GENERATED);
         itemModelGenerator.register(ModItems.ASPECT_OF_RENEWAL, Models.GENERATED);
+        itemModelGenerator.register(ModItems.ASPECT_OF_HARVEST, Models.GENERATED);
 
         itemModelGenerator.register(ModItems.ASPECT_OF_SURGE, Models.GENERATED);
         itemModelGenerator.register(ModItems.ASPECT_OF_BRILLIANCE, Models.GENERATED);
         itemModelGenerator.register(ModItems.ASPECT_OF_RESISTANCE, Models.GENERATED);
         itemModelGenerator.register(ModItems.ASPECT_OF_RECHARGE, Models.GENERATED);
+        itemModelGenerator.register(ModItems.ASPECT_OF_FREQUENCY, Models.GENERATED);
 
         itemModelGenerator.register(ModItems.FRAGMENT_OF_COMBUSTION, Models.GENERATED);
         itemModelGenerator.register(ModItems.FRAGMENT_OF_BLISTERING, Models.GENERATED);

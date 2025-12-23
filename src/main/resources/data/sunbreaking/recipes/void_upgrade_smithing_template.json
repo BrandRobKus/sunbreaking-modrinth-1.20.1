@@ -3,20 +3,17 @@
   "pattern": [
     "#F#",
     "#N#",
-    "#G#"
+    "#F#"
   ],
   "key": {
     "#": {
       "item": "minecraft:cobblestone"
     },
     "F": {
-      "item": "minecraft:ender_pearl"
+      "item": "sunbreaking:fleeting_void_light"
     },
     "N": {
       "item": "minecraft:netherite_upgrade_smithing_template"
-    },
-    "G": {
-      "item": "minecraft:amethyst_block"
     }
   },
   "result": {

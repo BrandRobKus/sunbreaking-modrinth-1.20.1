@@ -45,8 +45,10 @@ public class ModItemGroups {
                         entries.add(ModItems.ASPECT_OF_RADIANCE);
                         entries.add(ModItems.ASPECT_OF_SOLACE);
                         entries.add(ModItems.ASPECT_OF_RESOLVE);
+                        entries.add(ModItems.ASPECT_OF_BENEVOLENCE);
 
                         entries.add(ModItems.SOLAR_LIGHT);
+                        entries.add(ModItems.DIMINISHED_SOLAR_LIGHT);
                         entries.add(ModItems.SOLAR_UPGRADE_SMITHING_TEMPLATE);
 
                         entries.add(ModItems.SHADOWSHOT_BOW);
@@ -74,8 +76,10 @@ public class ModItemGroups {
                         entries.add(ModItems.ASPECT_OF_EXECUTION);
                         entries.add(ModItems.ASPECT_OF_DILATION);
                         entries.add(ModItems.ASPECT_OF_RENEWAL);
+                        entries.add(ModItems.ASPECT_OF_HARVEST);
 
                         entries.add(ModItems.VOID_LIGHT);
+                        entries.add(ModItems.FLEETING_VOID_LIGHT);
                         entries.add(ModItems.VOID_LIGHT_SHARD);
                         entries.add(ModItems.VOID_UPGRADE_SMITHING_TEMPLATE);
 
@@ -86,10 +90,6 @@ public class ModItemGroups {
                         entries.add(ModItems.FRAGMENT_OF_FEEDBACK);
                         entries.add(ModItems.FRAGMENT_OF_BEACONS);
 
-                        //entries.add(ModItems.ENDER_PEARL_BOND);
-                        //entries.add(ModItems.FIREBALL_BOND);
-                        //entries.add(ModItems.SNOWBALL_BOND);
-
                         entries.add(ModItems.STORMCALLERS_HEADDRESS);
                         entries.add(ModItems.STORMCALLERS_ROBES);
                         entries.add(ModItems.STORMCALLERS_PANTS);
@@ -99,8 +99,10 @@ public class ModItemGroups {
                         entries.add(ModItems.ASPECT_OF_BRILLIANCE);
                         entries.add(ModItems.ASPECT_OF_RESISTANCE);
                         entries.add(ModItems.ASPECT_OF_RECHARGE);
+                        entries.add(ModItems.ASPECT_OF_FREQUENCY);
 
                         entries.add(ModItems.ARC_LIGHT);
+                        entries.add(ModItems.FLICKERING_ARC_LIGHT);
                         entries.add(ModItems.ARC_UPGRADE_SMITHING_TEMPLATE);
 
                         entries.add(ModItems.WOODEN_GLAIVE);

@@ -1,24 +1,13 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " # ",
-    "ENE",
-    " n "
-  ],
-  "key": {
-    "#": {
-      "item": "minecraft:lightning_rod"
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "sunbreaking:flickering_arc_light"
     },
-    "E": {
-      "item": "minecraft:echo_shard"
-    },
-    "N": {
+    {
       "item": "minecraft:nether_star"
-    },
-    "n": {
-      "item": "minecraft:netherite_ingot"
     }
-  },
+  ],
   "result": {
     "item": "sunbreaking:arc_light",
     "count": 1

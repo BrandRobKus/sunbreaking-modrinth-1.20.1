@@ -22,8 +22,6 @@ public class StormCloudEntity extends ProjectileEntity {
     private int timeAlive = 0;
     private int lastLightningStrike = 0;
     private UUID ownerUUID;
-    private float timeToDie = 320;
-    private float detectionRadius = 4;
 
     public StormCloudEntity(EntityType<? extends StormCloudEntity> entityType, World world) {
         super(entityType, world);
@@ -46,6 +44,7 @@ public class StormCloudEntity extends ProjectileEntity {
         super.tick();
         timeAlive++;
 
+        float detectionRadius = 4;
         if (!getWorld().isClient && timeAlive - lastLightningStrike >= 30) {
             lastLightningStrike = timeAlive;
 
@@ -104,6 +103,7 @@ public class StormCloudEntity extends ProjectileEntity {
             }
         }
 
+        float timeToDie = 320;
         if (timeAlive >= timeToDie) {
             this.remove(Entity.RemovalReason.DISCARDED);
         }

@@ -48,9 +48,12 @@ public class BondItem extends Item implements ItemEffectToggleable {
     public float getArcSuperCost(ItemStack stack) {
         boolean shock = FragmentHelper.hasFragment(stack, ModItems.FRAGMENT_OF_SHOCK);
         int volts = FragmentHelper.getFragmentCount(stack, ModItems.FRAGMENT_OF_VOLTS);
+        boolean feedback = FragmentHelper.hasFragment(stack, ModItems.FRAGMENT_OF_FEEDBACK);
 
         if (shock && isPrecisionMode(stack)) {
             return 12.5f + 12.5f * volts;
+        } else if (feedback){
+            return 25f + 12.f * volts;
         } else {
             return 37.5f + 25f * volts;
         }
@@ -58,11 +61,17 @@ public class BondItem extends Item implements ItemEffectToggleable {
 
     @Override
     public void onToggleEffect(ItemStack stack, PlayerEntity player) {
+        World world = player.getWorld();
+
         if (!FragmentHelper.hasFragment(stack, ModItems.FRAGMENT_OF_SHOCK)) {
             if (player.getWorld().isClient) {
-                player.playSound(ModSounds.COOLDOWN_INDICATOR, 1,1);
+                player.getWorld().playSound(null, player.getBlockPos(),
+                        ModSounds.COOLDOWN_INDICATOR, SoundCategory.PLAYERS, 1.0F, 1.0F);
             }
             return;
+        } else {
+            world.playSound(null, player.getX(), player.getY(), player.getZ(),
+                    ModSounds.TOGGLE_SOUND, SoundCategory.PLAYERS, 1f, 1f);
         }
 
         if (!player.getWorld().isClient) {
@@ -71,7 +80,6 @@ public class BondItem extends Item implements ItemEffectToggleable {
             nbt.putBoolean(PRECISION_KEY, newValue);
         }
     }
-
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
@@ -87,11 +95,12 @@ public class BondItem extends Item implements ItemEffectToggleable {
 
         boolean shock = FragmentHelper.hasFragment(stack, ModItems.FRAGMENT_OF_SHOCK);
         int volts = FragmentHelper.getFragmentCount(stack, ModItems.FRAGMENT_OF_VOLTS);
+        int feedback = FragmentHelper.getFragmentCount(stack, ModItems.FRAGMENT_OF_FEEDBACK);
         boolean precision = isPrecisionMode(stack);
 
         float totalCost = (precision && shock)
                 ? 12.5f + 12.5f * volts
-                : 37.5f + 25f * volts;
+                : 37.5f - (feedback * 12.5f) + ((25f - (feedback * 12.5f)) * volts);
 
         if (!user.isCreative() && PlayerSuperAccessor.get(user).getSuper() < totalCost) {
             user.playSound(ModSounds.COOLDOWN_INDICATOR, 1.0F, 1.0F);
@@ -130,7 +139,13 @@ public class BondItem extends Item implements ItemEffectToggleable {
 
             if (!user.getAbilities().creativeMode) {
                 stack.damage(1, user, p -> p.sendToolBreakStatus(hand));
-                user.getItemCooldownManager().set(this, 20);
+
+
+                if(feedback >= 1){
+                    user.getItemCooldownManager().set(this, 100 + (volts * 75));
+                } else {
+                    user.getItemCooldownManager().set(this, 20);
+                }
                 playersOnCooldown.add(user.getUuid());
             }
         }
@@ -319,7 +334,6 @@ public class BondItem extends Item implements ItemEffectToggleable {
             if (nbtList.isEmpty()) {
                 return Optional.empty();
             } else {
-                int i = 0;
                 NbtCompound nbtCompound2 = nbtList.getCompound(0);
                 ItemStack itemStack = ItemStack.fromNbt(nbtCompound2);
                 nbtList.remove(0);
@@ -340,12 +354,6 @@ public class BondItem extends Item implements ItemEffectToggleable {
             NbtList nbtList = nbtCompound.getList("Items", NbtElement.COMPOUND_TYPE);
             return nbtList.stream().map(NbtCompound.class::cast).map(ItemStack::fromNbt);
         }
-    }
-
-    public static List<Text> getBundledItemNames(ItemStack bundle) {
-        return getBundledStacks(bundle)
-                .map(ItemStack::getName)
-                .toList();
     }
 
     // ========================= TOOLTIP =========================
@@ -377,13 +385,11 @@ public class BondItem extends Item implements ItemEffectToggleable {
 
         Map<Item, Integer> fragmentCounts = new LinkedHashMap<>();
 
-        getBundledStacks(stack).forEach(fragmentStack -> {
-            fragmentCounts.merge(
-                    fragmentStack.getItem(),
-                    fragmentStack.getCount(),
-                    Integer::sum
-            );
-        });
+        getBundledStacks(stack).forEach(fragmentStack -> fragmentCounts.merge(
+                fragmentStack.getItem(),
+                fragmentStack.getCount(),
+                Integer::sum
+        ));
 
         if (!fragmentCounts.isEmpty()) {
             tooltip.add(Text.literal("Contents:").formatted(Formatting.YELLOW));

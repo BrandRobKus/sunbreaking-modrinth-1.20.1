@@ -47,11 +47,6 @@ public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
         getOrCreateTagBuilder(ModTags.Items.BONDS)
                 .add(ModItems.STORMCALLERS_BOND)
         ;
-        getOrCreateTagBuilder(ModTags.Items.BONDS_BASE)
-                .add(ModItems.ENDER_PEARL_BOND)
-                .add(ModItems.FIREBALL_BOND)
-                .add(ModItems.SNOWBALL_BOND)
-        ;
         getOrCreateTagBuilder(ModTags.Items.SHADOWSHOTS)
                 .add(ModItems.SHADOWSHOT_BOW)
                 .add(ModItems.WOODCARVED_SHADOWSHOT_BOW)
@@ -83,18 +78,21 @@ public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 .add(ModItems.ASPECT_OF_RADIANCE)
                 .add(ModItems.ASPECT_OF_RESOLVE)
                 .add(ModItems.ASPECT_OF_SOLACE)
+                .add(ModItems.ASPECT_OF_BENEVOLENCE)
         ;
         getOrCreateTagBuilder(ModTags.Items.VOID_ASPECTS)
                 .add(ModItems.ASPECT_OF_OBSCURITY)
                 .add(ModItems.ASPECT_OF_EXECUTION)
                 .add(ModItems.ASPECT_OF_RENEWAL)
                 .add(ModItems.ASPECT_OF_DILATION)
+                .add(ModItems.ASPECT_OF_HARVEST)
         ;
         getOrCreateTagBuilder(ModTags.Items.ARC_ASPECTS)
                 .add(ModItems.ASPECT_OF_SURGE)
                 .add(ModItems.ASPECT_OF_BRILLIANCE)
                 .add(ModItems.ASPECT_OF_RESISTANCE)
                 .add(ModItems.ASPECT_OF_RECHARGE)
+                .add(ModItems.ASPECT_OF_FREQUENCY)
         ;
 
         getOrCreateTagBuilder(ModTags.Items.SOLAR_FRAGMENTS)

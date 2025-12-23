@@ -208,7 +208,6 @@ public class SolHammerItem extends ToolItem implements Vanishable {
         return true;
     }
 
-
     @Override
     public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
         if (state.getHardness(world, pos) != 0.0) {
