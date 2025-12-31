@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "sunbreaking:aspect_of_surge",
+    "sunbreaking:aspect_of_brilliance",
+    "sunbreaking:aspect_of_resistance",
+    "sunbreaking:aspect_of_recharge",
+    "sunbreaking:aspect_of_frequency"
+  ]
+}
