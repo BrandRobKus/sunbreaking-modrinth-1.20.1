@@ -55,6 +55,8 @@ public class ModItemGroups {
                         entries.add(ModItems.SHADOWSHOT_APPEARANCE_SMITHING_TEMPLATE);
                         entries.add(ModItems.WOODCARVED_SHADOWSHOT_BOW);
                         entries.add(ModItems.WOODCARVED_APPEARANCE_SMITHING_TEMPLATE);
+                        entries.add(ModItems.ENDER_SHADOWSHOT_BOW);
+                        entries.add(ModItems.ENDER_APPEARANCE_SMITHING_TEMPLATE);
                         entries.add(ModItems.VANILLA_SHADOWSHOT_BOW);
                         entries.add(ModItems.VANILLA_APPEARANCE_SMITHING_TEMPLATE);
 

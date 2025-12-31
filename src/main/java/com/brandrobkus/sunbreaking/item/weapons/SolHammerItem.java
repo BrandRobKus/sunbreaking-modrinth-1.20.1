@@ -139,7 +139,7 @@ public class SolHammerItem extends ToolItem implements Vanishable {
 
     public float getSuperCost(ItemStack stack) {
         int combustion = FragmentHelper.getFragmentCount(stack, ModItems.FRAGMENT_OF_COMBUSTION);
-        return 25f + ((25f * combustion));
+        return 25f + ((12f * combustion));
     }
 
     @Override

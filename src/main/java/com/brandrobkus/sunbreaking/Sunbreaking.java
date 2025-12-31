@@ -43,7 +43,6 @@ public class Sunbreaking implements ModInitializer {
 		ModItemGroups.registerItemGroups();
 		ModItems.registerModItems();
 		ModSounds.registerSounds();
-		ModDamageTypes.registerModDamageTypes();
 		ServerPlayNetworking.registerGlobalReceiver(
 				ModNetworking.TOGGLE_ARMOR_EFFECT,
 				(server, player, handler, buf, responseSender) ->

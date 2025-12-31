@@ -2,7 +2,6 @@ package com.brandrobkus.sunbreaking.item.weapons;
 
 import com.brandrobkus.sunbreaking.entity.custom.ShadowshotArrowEntity;
 import com.brandrobkus.sunbreaking.item.ModItems;
-import com.brandrobkus.sunbreaking.item.weapons.fragments.FragmentHelper;
 import com.brandrobkus.sunbreaking.network.ItemEffectToggleable;
 import com.brandrobkus.sunbreaking.sound.ModSounds;
 import com.brandrobkus.sunbreaking.util.ModTags;

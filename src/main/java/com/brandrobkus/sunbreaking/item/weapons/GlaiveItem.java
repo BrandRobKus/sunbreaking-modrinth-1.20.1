@@ -255,7 +255,7 @@ public class GlaiveItem extends SwordItem {
     @Override
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
         if (!(user instanceof PlayerEntity player)) return;
-        int cooldownTime = 30;
+        int cooldownTime = 10;
         player.getItemCooldownManager().set(this, cooldownTime);
         playersOnCooldown.add(user.getUuid());
     }

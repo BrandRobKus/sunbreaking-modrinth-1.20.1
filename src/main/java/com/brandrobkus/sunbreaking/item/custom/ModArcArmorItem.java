@@ -73,11 +73,11 @@ public class ModArcArmorItem extends ArmorItem {
             if (!speedActive) {
                 sprintTime++;
                 if (sprintTime == SPRINT_REQUIRED) {
-                    serverPlayer.playSound(
-                            ModSounds.GEAR_COOLDOWN_END,
+                    player.playSound(
+                            ModSounds.TOGGLE_SOUND,
                             SoundCategory.PLAYERS,
                             0.8f,
-                            1.1f
+                            1.0f
                     );
                     nbt.putBoolean(SPEED_READY, true);
                 }
@@ -129,7 +129,7 @@ public class ModArcArmorItem extends ArmorItem {
     }
 
     public static void toggleSpeed(PlayerEntity player) {
-        System.out.println("[ARC] toggleSpeed called");
+        player.playSound(ModSounds.COOLDOWN_END, SoundCategory.PLAYERS, 1, 1);
         if (!(player instanceof ServerPlayerEntity)) return;
         if (!hasFullSuitOfArmorOn(player)) return;
 
@@ -152,7 +152,6 @@ public class ModArcArmorItem extends ArmorItem {
 
         nbt.putBoolean(SPEED_ACTIVE, true);
         nbt.putInt(SPEED_GRACE, GRACE_TICKS);
-        System.out.println("[ARC] SPEED_ACTIVE set true");
         nbt.putInt(SPEED_GRACE, GRACE_TICKS);
 
         player.addStatusEffect(new StatusEffectInstance(

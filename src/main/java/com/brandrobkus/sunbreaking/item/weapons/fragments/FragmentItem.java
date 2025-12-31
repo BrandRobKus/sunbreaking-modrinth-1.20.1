@@ -95,6 +95,11 @@ public class FragmentItem extends Item {
             tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_volts.tooltip_2"));
         }
 
+        if (stack.isOf(ModItems.FRAGMENT_OF_FEEDBACK)){
+            tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_feedback.tooltip"));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_feedback.tooltip_1").formatted(Formatting.RED));
+        }
+
         if (stack.isOf(ModItems.FRAGMENT_OF_BEACONS)){
             tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_beacons.tooltip"));
             tooltip.add(Text.translatable("tooltip.sunbreaking.fragment_of_beacons.tooltip_1"));

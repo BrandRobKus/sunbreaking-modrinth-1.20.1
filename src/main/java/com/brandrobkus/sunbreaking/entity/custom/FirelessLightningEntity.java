@@ -1,6 +1,7 @@
 package com.brandrobkus.sunbreaking.entity.custom;
 
 import com.brandrobkus.sunbreaking.Sunbreaking;
+import com.brandrobkus.sunbreaking.command.fireteam.FireteamManager;
 import com.brandrobkus.sunbreaking.item.ModItems;
 import com.brandrobkus.sunbreaking.item.custom.ModArcArmorItem;
 import com.brandrobkus.sunbreaking.item.custom.aspects.StormcallingAspectHandler;
@@ -175,7 +176,18 @@ public class FirelessLightningEntity extends Entity {
 
                             if (!bond.isEmpty()) {
                                 int beacons = FragmentHelper.getFragmentCount(bond, ModItems.FRAGMENT_OF_BEACONS);
-                                if (beacons > 0) {
+                                boolean isExempt = false;
+
+                                if (owner != null) {
+                                    if (livingEntity instanceof ServerPlayerEntity targetPlayer) {
+                                        if (FireteamManager.areTeammates(owner, targetPlayer)) {
+                                            isExempt = true;
+                                        }
+                                    }
+                                }
+
+
+                                if (!isExempt && !bond.isEmpty()) {
                                     if (livingEntity instanceof BondGlowTracked tracked) {
                                         tracked.setBondGlow(200 * beacons);
                                     }
@@ -188,6 +200,7 @@ public class FirelessLightningEntity extends Entity {
                                             true
                                     ));
                                 }
+
                             }
                         }
                     if (livingEntity instanceof PlayerEntity player) {
@@ -258,7 +271,7 @@ public class FirelessLightningEntity extends Entity {
 
         for (int i = 0; i < count; i++) {
             Optional<BlockPos> optional = cleanOxidationAround(world, mutablePos);
-            if (!optional.isPresent()) {
+            if (optional.isEmpty()) {
                 break;
             }
 

@@ -258,7 +258,7 @@ public class SolHammerProjectileEntity extends PersistentProjectileEntity{
         int combustion = this.dataTracker.get(COMBUSTION);
         boolean blistering = this.dataTracker.get(BLISTERING);
 
-        float radius = 2.0F + combustion * 0.75f;
+        float radius = 2.0F + combustion * 0.33f;
 
         BlockPos pos = this.getBlockPos();
 
@@ -277,7 +277,49 @@ public class SolHammerProjectileEntity extends PersistentProjectileEntity{
         );
 
         if (this.dataTracker.get(ASHES)) {
-            spawnAshesProjectile(pos, combustion);
+            spawnAshesProjectile(pos, combustion, blistering);
+        }
+    }
+
+    private void spawnAshesProjectile(BlockPos pos, int combustion, boolean blistering) {
+        if (this.getWorld().isClient()) return;
+
+        double baseAngle = this.random.nextDouble() * Math.PI * 2.0;
+        double speed = 0.8;
+        double yVel = 0.4;
+
+        double[] angles = new double[] {
+                baseAngle,
+                baseAngle + (2.0 * Math.PI / 3.0),
+                baseAngle - (2.0 * Math.PI / 3.0)
+        };
+
+        float explosionRadius = 1.5f + (combustion * 0.125f);
+
+        for (double angle : angles) {
+            HammerExplosiveChunkEntity chunk =
+                    new HammerExplosiveChunkEntity(
+                            ModEntities.HAMMER_EXPLOSIVE_CHUNK,
+                            this.getWorld()
+                    );
+
+            chunk.setPosition(
+                    pos.getX() + 0.5,
+                    pos.getY() + 0.5,
+                    pos.getZ() + 0.5
+            );
+
+            double xVel = Math.cos(angle) * speed;
+            double zVel = Math.sin(angle) * speed;
+
+            chunk.setVelocity(xVel * 0.25f, yVel * 0.5f, zVel * 0.25f);
+            chunk.setExplosionRadius(explosionRadius);
+
+            if (blistering) {
+                igniteArea(pos, explosionRadius);
+            }
+
+            this.getWorld().spawnEntity(chunk);
         }
     }
 
@@ -302,44 +344,6 @@ public class SolHammerProjectileEntity extends PersistentProjectileEntity{
                     }
                 }
             }
-        }
-    }
-
-    private void spawnAshesProjectile(BlockPos pos, int combustion) {
-        if (this.getWorld().isClient()) return;
-
-        double baseAngle = this.random.nextDouble() * Math.PI * 2.0;
-        double speed = 0.8;
-        double yVel = 0.4;
-
-        double[] angles = new double[] {
-                baseAngle,
-                baseAngle + (2.0 * Math.PI / 3.0),
-                baseAngle - (2.0 * Math.PI / 3.0)
-        };
-
-        float explosionRadius = 1.5f + (combustion * 0.5f);
-
-        for (double angle : angles) {
-            HammerExplosiveChunkEntity chunk =
-                    new HammerExplosiveChunkEntity(
-                            ModEntities.HAMMER_EXPLOSIVE_CHUNK,
-                            this.getWorld()
-                    );
-
-            chunk.setPosition(
-                    pos.getX() + 0.5,
-                    pos.getY() + 0.5,
-                    pos.getZ() + 0.5
-            );
-
-            double xVel = Math.cos(angle) * speed;
-            double zVel = Math.sin(angle) * speed;
-
-            chunk.setVelocity(xVel * 0.25f, yVel * 0.5f, zVel * 0.25f);
-            chunk.setExplosionRadius(explosionRadius);
-
-            this.getWorld().spawnEntity(chunk);
         }
     }
 

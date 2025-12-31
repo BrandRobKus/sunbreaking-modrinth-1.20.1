@@ -59,8 +59,8 @@ public class AspectItem extends Item {
             tooltip.add(Text.translatable("tooltip.sunbreaking.aspect_of_resolve.tooltip_1"));
         }
         if (stack.isOf(ModItems.ASPECT_OF_BENEVOLENCE)) {
-            tooltip.add(Text.translatable("tooltip.sunbreaking.aspect_of_harvest.tooltip"));
-            tooltip.add(Text.translatable("tooltip.sunbreaking.aspect_of_harvest.tooltip_1"));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.aspect_of_benevolence.tooltip"));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.aspect_of_benevolence.tooltip_1"));
             tooltip.add(Text.translatable("tooltip.sunbreaking.aspect_of_harvest.tooltip_2").formatted(Formatting.RED));
             tooltip.add(Text.translatable("tooltip.sunbreaking.aspect_of_harvest.tooltip_3").formatted(Formatting.RED));
         }
@@ -68,6 +68,7 @@ public class AspectItem extends Item {
         if (stack.isOf(ModItems.ASPECT_OF_OBSCURITY)) {
             String keyName = ModKeyBindings.TOGGLE_ARMOR_EFFECT.getBoundKeyLocalizedText().getString();
             tooltip.add(Text.translatable("tooltip.sunbreaking.aspect_of_obscurity.tooltip", keyName));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.aspect_of_obscurity.tooltip_5"));
             tooltip.add(Text.translatable("tooltip.sunbreaking.aspect_of_obscurity.tooltip_0"));
             tooltip.add(Text.translatable("tooltip.sunbreaking.aspect_of_obscurity.tooltip_1"));
             tooltip.add(Text.translatable("tooltip.sunbreaking.aspect_of_obscurity.tooltip_2"));
@@ -86,8 +87,8 @@ public class AspectItem extends Item {
             tooltip.add(Text.translatable("tooltip.sunbreaking.aspect_of_renewal.tooltip_1"));
         }
         if (stack.isOf(ModItems.ASPECT_OF_HARVEST)) {
-            tooltip.add(Text.translatable("tooltip.sunbreaking.aspect_of_benevolence.tooltip"));
-            tooltip.add(Text.translatable("tooltip.sunbreaking.aspect_of_benevolence.tooltip_1"));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.aspect_of_harvest.tooltip"));
+            tooltip.add(Text.translatable("tooltip.sunbreaking.aspect_of_harvest.tooltip_1"));
             tooltip.add(Text.translatable("tooltip.sunbreaking.aspect_of_harvest.tooltip_2").formatted(Formatting.RED));
             tooltip.add(Text.translatable("tooltip.sunbreaking.aspect_of_harvest.tooltip_3").formatted(Formatting.RED));
         }

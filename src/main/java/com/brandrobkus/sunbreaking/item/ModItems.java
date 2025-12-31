@@ -31,7 +31,7 @@ public class ModItems {
             new SolHammerItem(ModToolMaterials.SOLAR, 4, -2.8F, new Item.Settings()));
 
     public static final Item FRAGMENT_OF_COMBUSTION = registerItem("fragment_of_combustion",
-            new FragmentItem(new FabricItemSettings().maxCount(2)));
+            new FragmentItem(new FabricItemSettings().maxCount(6)));
     public static final Item FRAGMENT_OF_BLISTERING = registerItem("fragment_of_blistering",
             new FragmentItem(new FabricItemSettings().maxCount(1)));
     public static final Item FRAGMENT_OF_ASHES = registerItem("fragment_of_ashes",
@@ -134,6 +134,8 @@ public class ModItems {
             new ShadowshotBowItem(new FabricItemSettings().maxDamage(500)));
     public static final Item VANILLA_SHADOWSHOT_BOW = registerItem("vanilla_shadowshot_bow",
             new ShadowshotBowItem(new FabricItemSettings().maxDamage(500)));
+    public static final Item ENDER_SHADOWSHOT_BOW = registerItem("ender_shadowshot_bow",
+            new ShadowshotBowItem(new FabricItemSettings().maxDamage(500)));
 
     public static final Item FRAGMENT_OF_EXPULSION = registerItem("fragment_of_expulsion",
             new FragmentItem(new FabricItemSettings().maxCount(4)));
@@ -172,6 +174,16 @@ public class ModItems {
                     Text.translatable("item.sunbreaking.vanilla_appearance_template.addition_slot"),
                     Text.translatable("item.sunbreaking.vanilla_appearance_template.apply"),
                     Text.translatable("item.sunbreaking.vanilla_appearance_template.base"),
+                    List.of(new Identifier(Sunbreaking.MOD_ID, "item/addition_slot")),
+                    List.of(new Identifier(Sunbreaking.MOD_ID, "item/base_slot"))));
+    public static final Item ENDER_APPEARANCE_SMITHING_TEMPLATE = registerItem(
+            "ender_appearance_smithing_template",
+            new SmithingTemplateItem(
+                    Text.translatable("item.sunbreaking.ender_appearance_template.title").formatted(Formatting.DARK_PURPLE),
+                    Text.translatable("item.sunbreaking.ender_appearance_template.base_slot"),
+                    Text.translatable("item.sunbreaking.ender_appearance_template.addition_slot"),
+                    Text.translatable("item.sunbreaking.ender_appearance_template.apply"),
+                    Text.translatable("item.sunbreaking.ender_appearance_template.base"),
                     List.of(new Identifier(Sunbreaking.MOD_ID, "item/addition_slot")),
                     List.of(new Identifier(Sunbreaking.MOD_ID, "item/base_slot"))));
 
@@ -262,7 +274,6 @@ public class ModItems {
             new AspectItem(new FabricItemSettings().maxCount(1)));
     public static final Item ASPECT_OF_RECHARGE = registerItem("aspect_of_recharge",
             new AspectItem(new FabricItemSettings().maxCount(1)));
-            //Kills with the Stormcaller's Bond increase Super Energy gain for a short time
     public static final Item ASPECT_OF_FREQUENCY = registerItem("aspect_of_frequency",
             new AspectItem(new FabricItemSettings().maxCount(1)));
 
@@ -312,6 +323,7 @@ public class ModItems {
 
             ModItems.FRAGMENT_OF_SHOCK,
             ModItems.FRAGMENT_OF_VOLTS,
+            ModItems.FRAGMENT_OF_FEEDBACK,
             ModItems.FRAGMENT_OF_BEACONS
     );
 

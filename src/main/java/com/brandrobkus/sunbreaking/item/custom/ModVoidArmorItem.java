@@ -70,7 +70,7 @@ public class ModVoidArmorItem extends ArmorItem {
         if (player.isInvisible() && !invisActive && hasExecution) {
             player.addStatusEffect(new StatusEffectInstance(
                     StatusEffects.STRENGTH,
-                    8,
+                    10,
                     1,
                     false,
                     false,
@@ -87,16 +87,27 @@ public class ModVoidArmorItem extends ArmorItem {
             return;
         }
 
-        player.addStatusEffect(new StatusEffectInstance(
-                StatusEffects.INVISIBILITY,
-                effectTimer,
-                0,
-                false,
-                true,
-                true
-        ));
-
-        PlayerSuperAccessor.get(player).addSuper(superDrain);
+        if(invisActive) {
+            if (hasExecution) {
+                player.addStatusEffect(new StatusEffectInstance(
+                        StatusEffects.STRENGTH,
+                        effectTimer,
+                        1,
+                        false,
+                        false,
+                        true
+                ));
+            }
+            player.addStatusEffect(new StatusEffectInstance(
+                    StatusEffects.INVISIBILITY,
+                    effectTimer,
+                    0,
+                    false,
+                    true,
+                    true
+            ));
+            PlayerSuperAccessor.get(player).addSuper(superDrain);
+        }
 
         if (player instanceof ServerPlayerEntity serverPlayer) {
             PacketByteBuf buf = PacketByteBufs.create();
@@ -106,16 +117,6 @@ public class ModVoidArmorItem extends ArmorItem {
             ServerPlayNetworking.send(serverPlayer, ModNetworking.GEAR_SYNC, buf);
         }
 
-        if (hasExecution) {
-            player.addStatusEffect(new StatusEffectInstance(
-                    StatusEffects.STRENGTH,
-                    effectTimer,
-                    1,
-                    false,
-                    false,
-                    true
-            ));
-        }
     }
 
     public static void toggleInvisibility(PlayerEntity player) {
