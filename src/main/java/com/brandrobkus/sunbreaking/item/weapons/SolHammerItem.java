@@ -7,7 +7,6 @@ import com.brandrobkus.sunbreaking.item.weapons.fragments.FragmentHelper;
 import com.brandrobkus.sunbreaking.network.ModNetworking;
 import com.brandrobkus.sunbreaking.sound.ModSounds;
 import com.brandrobkus.sunbreaking.enchantment.ModEnchantments;
-import com.brandrobkus.sunbreaking.util.ModDamageTypes;
 import com.brandrobkus.sunbreaking.util.ModTags;
 import com.brandrobkus.sunbreaking.util.gui.PlayerSuperAccessor;
 import com.google.common.collect.ImmutableMultimap;

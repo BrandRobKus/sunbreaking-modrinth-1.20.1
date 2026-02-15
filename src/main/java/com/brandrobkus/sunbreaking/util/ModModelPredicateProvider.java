@@ -26,7 +26,7 @@ public class ModModelPredicateProvider {
         );
     }
 
-    public static void registerWoodCarvedShadowShotBow (Item bow){
+    /*public static void registerWoodCarvedShadowShotBow (Item bow){
 
         FabricModelPredicateProviderRegistry.register(ModItems.WOODCARVED_SHADOWSHOT_BOW, new Identifier("pull"), (stack, world, entity, seed) -> {
             if (entity == null) {
@@ -41,6 +41,8 @@ public class ModModelPredicateProvider {
                 (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F
         );
     }
+
+
 
     public static void registerVanillaShadowShotBow (Item bow){
 
@@ -73,10 +75,14 @@ public class ModModelPredicateProvider {
                 (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F
         );
     }
+
+     */
     public static void registerModModel(){
         registerShadowShotBow(ModItems.SHADOWSHOT_BOW);
-        registerWoodCarvedShadowShotBow(ModItems.WOODCARVED_SHADOWSHOT_BOW);
+        /*registerWoodCarvedShadowShotBow(ModItems.WOODCARVED_SHADOWSHOT_BOW);
         registerVanillaShadowShotBow(ModItems.VANILLA_SHADOWSHOT_BOW);
         registerEnderShadowshotBow(ModItems.ENDER_SHADOWSHOT_BOW);
+
+         */
     }
 }

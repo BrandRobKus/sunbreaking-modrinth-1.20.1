@@ -2,18 +2,12 @@ package com.brandrobkus.sunbreaking.item.weapons;
 
 import com.brandrobkus.sunbreaking.Sunbreaking;
 import com.brandrobkus.sunbreaking.entity.custom.BaseHammerProjectileEntity;
-import com.brandrobkus.sunbreaking.entity.custom.BaseHammerProjectileEntity;
 import com.brandrobkus.sunbreaking.item.ModItems;
 import com.brandrobkus.sunbreaking.item.weapons.fragments.FragmentHelper;
-import com.brandrobkus.sunbreaking.network.ModNetworking;
 import com.brandrobkus.sunbreaking.sound.ModSounds;
 import com.brandrobkus.sunbreaking.enchantment.ModEnchantments;
-import com.brandrobkus.sunbreaking.util.ModDamageTypes;
-import com.brandrobkus.sunbreaking.util.gui.PlayerSuperAccessor;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EquipmentSlot;

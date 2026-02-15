@@ -18,9 +18,11 @@ public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
     protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
         getOrCreateTagBuilder(ModTags.Items.HAMMER)
                 .add(ModItems.HAMMER_OF_SOL)
-                .add(ModItems.BLAZING_HAMMER)
+                /*.add(ModItems.BLAZING_HAMMER)
                 .add(ModItems.HELLBENT_HAMMER)
                 .add(ModItems.FLAT_HAMMER)
+
+                 */
         ;
         getOrCreateTagBuilder(ModTags.Items.HAMMER_BASE)
                 .add(ModItems.WOODEN_HAMMER)
@@ -49,8 +51,10 @@ public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
         ;
         getOrCreateTagBuilder(ModTags.Items.SHADOWSHOTS)
                 .add(ModItems.SHADOWSHOT_BOW)
-                .add(ModItems.WOODCARVED_SHADOWSHOT_BOW)
+                /*.add(ModItems.WOODCARVED_SHADOWSHOT_BOW)
                 .add(ModItems.VANILLA_SHADOWSHOT_BOW)
+
+                 */
         ;
 
         getOrCreateTagBuilder(ModTags.Items.GEAR_METER)
@@ -64,12 +68,12 @@ public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
         ;
         getOrCreateTagBuilder(ModTags.Items.SUPER_METER)
                 .add(ModItems.SHADOWSHOT_BOW)
-                .add(ModItems.WOODCARVED_SHADOWSHOT_BOW)
-                .add(ModItems.VANILLA_SHADOWSHOT_BOW)
+                //.add(ModItems.WOODCARVED_SHADOWSHOT_BOW)
+                //add(ModItems.VANILLA_SHADOWSHOT_BOW)
                 .add(ModItems.HAMMER_OF_SOL)
-                .add(ModItems.BLAZING_HAMMER)
-                .add(ModItems.HELLBENT_HAMMER)
-                .add(ModItems.FLAT_HAMMER)
+                //.add(ModItems.BLAZING_HAMMER)
+                //.add(ModItems.HELLBENT_HAMMER)
+                //.add(ModItems.FLAT_HAMMER)
                 .add(ModItems.STORMCALLERS_BOND)
         ;
 

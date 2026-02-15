@@ -64,16 +64,12 @@ public class SuperHudOverlay {
         int superY = client.getWindow().getScaledHeight() - 62;
 
         if (hasGearItem) {
-            //Empty Gear Meter
             context.drawTexture(TEXTURE, gearX, gearY, 101, 64, 81, 5);
-            //Gear meter that scales up dynamically
             if (gearWidth > 0) context.drawTexture(TEXTURE, gearX, gearY, 101, 69, gearWidth, 5);
         }
 
         if (hasSuperItem) {
-            //Empty Super Meter
             context.drawTexture(TEXTURE, superX, superY, 0, 64, 81, 5);
-            //Super meter that scales up dynamically
             if (superWidth > 0) context.drawTexture(TEXTURE, superX, superY, 0, 69, superWidth, 5);
         }
 

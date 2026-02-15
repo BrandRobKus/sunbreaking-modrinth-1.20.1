@@ -188,7 +188,7 @@ public class ModLootTableModifiers {
                 builder.pool(poolBuilder.build());
             }
 
-            if(BASTION_OTHER.equals(identifier)) {
+            /*if(BASTION_OTHER.equals(identifier)) {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
                         .conditionally(RandomChanceLootCondition.builder(0.025f))
@@ -217,6 +217,8 @@ public class ModLootTableModifiers {
 
                 builder.pool(poolBuilder.build());
             }
+
+             */
 
             if(BASTION_TREASURE.equals(identifier)) {
                 LootPool.Builder poolBuilder = LootPool.builder()
@@ -231,14 +233,14 @@ public class ModLootTableModifiers {
             if(BASTION_TREASURE.equals(identifier)) {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
-                        .conditionally(RandomChanceLootCondition.builder(0.25f))
+                        .conditionally(RandomChanceLootCondition.builder(0.15f))
                         .with(ItemEntry.builder(ModItems.DIMINISHED_SOLAR_LIGHT))
                         .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
 
                 builder.pool(poolBuilder.build());
             }
 
-            if(NETHER_BRIDGE.equals(identifier)) {
+            /*if(NETHER_BRIDGE.equals(identifier)) {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
                         .conditionally(RandomChanceLootCondition.builder(0.025f))
@@ -267,6 +269,8 @@ public class ModLootTableModifiers {
 
                 builder.pool(poolBuilder.build());
             }
+
+             */
 
             if(RUINED_PORTAL.equals(identifier)) {
                 LootPool.Builder poolBuilder = LootPool.builder()
@@ -288,7 +292,7 @@ public class ModLootTableModifiers {
                 builder.pool(poolBuilder.build());
             }
 
-            if(RUINED_PORTAL.equals(identifier)) {
+            /*if(RUINED_PORTAL.equals(identifier)) {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
                         .conditionally(RandomChanceLootCondition.builder(0.025f))
@@ -317,6 +321,8 @@ public class ModLootTableModifiers {
 
                 builder.pool(poolBuilder.build());
             }
+
+             */
 
             if(ANCIENT_CITY.equals(identifier)) {
                 LootPool.Builder poolBuilder = LootPool.builder()
@@ -351,7 +357,7 @@ public class ModLootTableModifiers {
             if(ANCIENT_CITY.equals(identifier)) {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
-                        .conditionally(RandomChanceLootCondition.builder(0.25f))
+                        .conditionally(RandomChanceLootCondition.builder(0.15f))
                         .with(ItemEntry.builder(ModItems.FLICKERING_ARC_LIGHT))
                         .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
 
@@ -381,7 +387,7 @@ public class ModLootTableModifiers {
             if(END_CITY_TREASURE.equals(identifier)) {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
-                        .conditionally(RandomChanceLootCondition.builder(0.25f))
+                        .conditionally(RandomChanceLootCondition.builder(0.15f))
                         .with(ItemEntry.builder(ModItems.FLEETING_VOID_LIGHT))
                         .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
 

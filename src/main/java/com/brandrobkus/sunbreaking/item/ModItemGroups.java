@@ -23,13 +23,15 @@ public class ModItemGroups {
                         entries.add(ModItems.NETHERITE_HAMMER);
 
                         entries.add(ModItems.HAMMER_OF_SOL);
-                        entries.add(ModItems.HAMMER_APPEARANCE_SMITHING_TEMPLATE);
+                        /*entries.add(ModItems.HAMMER_APPEARANCE_SMITHING_TEMPLATE);
                         entries.add(ModItems.BLAZING_HAMMER);
                         entries.add(ModItems.BLAZING_APPEARANCE_SMITHING_TEMPLATE);
                         entries.add(ModItems.HELLBENT_HAMMER);
                         entries.add(ModItems.HELLBENT_APPEARANCE_SMITHING_TEMPLATE);
                         entries.add(ModItems.FLAT_HAMMER);
                         entries.add(ModItems.FLAT_APPEARANCE_SMITHING_TEMPLATE);
+
+                         */
 
                         entries.add(ModItems.FRAGMENT_OF_COMBUSTION);
                         entries.add(ModItems.FRAGMENT_OF_BLISTERING);
@@ -52,13 +54,15 @@ public class ModItemGroups {
                         entries.add(ModItems.SOLAR_UPGRADE_SMITHING_TEMPLATE);
 
                         entries.add(ModItems.SHADOWSHOT_BOW);
-                        entries.add(ModItems.SHADOWSHOT_APPEARANCE_SMITHING_TEMPLATE);
+                        /*entries.add(ModItems.SHADOWSHOT_APPEARANCE_SMITHING_TEMPLATE);
                         entries.add(ModItems.WOODCARVED_SHADOWSHOT_BOW);
                         entries.add(ModItems.WOODCARVED_APPEARANCE_SMITHING_TEMPLATE);
                         entries.add(ModItems.ENDER_SHADOWSHOT_BOW);
                         entries.add(ModItems.ENDER_APPEARANCE_SMITHING_TEMPLATE);
                         entries.add(ModItems.VANILLA_SHADOWSHOT_BOW);
                         entries.add(ModItems.VANILLA_APPEARANCE_SMITHING_TEMPLATE);
+
+                         */
 
                         entries.add(ModItems.SHADOWSHOT_ARROW);
 

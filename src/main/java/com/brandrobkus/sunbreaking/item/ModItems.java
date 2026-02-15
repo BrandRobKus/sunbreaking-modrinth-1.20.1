@@ -23,12 +23,14 @@ public class ModItems {
 
     public static final Item HAMMER_OF_SOL = registerItem("hammer_of_sol",
             new SolHammerItem(ModToolMaterials.SOLAR, 4, -2.8F, new Item.Settings()));
-    public static final Item BLAZING_HAMMER = registerItem("blazing_hammer_of_sol",
+    /*public static final Item BLAZING_HAMMER = registerItem("blazing_hammer_of_sol",
             new SolHammerItem(ModToolMaterials.SOLAR, 4, -2.8F, new Item.Settings()));
     public static final Item HELLBENT_HAMMER = registerItem("hellbent_hammer_of_sol",
             new SolHammerItem(ModToolMaterials.SOLAR, 4, -2.8F, new Item.Settings()));
     public static final Item FLAT_HAMMER = registerItem("2d_hammer_of_sol",
             new SolHammerItem(ModToolMaterials.SOLAR, 4, -2.8F, new Item.Settings()));
+
+     */
 
     public static final Item FRAGMENT_OF_COMBUSTION = registerItem("fragment_of_combustion",
             new FragmentItem(new FabricItemSettings().maxCount(6)));
@@ -67,6 +69,7 @@ public class ModItems {
                     List.of(new Identifier(Sunbreaking.MOD_ID, "item/addition_slot")),
                     List.of(new Identifier(Sunbreaking.MOD_ID, "item/base_slot"))));
 
+    /*
     public static final Item HAMMER_APPEARANCE_SMITHING_TEMPLATE = registerItem(
             "hammer_appearance_smithing_template",
             new SmithingTemplateItem(
@@ -108,6 +111,8 @@ public class ModItems {
                     List.of(new Identifier(Sunbreaking.MOD_ID, "item/addition_slot")),
                     List.of(new Identifier(Sunbreaking.MOD_ID, "item/base_slot"))));
 
+     */
+
     public static final Item SUNBREAKERS_HELMET = registerItem("sunbreakers_helmet",
             new ModSolarArmorItem(ModArmorMaterials.SOLAR, ArmorItem.Type.HELMET, new FabricItemSettings().maxCount(1).fireproof()));
     public static final Item SUNBREAKERS_CUIRASS = registerItem("sunbreakers_cuirass",
@@ -130,12 +135,14 @@ public class ModItems {
 
     public static final Item SHADOWSHOT_BOW = registerItem("shadowshot_bow",
             new ShadowshotBowItem(new FabricItemSettings().maxDamage(500)));
-    public static final Item WOODCARVED_SHADOWSHOT_BOW = registerItem("woodcarved_shadowshot_bow",
+    /*public static final Item WOODCARVED_SHADOWSHOT_BOW = registerItem("woodcarved_shadowshot_bow",
             new ShadowshotBowItem(new FabricItemSettings().maxDamage(500)));
     public static final Item VANILLA_SHADOWSHOT_BOW = registerItem("vanilla_shadowshot_bow",
             new ShadowshotBowItem(new FabricItemSettings().maxDamage(500)));
     public static final Item ENDER_SHADOWSHOT_BOW = registerItem("ender_shadowshot_bow",
             new ShadowshotBowItem(new FabricItemSettings().maxDamage(500)));
+
+     */
 
     public static final Item FRAGMENT_OF_EXPULSION = registerItem("fragment_of_expulsion",
             new FragmentItem(new FabricItemSettings().maxCount(4)));
@@ -146,7 +153,7 @@ public class ModItems {
     public static final Item FRAGMENT_OF_VIGILANCE = registerItem("fragment_of_vigilance",
             new FragmentItem(new FabricItemSettings().maxCount(4)));
 
-    public static final Item SHADOWSHOT_APPEARANCE_SMITHING_TEMPLATE = registerItem(
+    /*public static final Item SHADOWSHOT_APPEARANCE_SMITHING_TEMPLATE = registerItem(
             "shadowshot_appearance_smithing_template",
             new SmithingTemplateItem(
                     Text.translatable("item.sunbreaking.shadowshot_appearance_template.title").formatted(Formatting.DARK_PURPLE),
@@ -186,6 +193,8 @@ public class ModItems {
                     Text.translatable("item.sunbreaking.ender_appearance_template.base"),
                     List.of(new Identifier(Sunbreaking.MOD_ID, "item/addition_slot")),
                     List.of(new Identifier(Sunbreaking.MOD_ID, "item/base_slot"))));
+
+     */
 
     public static final Item SHADOWSHOT_ARROW = registerItem("shadowshot_arrow",
             new ShadowshotArrowItem(new FabricItemSettings()));

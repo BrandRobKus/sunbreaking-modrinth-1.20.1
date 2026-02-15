@@ -245,7 +245,8 @@
 
   "item.sunbreaking.shadowshot_arrow": "Shadowshot Arrow",
   "item.sunbreaking.smoke_bomb": "Smoke Bomb",
-  "key.sunbreaking.toggle_invisibility": "Toggle Obscuring Invisibility",
+  "key.sunbreaking.toggle_invisibility": "Toggle Armor Effect",
+  "key.sunbreaking.toggle_item_effect": "Toggle Super Weapon Effect",
 
   "item.sunbreaking.wooden_glaive": "Wooden Glaive",
   "item.sunbreaking.stone_glaive": "Stone Glaive",
@@ -266,6 +267,6 @@
   "item.sunbreaking.arc_upgrade_template.base": "Base",
 
   "death.attack.glaive_projectile": "%1$s thought Glaives were only Melee Weapons",
-  "death.attack.glaive_projectile.player": "%2$s was shot by %1$s, who was using a pointy stick? How does that work?",
+  "death.attack.glaive_projectile.player": "%1$s was shot by %2$s's pointy stick",
   "death.attack.fireless_lightning": "%1$s crossed a Stormcaller"
 }

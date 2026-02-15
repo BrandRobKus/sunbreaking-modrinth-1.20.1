@@ -37,7 +37,7 @@ import net.minecraft.world.World;
 import java.util.*;
 import java.util.stream.Stream;
 
-public class ShadowshotBowItem extends BowItem implements ItemEffectToggleable {
+public class ShadowshotBowItem extends BowItem implements ItemEffectToggleable, Vanishable {
     private static final Set<UUID> playersOnCooldown = new HashSet<>();
     private static final int MAX_STORAGE = 128;
     public static final String SHADOWSHOT_KEY = "ShadowshotMode";
@@ -139,6 +139,8 @@ public class ShadowshotBowItem extends BowItem implements ItemEffectToggleable {
             }
 
             world.spawnEntity(projectile);
+            stack.damage(1, user, (p) -> p.sendToolBreakStatus(user.getActiveHand()));
+
 
             boolean consumeArrow = !infinite && !player.getAbilities().creativeMode;
             if (consumeArrow) {
@@ -427,5 +429,10 @@ public class ShadowshotBowItem extends BowItem implements ItemEffectToggleable {
 
     private void playInsertSound(Entity entity) {
         entity.playSound(ModSounds.ASPECT_EQUIP, 0.8F, 0.8F + entity.getWorld().getRandom().nextFloat() * 0.4F);
+    }
+
+    @Override
+    public boolean isDamageable() {
+        return true;
     }
 }
