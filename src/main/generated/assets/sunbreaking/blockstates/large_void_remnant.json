@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "sunbreaking:block/large_void_remnant",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "sunbreaking:block/large_void_remnant",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "sunbreaking:block/large_void_remnant",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "sunbreaking:block/large_void_remnant",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "sunbreaking:block/large_void_remnant"
+    },
+    "facing=west": {
+      "model": "sunbreaking:block/large_void_remnant",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

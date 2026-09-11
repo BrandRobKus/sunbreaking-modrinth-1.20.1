@@ -1,6 +1,7 @@
 package com.brandrobkus.sunbreaking.item;
 
 import com.brandrobkus.sunbreaking.Sunbreaking;
+import com.brandrobkus.sunbreaking.block.ModBlocks;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -117,6 +118,27 @@ public class ModItemGroups {
                         entries.add(ModItems.GOLD_GLAIVE);
                         entries.add(ModItems.DIAMOND_GLAIVE);
                         entries.add(ModItems.NETHERITE_GLAIVE);
+
+                        entries.add(ModBlocks.TRAVELER_SHARD);
+                        entries.add(ModBlocks.WEATHERED_TRAVELER_SHARD);
+                        entries.add(ModBlocks.SOLAR_SURGED_TRAVELER_SHARD);
+                        entries.add(ModBlocks.VOID_SURGED_TRAVELER_SHARD);
+                        entries.add(ModBlocks.ARC_SURGED_TRAVELER_SHARD);
+
+                        entries.add(ModBlocks.SMALL_SOLAR_REMNANT);
+                        entries.add(ModBlocks.MEDIUM_SOLAR_REMNANT);
+                        entries.add(ModBlocks.LARGE_SOLAR_REMNANT);
+                        entries.add(ModBlocks.SOLAR_BURST);
+
+                        entries.add(ModBlocks.SMALL_VOID_REMNANT);
+                        entries.add(ModBlocks.MEDIUM_VOID_REMNANT);
+                        entries.add(ModBlocks.LARGE_VOID_REMNANT);
+                        entries.add(ModBlocks.VOID_BURST);
+
+                        entries.add(ModBlocks.SMALL_ARC_REMNANT);
+                        entries.add(ModBlocks.MEDIUM_ARC_REMNANT);
+                        entries.add(ModBlocks.LARGE_ARC_REMNANT);
+                        entries.add(ModBlocks.ARC_BURST);
 
                     }).build());
 

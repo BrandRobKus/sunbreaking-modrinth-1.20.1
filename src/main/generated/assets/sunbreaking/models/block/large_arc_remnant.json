@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "sunbreaking:block/large_arc_remnant"
+  }
+}

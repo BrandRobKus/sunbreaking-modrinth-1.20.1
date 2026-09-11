@@ -1,6 +1,7 @@
 package com.brandrobkus.sunbreaking.datagen;
 
 
+import com.brandrobkus.sunbreaking.block.ModBlocks;
 import com.brandrobkus.sunbreaking.item.ModItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
@@ -17,6 +18,27 @@ public class ModModelProvider extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+        blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.TRAVELER_SHARD);
+        blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.WEATHERED_TRAVELER_SHARD);
+
+        blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.SOLAR_SURGED_TRAVELER_SHARD);
+        blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.ARC_SURGED_TRAVELER_SHARD);
+        blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.VOID_SURGED_TRAVELER_SHARD);
+
+        blockStateModelGenerator.registerAmethyst(ModBlocks.SMALL_SOLAR_REMNANT);
+        blockStateModelGenerator.registerAmethyst(ModBlocks.MEDIUM_SOLAR_REMNANT);
+        blockStateModelGenerator.registerAmethyst(ModBlocks.LARGE_SOLAR_REMNANT);
+        blockStateModelGenerator.registerAmethyst(ModBlocks.SOLAR_BURST);
+
+        blockStateModelGenerator.registerAmethyst(ModBlocks.SMALL_ARC_REMNANT);
+        blockStateModelGenerator.registerAmethyst(ModBlocks.MEDIUM_ARC_REMNANT);
+        blockStateModelGenerator.registerAmethyst(ModBlocks.LARGE_ARC_REMNANT);
+        blockStateModelGenerator.registerAmethyst(ModBlocks.ARC_BURST);
+
+        blockStateModelGenerator.registerAmethyst(ModBlocks.SMALL_VOID_REMNANT);
+        blockStateModelGenerator.registerAmethyst(ModBlocks.MEDIUM_VOID_REMNANT);
+        blockStateModelGenerator.registerAmethyst(ModBlocks.LARGE_VOID_REMNANT);
+        blockStateModelGenerator.registerAmethyst(ModBlocks.VOID_BURST);
 
     }
 

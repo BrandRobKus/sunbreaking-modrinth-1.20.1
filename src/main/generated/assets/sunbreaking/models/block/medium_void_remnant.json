@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "sunbreaking:block/medium_void_remnant"
+  }
+}

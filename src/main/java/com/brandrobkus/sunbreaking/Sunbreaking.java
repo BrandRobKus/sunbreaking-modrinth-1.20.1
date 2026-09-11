@@ -1,5 +1,6 @@
 package com.brandrobkus.sunbreaking;
 
+import com.brandrobkus.sunbreaking.block.ModBlocks;
 import com.brandrobkus.sunbreaking.command.FireteamCommand;
 import com.brandrobkus.sunbreaking.enchantment.ModEnchantments;
 import com.brandrobkus.sunbreaking.entity.ModEntities;
@@ -37,6 +38,7 @@ public class Sunbreaking implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		ModBlocks.registerModBlocks();
 		ModEnchantments.registerModEnchantments();
 		ModEntities.registerModEntities();
 		ModEventHandler.register();

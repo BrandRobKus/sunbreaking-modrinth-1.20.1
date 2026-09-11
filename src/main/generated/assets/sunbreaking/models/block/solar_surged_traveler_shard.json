@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "sunbreaking:block/solar_surged_traveler_shard"
+  }
+}

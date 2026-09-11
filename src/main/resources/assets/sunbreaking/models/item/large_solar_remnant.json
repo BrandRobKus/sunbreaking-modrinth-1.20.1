@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "sunbreaking:block/large_solar_remnant"
+  }
+}
