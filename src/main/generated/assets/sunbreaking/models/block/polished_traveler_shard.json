@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "sunbreaking:block/polished_traveler_shard"
+  }
+}

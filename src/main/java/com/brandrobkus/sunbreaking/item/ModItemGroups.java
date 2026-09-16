@@ -120,6 +120,7 @@ public class ModItemGroups {
                         entries.add(ModItems.NETHERITE_GLAIVE);
 
                         entries.add(ModBlocks.TRAVELER_SHARD);
+                        entries.add(ModBlocks.POLISHED_TRAVELER_SHARD);
                         entries.add(ModBlocks.WEATHERED_TRAVELER_SHARD);
                         entries.add(ModBlocks.SOLAR_SURGED_TRAVELER_SHARD);
                         entries.add(ModBlocks.VOID_SURGED_TRAVELER_SHARD);

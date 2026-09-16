@@ -16,7 +16,7 @@
   "tooltip.sunbreaking.fragment_of_combustion.tooltip": "Increases Blast Radius",
   "tooltip.sunbreaking.fragment_of_combustion.tooltip_2": "and Damage per Stack",
   "tooltip.sunbreaking.fragment_of_combustion.tooltip_1": "Requires more Super Energy per Stack",
-  "tooltip.sunbreaking.fragment_of_combustion.tooltip_3": "Stacks up to II",
+  "tooltip.sunbreaking.fragment_of_combustion.tooltip_3": "Stacks up to VI",
   "item.sunbreaking.fragment_of_blistering": "Fragment of Blistering",
   "tooltip.sunbreaking.fragment_of_blistering.tooltip": "Ignites the ground at",
   "tooltip.sunbreaking.fragment_of_blistering.tooltip_1": "the point of impact",
@@ -268,5 +268,29 @@
 
   "death.attack.glaive_projectile": "%1$s thought Glaives were only Melee Weapons",
   "death.attack.glaive_projectile.player": "%1$s was shot by %2$s's pointy stick",
-  "death.attack.fireless_lightning": "%1$s crossed a Stormcaller"
+  "death.attack.fireless_lightning": "%1$s crossed a Stormcaller",
+
+  "block.sunbreaking.traveler_shard": "Traveler Shard",
+  "block.sunbreaking.polished_traveler_shard": "Polished Traveler Shard",
+  "block.sunbreaking.weathered_traveler_shard": "Weathered Traveler Shard",
+
+  "block.sunbreaking.arc_surged_traveler_shard": "Arc-Surged Traveler Shard",
+  "block.sunbreaking.solar_surged_traveler_shard": "Solar-Surged Traveler Shard",
+  "block.sunbreaking.void_surged_traveler_shard": "Void-Surged Traveler Shard",
+
+  "block.sunbreaking.small_arc_remnant": "Small Arc Remnant",
+  "block.sunbreaking.medium_arc_remnant": "Medium Arc Remnant",
+  "block.sunbreaking.large_arc_remnant": "Large Arc Remnant",
+  "block.sunbreaking.arc_burst": "Arc Burst",
+
+  "block.sunbreaking.small_solar_remnant": "Small Solar Remnant",
+  "block.sunbreaking.medium_solar_remnant": "Medium Solar Remnant",
+  "block.sunbreaking.large_solar_remnant": "Large Solar Remnant",
+  "block.sunbreaking.solar_burst": "Solar Burst",
+
+  "block.sunbreaking.small_void_remnant": "Small Void Remnant",
+  "block.sunbreaking.medium_void_remnant": "Medium Void Remnant",
+  "block.sunbreaking.large_void_remnant": "Large Void Remnant",
+  "block.sunbreaking.void_burst": "Void Burst"
+
 }

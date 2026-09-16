@@ -294,7 +294,7 @@ public class ModSolarArmorItem extends ArmorItem {
     }
 
     // ========================= TOOLTIP =========================
-    @Override
+    /*@Override
     public Optional<TooltipData> getTooltipData(ItemStack stack) {
         if (!isChestplate()) return Optional.empty();
 
@@ -302,6 +302,8 @@ public class ModSolarArmorItem extends ArmorItem {
         getBundledStacks(stack).forEach(list::add);
         return Optional.of(new BundleTooltipData(list, getBundleOccupancy(stack)));
     }
+
+     */
 
 
     @Override

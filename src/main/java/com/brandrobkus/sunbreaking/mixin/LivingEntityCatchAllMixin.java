@@ -219,7 +219,6 @@ public class LivingEntityCatchAllMixin implements BondGlowTracked {
     @Unique
     private int bondGlowTicks;
 
-    // === TICK DOWN ===
     @Inject(method = "tick", at = @At("HEAD"))
     private void tickBondGlow(CallbackInfo ci) {
         if (bondGlowTicks > 0) {
@@ -230,14 +229,12 @@ public class LivingEntityCatchAllMixin implements BondGlowTracked {
         }
     }
 
-    // === SET ===
     @Override
     public void setBondGlow(int ticks) {
         isBondGlowing = true;
         bondGlowTicks = ticks;
     }
 
-    // === GET ===
     @Override
     public boolean isBondGlowing() {
         return isBondGlowing;

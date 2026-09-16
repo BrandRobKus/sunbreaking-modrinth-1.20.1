@@ -355,7 +355,7 @@ public class ModArcArmorItem extends ArmorItem {
     }
 
     // ========================= TOOLTIP =========================
-    @Override
+    /*@Override
     public Optional<TooltipData> getTooltipData(ItemStack stack) {
         if (!isChestplate()) return Optional.empty();
 
@@ -363,6 +363,8 @@ public class ModArcArmorItem extends ArmorItem {
         getBundledStacks(stack).forEach(list::add);
         return Optional.of(new BundleTooltipData(list, getBundleOccupancy(stack)));
     }
+
+     */
 
     @Override
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {

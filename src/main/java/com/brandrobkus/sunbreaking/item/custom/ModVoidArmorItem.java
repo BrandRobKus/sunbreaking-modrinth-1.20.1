@@ -362,7 +362,7 @@ public class ModVoidArmorItem extends ArmorItem {
     }
 
     // ========================= TOOLTIP =========================
-    @Override
+    /*@Override
     public Optional<TooltipData> getTooltipData(ItemStack stack) {
         if (!isChestplate()) return Optional.empty();
 
@@ -372,6 +372,7 @@ public class ModVoidArmorItem extends ArmorItem {
         return Optional.of(new BundleTooltipData(list, getBundleOccupancy(stack)));
     }
 
+     */
 
     @Override
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {

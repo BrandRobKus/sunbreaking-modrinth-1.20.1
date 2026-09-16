@@ -373,12 +373,14 @@ public class BondItem extends Item implements ItemEffectToggleable {
         return result.toString();
     }
 
-    @Override
+    /*@Override
     public Optional<TooltipData> getTooltipData(ItemStack stack) {
         DefaultedList<ItemStack> defaultedList = DefaultedList.of();
         getBundledStacks(stack).forEach(defaultedList::add);
         return Optional.of(new BundleTooltipData(defaultedList, getBundleOccupancy(stack)));
     }
+
+     */
 
     @Override
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {

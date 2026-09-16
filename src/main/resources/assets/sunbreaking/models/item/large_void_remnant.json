@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "sunbreaking:block/medium_void_remnant"
+    "layer0": "sunbreaking:block/large_void_remnant"
   }
 }

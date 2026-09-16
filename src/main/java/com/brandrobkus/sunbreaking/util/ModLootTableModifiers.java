@@ -240,6 +240,102 @@ public class ModLootTableModifiers {
                 builder.pool(poolBuilder.build());
             }
 
+            //solar aspects
+            {
+                if (BASTION_TREASURE.equals(identifier)) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceLootCondition.builder(0.1f))
+                            .with(ItemEntry.builder(ModItems.ASPECT_OF_BENEVOLENCE))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+
+                    builder.pool(poolBuilder.build());
+                }
+
+                if (BASTION_TREASURE.equals(identifier)) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceLootCondition.builder(0.1f))
+                            .with(ItemEntry.builder(ModItems.ASPECT_OF_BENEVOLENCE))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+
+                    builder.pool(poolBuilder.build());
+                }
+
+                if (BASTION_TREASURE.equals(identifier)) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceLootCondition.builder(0.1f))
+                            .with(ItemEntry.builder(ModItems.ASPECT_OF_RESOLVE))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+
+                    builder.pool(poolBuilder.build());
+                }
+
+                if (BASTION_TREASURE.equals(identifier)) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceLootCondition.builder(0.1f))
+                            .with(ItemEntry.builder(ModItems.ASPECT_OF_TEMPERING))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+
+                    builder.pool(poolBuilder.build());
+                }
+
+                if (BASTION_TREASURE.equals(identifier)) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceLootCondition.builder(0.1f))
+                            .with(ItemEntry.builder(ModItems.ASPECT_OF_RADIANCE))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+
+                    builder.pool(poolBuilder.build());
+                }
+            }
+
+            //solar fragments
+            {
+                if (BASTION_TREASURE.equals(identifier)) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceLootCondition.builder(0.1f))
+                            .with(ItemEntry.builder(ModItems.FRAGMENT_OF_ASHES))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+
+                    builder.pool(poolBuilder.build());
+                }
+
+                if (BASTION_TREASURE.equals(identifier)) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceLootCondition.builder(0.1f))
+                            .with(ItemEntry.builder(ModItems.FRAGMENT_OF_COMBUSTION))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+
+                    builder.pool(poolBuilder.build());
+                }
+
+                if (BASTION_TREASURE.equals(identifier)) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceLootCondition.builder(0.1f))
+                            .with(ItemEntry.builder(ModItems.FRAGMENT_OF_BLISTERING))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+
+                    builder.pool(poolBuilder.build());
+                }
+
+                if (BASTION_TREASURE.equals(identifier)) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceLootCondition.builder(0.1f))
+                            .with(ItemEntry.builder(ModItems.FRAGMENT_OF_SEARING))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+
+                    builder.pool(poolBuilder.build());
+                }
+            }
+
             /*if(NETHER_BRIDGE.equals(identifier)) {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
@@ -364,6 +460,102 @@ public class ModLootTableModifiers {
                 builder.pool(poolBuilder.build());
             }
 
+            //arc aspects
+            {
+                if (ANCIENT_CITY.equals(identifier)) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceLootCondition.builder(0.1f))
+                            .with(ItemEntry.builder(ModItems.ASPECT_OF_BRILLIANCE))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+
+                    builder.pool(poolBuilder.build());
+                }
+
+                if (ANCIENT_CITY.equals(identifier)) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceLootCondition.builder(0.1f))
+                            .with(ItemEntry.builder(ModItems.ASPECT_OF_SURGE))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+
+                    builder.pool(poolBuilder.build());
+                }
+
+                if (ANCIENT_CITY.equals(identifier)) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceLootCondition.builder(0.1f))
+                            .with(ItemEntry.builder(ModItems.ASPECT_OF_RESISTANCE))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+
+                    builder.pool(poolBuilder.build());
+                }
+
+                if (ANCIENT_CITY.equals(identifier)) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceLootCondition.builder(0.1f))
+                            .with(ItemEntry.builder(ModItems.ASPECT_OF_RECHARGE))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+
+                    builder.pool(poolBuilder.build());
+                }
+
+                if (ANCIENT_CITY.equals(identifier)) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceLootCondition.builder(0.1f))
+                            .with(ItemEntry.builder(ModItems.ASPECT_OF_FREQUENCY))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+
+                    builder.pool(poolBuilder.build());
+                }
+            }
+
+            //arc fragments
+            {
+                if (ANCIENT_CITY.equals(identifier)) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceLootCondition.builder(0.1f))
+                            .with(ItemEntry.builder(ModItems.FRAGMENT_OF_FEEDBACK))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+
+                    builder.pool(poolBuilder.build());
+                }
+
+                if (ANCIENT_CITY.equals(identifier)) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceLootCondition.builder(0.1f))
+                            .with(ItemEntry.builder(ModItems.FRAGMENT_OF_BEACONS))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+
+                    builder.pool(poolBuilder.build());
+                }
+
+                if (ANCIENT_CITY.equals(identifier)) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceLootCondition.builder(0.1f))
+                            .with(ItemEntry.builder(ModItems.FRAGMENT_OF_SHOCK))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+
+                    builder.pool(poolBuilder.build());
+                }
+
+                if (ANCIENT_CITY.equals(identifier)) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceLootCondition.builder(0.1f))
+                            .with(ItemEntry.builder(ModItems.FRAGMENT_OF_VOLTS))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+
+                    builder.pool(poolBuilder.build());
+                }
+            }
+
             if(END_CITY_TREASURE.equals(identifier)) {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
@@ -392,6 +584,102 @@ public class ModLootTableModifiers {
                         .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
 
                 builder.pool(poolBuilder.build());
+            }
+
+            //void aspects
+            {
+                if(END_CITY_TREASURE.equals(identifier)) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceLootCondition.builder(0.1f))
+                            .with(ItemEntry.builder(ModItems.ASPECT_OF_DILATION))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+
+                    builder.pool(poolBuilder.build());
+                }
+
+                if(END_CITY_TREASURE.equals(identifier)) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceLootCondition.builder(0.1f))
+                            .with(ItemEntry.builder(ModItems.ASPECT_OF_EXECUTION))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+
+                    builder.pool(poolBuilder.build());
+                }
+
+                if(END_CITY_TREASURE.equals(identifier)) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceLootCondition.builder(0.1f))
+                            .with(ItemEntry.builder(ModItems.ASPECT_OF_OBSCURITY))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+
+                    builder.pool(poolBuilder.build());
+                }
+
+                if(END_CITY_TREASURE.equals(identifier)) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceLootCondition.builder(0.1f))
+                            .with(ItemEntry.builder(ModItems.ASPECT_OF_RENEWAL))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+
+                    builder.pool(poolBuilder.build());
+                }
+
+                if(END_CITY_TREASURE.equals(identifier)) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceLootCondition.builder(0.1f))
+                            .with(ItemEntry.builder(ModItems.ASPECT_OF_HARVEST))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+
+                    builder.pool(poolBuilder.build());
+                }
+            }
+
+            //void fragments
+            {
+                if(END_CITY_TREASURE.equals(identifier)) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceLootCondition.builder(0.1f))
+                            .with(ItemEntry.builder(ModItems.FRAGMENT_OF_CESSATION))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+
+                    builder.pool(poolBuilder.build());
+                }
+
+                if(END_CITY_TREASURE.equals(identifier)) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceLootCondition.builder(0.1f))
+                            .with(ItemEntry.builder(ModItems.FRAGMENT_OF_EXPULSION))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+
+                    builder.pool(poolBuilder.build());
+                }
+
+                if(END_CITY_TREASURE.equals(identifier)) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceLootCondition.builder(0.1f))
+                            .with(ItemEntry.builder(ModItems.FRAGMENT_OF_INSTABILITY))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+
+                    builder.pool(poolBuilder.build());
+                }
+
+                if(END_CITY_TREASURE.equals(identifier)) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceLootCondition.builder(0.1f))
+                            .with(ItemEntry.builder(ModItems.FRAGMENT_OF_VIGILANCE))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+
+                    builder.pool(poolBuilder.build());
+                }
             }
 
         }));

@@ -1,18 +1,18 @@
-// 1.20.1	2026-09-10T10:28:04.3147745	Sunbreaking/Tags for minecraft:item
-bab4b64a6bbc120337072b653668adf7e85b0aad data\sunbreaking\tags\items\void_aspects.json
-83532e19b2d2a8015ee2605bf56c03222def32d7 data\sunbreaking\tags\items\basic_hammers.json
-af0de9f305d250e2cc27589ed65d818188779e77 data\sunbreaking\tags\items\stormcaller_armor.json
-50252d5edc8346e5580076a1a83d106fde9e9ac0 data\sunbreaking\tags\items\arc_aspects.json
+// 1.20.1	2026-09-15T23:00:07.6789883	Sunbreaking/Tags for minecraft:item
 7b3d4a41b30b1a8042d24d82a8ef09facc880595 data\sunbreaking\tags\items\solar_aspects.json
-a2a230d07fd6c9fcabf03c79cd91af2c9f8bda5d data\sunbreaking\tags\items\bonds.json
 c6390d61c788241e8a563f06ee580afc40dc7d63 data\sunbreaking\tags\items\hammer_of_sol.json
+83532e19b2d2a8015ee2605bf56c03222def32d7 data\sunbreaking\tags\items\basic_hammers.json
 bc47df47745f8576f07a5ea9163ece4332bc2de4 data\sunbreaking\tags\items\shadowshots.json
+908a9053c03fa627062e875a7faed1b871afd262 data\sunbreaking\tags\items\glaives.json
+a2a230d07fd6c9fcabf03c79cd91af2c9f8bda5d data\sunbreaking\tags\items\bonds.json
+2dcdc20bb8aa6ae5a43539ded456429495b4d1a2 data\sunbreaking\tags\items\solar_fragments.json
+3c300c1576caac86324842667bb55d65cedd7e14 data\sunbreaking\tags\items\arc_fragments.json
+af0de9f305d250e2cc27589ed65d818188779e77 data\sunbreaking\tags\items\stormcaller_armor.json
+ac470cfe8cc47e374acd621121542de5b21a2061 data\sunbreaking\tags\items\sunbreaker_armor.json
 5025a2ed6ce862b4173aa06511d6c6a434dbf544 data\sunbreaking\tags\items\arrows.json
+bab4b64a6bbc120337072b653668adf7e85b0aad data\sunbreaking\tags\items\void_aspects.json
+50252d5edc8346e5580076a1a83d106fde9e9ac0 data\sunbreaking\tags\items\arc_aspects.json
 bd8c8f3bcbc9d00b37f41c8cd73c0832b6d6c3ad data\sunbreaking\tags\items\nightstalker_armor.json
 7a37a7d52f76168ec9d5c12f1da873ee1542f15b data\sunbreaking\tags\items\super_meter.json
-ac470cfe8cc47e374acd621121542de5b21a2061 data\sunbreaking\tags\items\sunbreaker_armor.json
-57e2e0245e3d4ff7421570b516869e4509ca1868 data\sunbreaking\tags\items\void_fragments.json
-3c300c1576caac86324842667bb55d65cedd7e14 data\sunbreaking\tags\items\arc_fragments.json
-2dcdc20bb8aa6ae5a43539ded456429495b4d1a2 data\sunbreaking\tags\items\solar_fragments.json
-908a9053c03fa627062e875a7faed1b871afd262 data\sunbreaking\tags\items\glaives.json
 a8935d77a61d18bfdc98e5e289c69f7e18deb37e data\sunbreaking\tags\items\gear_meter.json
+57e2e0245e3d4ff7421570b516869e4509ca1868 data\sunbreaking\tags\items\void_fragments.json

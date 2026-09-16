@@ -1,6 +1,6 @@
 {
   "parent": "sunbreaking:item/shadowshot_bow",
   "textures": {
-    "layer0": "sunbreaking:item/shadowshot_bow_pulling_1"
+    "layer0": "sunbreaking:item/shadowshot_bow_pulling_1_gui"
   }
 }

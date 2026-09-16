@@ -19,6 +19,7 @@ public class ModModelProvider extends FabricModelProvider {
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.TRAVELER_SHARD);
+        blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.POLISHED_TRAVELER_SHARD);
         blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.WEATHERED_TRAVELER_SHARD);
 
         blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.SOLAR_SURGED_TRAVELER_SHARD);

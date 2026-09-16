@@ -18,8 +18,11 @@ public class ModBlocks {
 
     public static final Block TRAVELER_SHARD = registerBlock("traveler_shard",
             new Block(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).strength(1.5F).sounds(BlockSoundGroup.AMETHYST_BLOCK).requiresTool()));
+    public static final Block POLISHED_TRAVELER_SHARD = registerBlock("polished_traveler_shard",
+            new Block(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).strength(1.5F).sounds(BlockSoundGroup.AMETHYST_BLOCK).requiresTool()));
     public static final Block WEATHERED_TRAVELER_SHARD = registerBlock("weathered_traveler_shard",
-            new Block(AbstractBlock.Settings.create().mapColor(MapColor.WHITE_GRAY).strength(1.5F).sounds(BlockSoundGroup.STONE).requiresTool()));
+            new Block(AbstractBlock.Settings.create().mapColor(MapColor.WHITE_GRAY).strength(1.5F).sounds(BlockSoundGroup.AMETHYST_BLOCK).requiresTool()));
+
     public static final Block ARC_SURGED_TRAVELER_SHARD = registerBlock("arc_surged_traveler_shard",
             new ArcSurgedTravelerShard(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).strength(2.0F).sounds(BlockSoundGroup.AMETHYST_BLOCK).requiresTool()));
     public static final Block SMALL_ARC_REMNANT = registerBlock("small_arc_remnant",
@@ -38,9 +41,9 @@ public class ModBlocks {
     public static final Block MEDIUM_VOID_REMNANT = registerBlock("medium_void_remnant",
             new AmethystClusterBlock(4, 3, AbstractBlock.Settings.create().mapColor(MapColor.PURPLE).nonOpaque().ticksRandomly().strength(1.5F).sounds(BlockSoundGroup.MEDIUM_AMETHYST_BUD).solid().luminance((state) -> 4).pistonBehavior(PistonBehavior.DESTROY)));
     public static final Block LARGE_VOID_REMNANT = registerBlock("large_void_remnant",
-            new AmethystClusterBlock(5, 3, AbstractBlock.Settings.create().mapColor(MapColor.PURPLE).nonOpaque().ticksRandomly().strength(1.5F).sounds(BlockSoundGroup.LARGE_AMETHYST_BUD).solid().luminance((state) -> 7).pistonBehavior(PistonBehavior.DESTROY)));
+            new AmethystClusterBlock(6, 3, AbstractBlock.Settings.create().mapColor(MapColor.PURPLE).nonOpaque().ticksRandomly().strength(1.5F).sounds(BlockSoundGroup.LARGE_AMETHYST_BUD).solid().luminance((state) -> 7).pistonBehavior(PistonBehavior.DESTROY)));
     public static final Block VOID_BURST = registerBlock("void_burst",
-            new AmethystClusterBlock(7, 3, AbstractBlock.Settings.create().mapColor(MapColor.PURPLE).solid().nonOpaque().ticksRandomly().sounds(BlockSoundGroup.AMETHYST_CLUSTER).strength(1.5F).luminance((state) -> 10).pistonBehavior(PistonBehavior.DESTROY)));
+            new AmethystClusterBlock(11, 3, AbstractBlock.Settings.create().mapColor(MapColor.PURPLE).solid().nonOpaque().ticksRandomly().sounds(BlockSoundGroup.AMETHYST_CLUSTER).strength(1.5F).luminance((state) -> 10).pistonBehavior(PistonBehavior.DESTROY)));
 
     public static final Block SOLAR_SURGED_TRAVELER_SHARD = registerBlock("solar_surged_traveler_shard",
             new SolarSurgedTravelerShard(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).strength(2.0F).sounds(BlockSoundGroup.AMETHYST_BLOCK).requiresTool()));

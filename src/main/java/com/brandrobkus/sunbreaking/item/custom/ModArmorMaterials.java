@@ -11,14 +11,14 @@ import net.minecraft.sound.SoundEvents;
 import java.util.function.Supplier;
 
 public enum ModArmorMaterials implements ArmorMaterial {
-    SOLAR("solar",1, new int[]{4,9,7,4}, 35,
+    SOLAR("solar",1, new int[]{3,8,6,3}, 35,
             SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE, 3f, 0.05f,
             () ->Ingredient.ofItems(ModItems.SOLAR_LIGHT)),
     VOID("void",1, new int[]{3,8,6,3}, 35,
-            SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE, 3f, 0.0125f,
+            SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE, 2f, 0f,
             () ->Ingredient.ofItems(ModItems.VOID_LIGHT)),
     ARC("arc",1, new int[]{3,8,6,3}, 35,
-            SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE, 3f, 0.0125f,
+            SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE, 2.5f, 0.0125f,
             () ->Ingredient.ofItems(ModItems.ARC_LIGHT))
     ;
 

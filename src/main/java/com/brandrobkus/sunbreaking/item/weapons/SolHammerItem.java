@@ -460,12 +460,14 @@ public class SolHammerItem extends ToolItem implements Vanishable {
         return result.toString();
     }
 
-    @Override
+    /*@Override
     public Optional<TooltipData> getTooltipData(ItemStack stack) {
         DefaultedList<ItemStack> defaultedList = DefaultedList.of();
         getBundledStacks(stack).forEach(defaultedList::add);
         return Optional.of(new BundleTooltipData(defaultedList, getBundleOccupancy(stack)));
     }
+
+     */
 
     @Override
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {

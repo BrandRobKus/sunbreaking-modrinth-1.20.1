@@ -12,6 +12,5 @@ public class SunbreakingDataGenerator implements DataGeneratorEntrypoint {
 
 		pack.addProvider(ModModelProvider::new);
 		pack.addProvider(ModItemTagProvider::new);
-
 	}
 }
